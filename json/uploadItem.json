@@ -1,0 +1,8 @@
+{
+  "Name:": "string",
+  "Description": "string",
+  "Category": "string",
+  "Price": "int",
+  "Amount": "int",
+  "Status": "int"
+}

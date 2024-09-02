@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>商品名稱</title>
+    <script src="js/libs.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  </head>
+
+  <body
+    id="app"
+    class="d-block justify-content-start align-items-center vh-100 overflow-x-hidden"
+  >
+    <header
+      class="d-flex justify-content-between align-items-center border border-1 p-3"
+      style="height: 4rem"
+    >
+      <div class="d-flex justify-content-start align-items-center w-100">
+        <button class="border border-0 bg-transparent">
+          <i class="fa-solid fa-bars fs-2"></i>
+        </button>
+
+        <a
+          class="text-decoration-none ms-3"
+          href="index.html"
+          style="width: 12rem"
+        >
+          <img
+            style="width: 100%; height: auto"
+            class=""
+            src="img/Decathlon_Logo.png"
+            href="index.html"
+          />
+        </a>
+        <input
+          type="text"
+          class="form-control ms-3 d-none d-md-block w-50"
+          placeholder="查詢"
+        />
+      </div>
+
+      <div class="d-flex justify-content-end align-items-center gap-2">
+        <button class="border border-0 bg-transparent d-md-none">
+          <i class="fa-solid fa-magnifying-glass fs-5"></i>
+        </button>
+
+        <a class="bg-transparent text-black" href="">
+          <img
+            src="img/customer-service.png"
+            alt=""
+            style="width: 1.3rem; height: 1.3rem"
+          />
+        </a>
+
+        <!-- TODO: 視窗最小時隱藏 按下搜尋按鈕 覆蓋 -->
+        <!-- <input type="text" class="form-control" placeholder="查詢" aria-label="search" aria-describedby="addon-wrapping"/> -->
+        <!-- 判斷會員是否登入 -->
+        <a class="bg-transparent text-black" href="">
+          <i class="fa-solid fa-user"></i>
+        </a>
+
+        <a class="bg-transparent text-black ms-auto me-2" href="cart.html">
+          <i class="fa-solid fa-cart-shopping"></i>
+        </a>
+      </div>
+    </header>
+
+    <div class="col-12">
+      <div class="p-3">
+        <a class="text-decoration-none text-black" href="index.html">
+          <i class="fa-solid fa-arrow-left"></i>繼續購物
+        </a>
+      </div>
+      <div class="swiper mySwiper mb-3" style="height: 25rem">
+        <div class="swiper-wrapper">
+          <div
+            class="swiper-slide d-flex justify-content-center align-items-center"
+          >
+            <img src="img/product1.jpg" style="width: 100%; height: auto" />
+          </div>
+          <div
+            class="swiper-slide d-flex justify-content-center align-items-center"
+          >
+            <img src="img/product2.jpg" style="width: 100%; height: auto" />
+          </div>
+          <div
+            class="swiper-slide d-flex justify-content-center align-items-center"
+          >
+            <img src="img/product1.jpg" style="width: 100%; height: auto" />
+          </div>
+          <div
+            class="swiper-slide d-flex justify-content-center align-items-center"
+          >
+            <img src="img/product2.jpg" style="width: 100%; height: auto" />
+          </div>
+          <div
+            class="swiper-slide d-flex justify-content-center align-items-center"
+          >
+            <img src="img/product1.jpg" style="width: 100%; height: auto" />
+          </div>
+          <div
+            class="swiper-slide d-flex justify-content-center align-items-center"
+          >
+            <img src="img/product2.jpg" style="width: 100%; height: auto" />
+          </div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+
+      <div class="p-3">
+        <p class="fs-5 fw-bolder">
+          14吋 兒童鋼製自行車 (塗鴉款/附輔助輪) DISCOVER 500
+        </p>
+        <p class="fs-5 fw-bolder">$2,999</p>
+
+        <div class="mb-3">
+          <div>
+            <p>數量</p>
+            <!-- TODOError: 還沒辦法透過按鈕更改數量 -->
+            <!-- TODOError: 需檢查不能超過最大數量 -->
+            <div class="input-group mb-3 w-50">
+              <button
+                class="input-group-text btn btn-outline-secondary"
+                @click="decrease"
+              >
+                -
+              </button>
+              <input
+                type="number"
+                class="form-control text-center border border-secondary"
+                v-model="amount"
+                placeholder="數量"
+                value="1"
+              />
+              <button
+                class="input-group-text btn btn-outline-primary"
+                @click="increase"
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          <!-- TODOError 目前還沒有即時更新 -->
+          <div>剩餘庫存: {{lastAmount}}</div>
+        </div>
+        <div class="w-100 d-flex justify-content-between mb-3">
+          <button class="btn btn-danger col-5">加入購物車</button>
+          <button class="btn btn-outline-danger col-5">立即購買</button>
+        </div>
+
+        <div class="fs-5 fw-bolder">商品描述</div>
+        <div class="">
+          一款簡單又堅固、附輔助輪的 14" 自行車。一款簡單又堅固、附輔助輪的 14"
+          自行車。適合身高 90-110 cm 兒童的 14"
+          單速自行車，配有輔助輪及簡單的鏈條保護罩。附有輔助輪，擋泥板、腳撐需另購。
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis
+          voluptates eum hic dolorum autem quibusdam iste ab, asperiores
+          consequatur id totam consequuntur exercitationem esse saepe? Fuga
+          necessitatibus aut eaque aliquid. Magnam eligendi voluptatum est
+          maiores incidunt excepturi quaerat deleniti, nemo rerum, nisi, quam
+          eveniet dolore. Fugit, sed laborum. Dignissimos voluptatibus iure
+          soluta minima pariatur asperiores obcaecati, aspernatur atque mollitia
+          cupiditate. Laboriosam, quo! Cupiditate modi ipsa laudantium deserunt
+          sequi fugit eaque non explicabo quae exercitationem dolor ducimus
+          optio, doloremque tempore fuga commodi. Dolor iusto nulla nostrum
+          provident, explicabo qui eaque quae! Dignissimos magni consectetur
+          quia culpa consequatur ipsum modi cupiditate. Minima tenetur quaerat
+          deserunt, vel similique cupiditate est esse maxime iure, et maiores
+          repellat, aliquam vero velit ipsam non quas ad. Assumenda quos odit
+          illo eveniet inventore magni consequatur nulla ea ut accusamus
+          provident alias dolore eligendi quam nam, temporibus earum optio
+          nesciunt enim! Reprehenderit sequi id tempora natus aspernatur. Nemo!
+          Eum, quibusdam nihil dignissimos cum praesentium ad sint quam. Velit
+          corrupti praesentium, delectus laborum modi repudiandae reprehenderit
+          aut eius sequi! Quam dignissimos blanditiis natus laborum consequatur!
+          Illum dignissimos delectus alias! Nobis ut nulla cupiditate amet
+          voluptate maxime aliquam sint, ratione obcaecati saepe, impedit
+          reiciendis voluptates voluptatum numquam, itaque error. Expedita
+          placeat praesentium itaque ratione atque nam quis rerum eligendi
+          mollitia. Aspernatur excepturi fugiat, accusamus eius ab, vero
+          blanditiis molestiae ut quis facilis corrupti saepe quia harum
+          inventore eveniet dolorum reprehenderit, ratione eligendi cumque.
+          Dicta temporibus quidem ipsum? Molestiae, ab amet. Aliquam dolore
+          consectetur esse quasi veniam corporis rerum error nisi. Obcaecati,
+          laboriosam repellendus debitis necessitatibus nemo iste corporis alias
+          asperiores id voluptates eaque consequuntur, delectus facilis at,
+          temporibus vel a. Molestiae harum dolor modi natus ab maxime, commodi
+          porro provident, eius eaque asperiores odit facilis consequatur rem
+          quae veniam. Quos atque rerum quidem eum. Est quae praesentium
+          blanditiis vero! Magni.
+        </div>
+      </div>
+    </div>
+
+    <footer class="bg-primary w-100 p-3">
+      <div class="d-flex">
+        <div class="me-2">
+          <div class="fs-3">客戶服務</div>
+          <ul>
+            <li>
+              <a class="text-black text-decoration-none" href="">聯繫我們</a>
+            </li>
+            <li>
+              <a class="text-black text-decoration-none" href="">常見QA</a>
+            </li>
+            <li>
+              <a class="text-black text-decoration-none" href=""
+                >退貨/物流政策</a
+              >
+            </li>
+            <li>
+              <a class="text-black text-decoration-none" href="">隱私權政策</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <div class="fs-3">關於我們</div>
+          <ul>
+            <li>
+              <a class="text-black text-decoration-none" href="">1</a>
+            </li>
+            <li>
+              <a class="text-black text-decoration-none" href="">2</a>
+            </li>
+            <li>
+              <a class="text-black text-decoration-none" href="">3</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </body>
+
+  <!-- Initialize Swiper -->
+  <script>
+    var swiper = new Swiper(".mySwiper", {
+      cssMode: true,
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      pagination: {
+        el: ".swiper-pagination",
+      },
+      mousewheel: true,
+      keyboard: true,
+    });
+  </script>
+  <script>
+    Vue.createApp({
+      data() {
+        return {
+          lastAmount: 5,
+          amount: 1,
+        };
+      },
+      methods: {
+        increase() {
+          if (this.amount < this.lastAmount) {
+            this.amount++;
+          }
+          console.log(
+            "file: inputIncrease.js:11  increase  amount: ",
+            this.amount
+          );
+        },
+        decrease() {
+          if (this.amount > 1) {
+            this.amount--;
+          }
+          console.log(
+            "file: inputIncrease.js:15  decrease  amount: ",
+            this.amount
+          );
+        },
+      },
+    }).mount("#app");
+  </script>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>檢視會員資料</title>
+    <script src="js/libs.js"></script>
+  </head>
+  <body
+    class="d-flex flex-column justify-content-center align-items-center vh-100"
+  >
+    <header
+      class="w-100 d-flex justify-content-center align-items-center shadow-sm position-absolute top-0"
+    >
+      <a class="m-2 text-black" href="">
+        <i class="fa-solid fa-arrow-left"></i>
+      </a>
+      <h5 class="mt-2">檢視會員資料</h5>
+
+      <button class="bg-transparent ms-auto me-2 float-right border border-0">
+        <i class="fa-regular fa-circle-question"></i>
+      </button>
+    </header>
+
+    <form class="p-3 w-100 h-100 mt-5">
+      <div class="mb-3">
+        <label class="form-label">商品圖片</label>
+        <input class="form-control" type="file" id="product_image" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">商品名稱</label>
+        <input
+          class="form-control"
+          id="product_name"
+          aria-describedby="product_name"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">商品描述</label>
+        <input id="product_description" class="form-control" />
+      </div>
+
+      <div class="dropdown mb-3">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          商品分類
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">分類0</a></li>
+          <li><a class="dropdown-item" href="#">分類1</a></li>
+          <li><a class="dropdown-item" href="#">分類2</a></li>
+        </ul>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">價格</label>
+        <input id="product_price" class="form-control" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">商品數量</label>
+        <input id="product_price" class="form-control" />
+      </div>
+
+      <div class="dropdown mb-3">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          商品保存狀態
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">全新</a></li>
+          <li><a class="dropdown-item" href="#">二手</a></li>
+        </ul>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </body>
+</html>
