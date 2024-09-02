@@ -6,7 +6,7 @@
   >
     <div class="d-flex justify-content-start align-items-center w-100">
       <button class="border border-0 bg-transparent">
-        <i class="fa-solid fa-bars fs-2"></i>
+        <faBars class="fa-solid fa-bars fs-2"></faBars>
       </button>
 
       <a
