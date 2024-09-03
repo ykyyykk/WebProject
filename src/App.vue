@@ -1,11 +1,11 @@
-// script template style之間的順序 沒有固定可以隨意調動
-
+<!-- script template style之間的順序 沒有固定可以隨意調動 -->
 <script setup>
-import headerComponent from "./components/headerComponent.vue";
+// import HeaderComponent from " ../components/HeaderComponent.vue";
 </script>
 
 <template>
-  <headerComponent />
+  <!-- <HeaderComponent /> -->
+  <router-view />
 </template>
 
 <style scoped>
