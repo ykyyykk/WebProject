@@ -14,9 +14,10 @@
         <i class="fa-solid fa-user ms-2 me-2"></i>
         <input
           type="text"
+          v-model="email"
           class="form-control border border-0"
-          placeholder="電話號碼/Email/使用者帳號"
-          aria-label="PhoneNumber/email/account"
+          placeholder="Email"
+          aria-label="Email"
           aria-describedby="basic-addon1"
         />
       </div>
@@ -27,6 +28,7 @@
         <i class="fa-solid fa-lock ms-2 me-2"></i>
         <input
           type="text"
+          v-model="password"
           class="form-control border border-0"
           placeholder="密碼"
           aria-label="password"
@@ -41,7 +43,7 @@
         >
       </div>
 
-      <button class="btn btn-primary w-100 mb-3">下一步</button>
+      <button @click="Login" class="btn btn-primary w-100 mb-3">登入</button>
 
       <div class="d-flex justify-content-end">
         <a class="text-decoration-none" href="#">使用SMS簡訊登入</a>
@@ -84,14 +86,43 @@
 </template>
 
 <script>
+//TODOAdd: 並且返回登入頁面
+
+import axios from "axios";
 import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 
 export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
   components: { HeaderComponent, SmallHeaderComponent },
   methods: {
-    Back() {
-      this.$router.go(-1);
+    async Login() {
+      try {
+        const response = await axios.post("http://localhost:3000/api/login", {
+          email: this.email,
+          password: this.password,
+        });
+
+        if (response.data.success) {
+          alert("登入成功");
+          //TODOAdd: 登入成功 去會員中心
+        } else {
+          alert(
+            "帳號或密碼錯誤！ 提醒您，為確保登入安全，連續錯誤5次將暫時鎖定該帳號無法進行登入"
+          );
+        }
+      } catch (error) {
+        // TODOSecond: 連續錯誤5次將暫時鎖定該帳號無法進行登入
+        alert(
+          "帳號或密碼錯誤！ 提醒您，為確保登入安全，連續錯誤5次將暫時鎖定該帳號無法進行登入",
+          error
+        );
+      }
     },
   },
 };

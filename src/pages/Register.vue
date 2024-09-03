@@ -16,6 +16,7 @@
           type="text"
           class="form-control border border-0"
           placeholder="姓名"
+          v-model="name"
           aria-label="username"
           aria-describedby="basic-addon1"
         />
@@ -28,6 +29,7 @@
           type="text"
           class="form-control border border-0"
           placeholder="電話"
+          v-model="phoneNumber"
           aria-label="phonenumber"
           aria-describedby="basic-addon1"
         />
@@ -40,12 +42,15 @@
           type="text"
           class="form-control border border-0"
           placeholder="Email"
+          v-model="email"
           aria-label="email"
           aria-describedby="basic-addon1"
         />
       </div>
 
-      <button class="btn btn-primary w-100 mb-3">下一步</button>
+      <button @click="Register" class="btn btn-primary w-100 mb-3">
+        下一步
+      </button>
       <div class="text-center mb-3">或</div>
 
       <button
@@ -89,10 +94,35 @@
 </template>
 
 <script>
+import axios from "axios";
 import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 
 export default {
+  data() {
+    return {
+      name: "",
+      phoneNumber: "",
+      email: "",
+    };
+  },
+  methods: {
+    async Register() {
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/api/register",
+          {
+            name: this.name,
+            phoneNumber: this.phoneNumber,
+            email: this.email,
+          }
+        );
+        alert("註冊成功");
+      } catch (error) {
+        alert("註冊失敗", error);
+      }
+    },
+  },
   components: { HeaderComponent, SmallHeaderComponent },
 };
 </script>

@@ -14,7 +14,9 @@
   "description": "",
   "dependencies": {
     "@vitejs/plugin-vue": "^5.1.2",
+    "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
+    "cors": "^2.8.5",
     "express": "^4.19.2",
     "express-handlebars": "^8.0.1",
     "nodemon": "^3.1.4",
