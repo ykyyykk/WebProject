@@ -1,234 +1,48 @@
 <template>
-  <body
-    class="d-block justify-content-start align-items-center vh-100 overflow-x-hidden"
-  >
-    <!-- TODOWarning: 會隨著寬度等比例縮放 -->
-    <!-- TODOError: 按下搜尋按鈕沒有彈出搜尋視窗 -->
-    <header
-      class="d-flex justify-content-between align-items-center border border-1 p-3"
-      style="height: 4rem"
+  <HeaderComponent />
+  <SwiperComponent />
+
+  <div id="itmesContainer" class="container p-2">
+    <div
+      v-for="item in items"
+      :key="item.id"
+      class="row d-flex justify-content-start align-items-center mt-3"
     >
-      <div class="d-flex justify-content-start align-items-center w-100">
-        <button class="border border-0 bg-transparent">
-          <i class="fa-solid fa-bars fs-2"></i>
-        </button>
-
-        <a
-          class="text-decoration-none ms-3"
-          href="index.html"
-          style="width: 12rem"
-        >
-          <img
-            style="width: 100%; height: auto"
-            class=""
-            src="../assets/img/Decathlon_Logo.png"
-            href="index.html"
-          />
-        </a>
-        <input
-          type="text"
-          class="form-control ms-3 d-none d-md-block w-50"
-          placeholder="查詢"
+      <div class="card col-lg-3 col-sm-4 col-6">
+        <img
+          src="../assets/img/slide1.png"
+          class="card-img-top"
+          alt="商品圖片"
         />
-      </div>
-
-      <div class="d-flex justify-content-end align-items-center gap-2">
-        <button class="border border-0 bg-transparent d-md-none">
-          <i class="fa-solid fa-magnifying-glass fs-5"></i>
-        </button>
-
-        <a class="bg-transparent text-black" href="">
-          <img
-            src="../assets/img/customer-service.png"
-            alt=""
-            style="width: 1.3rem; height: 1.3rem"
-          />
-        </a>
-
-        <!-- TODO: 視窗最小時隱藏 按下搜尋按鈕 覆蓋 -->
-        <!-- <input type="text" class="form-control" placeholder="查詢" aria-label="search" aria-describedby="addon-wrapping"/> -->
-        <!-- 判斷會員是否登入 -->
-        <a class="bg-transparent text-black" href="member_center.html">
-          <i class="fa-solid fa-user"></i>
-        </a>
-
-        <a class="bg-transparent text-black ms-auto me-2" href="cart.html">
-          <i class="fa-solid fa-cart-shopping"></i>
-        </a>
-      </div>
-    </header>
-
-    <!-- TODOWarning: 會隨著寬度等比例縮放 -->
-    <div class="swiper mySwiper" style="height: 25rem">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">Slide 1</div>
-        <div class="swiper-slide">Slide 2</div>
-        <div class="swiper-slide">Slide 3</div>
-        <div class="swiper-slide">Slide 4</div>
-        <div class="swiper-slide">Slide 5</div>
-        <div class="swiper-slide">Slide 6</div>
-        <div class="swiper-slide">Slide 7</div>
-        <div class="swiper-slide">Slide 8</div>
-        <div class="swiper-slide">Slide 9</div>
-      </div>
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-pagination"></div>
-    </div>
-
-    <div id="itmesContainer" class="container p-3">
-      <div
-        v-for="item in items"
-        :key="item.id"
-        class="row d-flex justify-content-start align-items-center mt-3"
-      >
-        <div class="card col-lg-3 col-sm-4 col-6">
-          <img
-            src="../assets/img/slide1.png"
-            class="card-img-top"
-            alt="商品圖片"
-          />
-          <div class="card-body">
-            <h5 class="card-title">商品名稱</h5>
-            <router-link
-              :to="{
-                name: 'ItemDetail',
-                params: { id: item.id, title: item.title, detail: item.detail },
-              }"
-              class="text-danger bg-yellow text-decoration-none stretched-link"
-            >
-              $10</router-link
-            >
-          </div>
-        </div>
-
-        <div class="card col-lg-3 col-sm-4 col-6">
-          <img
-            src="../assets/img/slide2.png"
-            class="card-img-top"
-            alt="商品圖片"
-          />
-          <div class="card-body">
-            <h5 class="card-title">商品名稱</h5>
-            <router-link
-              :to="{
-                name: 'ItemDetail',
-                params: { id: item.id, title: item.title, detail: item.detail },
-              }"
-              class="text-danger bg-yellow text-decoration-none stretched-link"
-            >
-              $10</router-link
-            >
-          </div>
-        </div>
-
-        <div class="card col-lg-3 col-sm-4 col-6">
-          <img
-            src="../assets/img/slide1.png"
-            class="card-img-top"
-            alt="商品圖片"
-          />
-          <div class="card-body">
-            <h5 class="card-title">商品名稱</h5>
-            <router-link
-              :to="{
-                name: 'ItemDetail',
-                params: { id: item.id, title: item.title, detail: item.detail },
-              }"
-              class="text-danger bg-yellow text-decoration-none stretched-link"
-            >
-              $10</router-link
-            >
-          </div>
-        </div>
-
-        <div class="card col-lg-3 col-sm-4 col-6">
-          <img
-            src="../assets/img/slide2.png"
-            class="card-img-top"
-            alt="商品圖片"
-          />
-          <div class="card-body">
-            <h5 class="card-title">商品名稱</h5>
-            <router-link
-              :to="{
-                name: 'ItemDetail',
-                params: { id: item.id, title: item.title, detail: item.detail },
-              }"
-              class="text-danger bg-yellow text-decoration-none stretched-link"
-            >
-              $10</router-link
-            >
-          </div>
-        </div>
-
-        <div class="card col-lg-3 col-sm-4 col-6">
-          <img
-            src="../assets/img/slide1.png"
-            class="card-img-top"
-            alt="商品圖片"
-          />
-          <div class="card-body">
-            <h5 class="card-title">商品名稱</h5>
-            <router-link
-              :to="{
-                name: 'ItemDetail',
-                params: { id: item.id, title: item.title, detail: item.detail },
-              }"
-              class="text-danger bg-yellow text-decoration-none stretched-link"
-            >
-              $10</router-link
-            >
-          </div>
+        <div class="card-body">
+          <h5 class="card-title">{{ item.title }}</h5>
+          <router-link
+            :to="{
+              name: 'ItemDetail',
+              params: { id: item.id, title: item.title, detail: item.detail },
+            }"
+            class="text-danger bg-yellow text-decoration-none stretched-link"
+          >
+            ${{ item.price }}</router-link
+          >
         </div>
       </div>
     </div>
-
-    <footer class="bg-primary m-0">
-      <div>
-        <h3>客戶服務</h3>
-        <ul>
-          <li>
-            <a class="text-black text-decoration-none" href="">聯繫我們</a>
-          </li>
-          <li><a class="text-black text-decoration-none" href="">常見QA</a></li>
-          <li>
-            <a class="text-black text-decoration-none" href="">退貨/物流政策</a>
-          </li>
-          <li>
-            <a class="text-black text-decoration-none" href="">隱私權政策</a>
-          </li>
-        </ul>
-      </div>
-      <div><h3>關於我們</h3></div>
-    </footer>
-  </body>
+  </div>
 </template>
 
 <script>
-var swiper = new Swiper(".mySwiper", {
-  cssMode: true,
-  navigation: {
-    nextEl: ".swiper-button-next",
-    prevEl: ".swiper-button-prev",
-  },
-  pagination: {
-    el: ".swiper-pagination",
-  },
-  mousewheel: true,
-  keyboard: true,
-});
+import { mapGetters } from "vuex";
+import HeaderComponent from "../components/HeaderComponent.vue";
+import SwiperComponent from "../components/SwiperComponent.vue";
 
 export default {
-  data() {
-    return {
-      items: [
-        { title: "title", id: 0, detail: "detail" },
-        { title: "title1", id: 1, detail: "detail1" },
-        { title: "title2", id: 2, detail: "detail2" },
-        { title: "title3", id: 3, detail: "detail3" },
-      ],
-    };
+  components: { HeaderComponent, SwiperComponent },
+  computed: {
+    ...mapGetters(["getItems"]),
+    items() {
+      return this.getItems;
+    },
   },
 };
 </script>

@@ -1,11 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../pages/Home.vue";
+import AddItem from "../pages/AddItem.vue";
 import Cart from "../pages/Cart.vue";
+import Service from "../pages/Service.vue";
+import MemberCenter from "../pages/MemberCenter.vue";
+import ForgotPassword from "../pages/ForgotPassword.vue";
+import Login from "../pages/Login.vue";
+import Register from "../pages/Register.vue";
+import NotFound from "../pages/NotFound.vue";
 import Item from "../pages/Items/Item.vue";
 import ItemDetail from "../pages/Items/ItemDetail.vue";
-import NotFound from "../pages/NotFound.vue";
-// import Jobs from "../pages/jobs/Jobs.vue";
-// import JobDetails from "../pages/jobs/JobDetails.vue";
 
 const routes = [
   {
@@ -14,9 +18,39 @@ const routes = [
     component: Home,
   },
   {
+    path: "/addItem",
+    name: "AddItem",
+    component: AddItem,
+  },
+  {
     path: "/cart",
     name: "Cart",
     component: Cart,
+  },
+  {
+    path: "/service",
+    name: "Service",
+    component: Service,
+  },
+  {
+    path: "/membercenter",
+    name: "MemberCenter",
+    component: MemberCenter,
+  },
+  {
+    path: "/forgotpassword",
+    name: "ForgotPassword",
+    component: ForgotPassword,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register,
   },
   {
     path: "/item",

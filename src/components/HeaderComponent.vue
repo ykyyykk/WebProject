@@ -1,26 +1,25 @@
-<script></script>
 <template>
+  <!-- TODOWarning: 會隨著寬度等比例縮放 -->
+  <!-- TODOError: 按下搜尋按鈕沒有彈出搜尋視窗 -->
   <header
-    class="d-flex justify-content-between align-items-center border border-1 p-3"
+    class="d-flex justify-content-between align-items-center p-2"
     style="height: 4rem"
   >
     <div class="d-flex justify-content-start align-items-center w-100">
       <button class="border border-0 bg-transparent">
-        <faBars class="fa-solid fa-bars fs-2"></faBars>
+        <i class="fa-solid fa-bars fs-2"></i>
       </button>
 
-      <a
+      <router-link
+        :to="{ name: 'Home' }"
         class="text-decoration-none ms-3"
-        href="index.html"
         style="width: 12rem"
       >
         <img
           style="width: 100%; height: auto"
-          class=""
-          src="../img/Decathlon_Logo.png"
-          href="index.html"
+          src="../assets/img/Decathlon_Logo.png"
         />
-      </a>
+      </router-link>
       <input
         type="text"
         class="form-control ms-3 d-none d-md-block w-50"
@@ -33,25 +32,42 @@
         <i class="fa-solid fa-magnifying-glass fs-5"></i>
       </button>
 
-      <a class="bg-transparent text-black" href="">
+      <router-link :to="{ name: 'Service' }" class="bg-transparent text-black">
         <img
-          src="../img/customer-service.png"
-          alt=""
           style="width: 1.3rem; height: 1.3rem"
+          src="../assets/img/customer-service.png"
         />
-      </a>
+      </router-link>
 
       <!-- TODO: 視窗最小時隱藏 按下搜尋按鈕 覆蓋 -->
       <!-- <input type="text" class="form-control" placeholder="查詢" aria-label="search" aria-describedby="addon-wrapping"/> -->
       <!-- 判斷會員是否登入 -->
-      <a class="bg-transparent text-black" href="member_center.html">
-        <i class="fa-solid fa-user"></i>
-      </a>
 
-      <a class="bg-transparent text-black ms-auto me-2" href="cart.html">
+      <router-link :to="CheckLoginStatus" class="bg-transparent text-black">
+        <i class="fa-solid fa-user"></i>
+      </router-link>
+
+      <router-link
+        :to="{ name: 'Cart' }"
+        class="bg-transparent text-black ms-auto me-2"
+      >
         <i class="fa-solid fa-cart-shopping"></i>
-      </a>
+      </router-link>
     </div>
   </header>
 </template>
-<style></style>
+
+<script>
+export default {
+  data() {
+    return {
+      isLogin: false,
+    };
+  },
+  computed: {
+    CheckLoginStatus() {
+      return this.isLogin ? { name: "MemberCenter" } : { name: "Login" };
+    },
+  },
+};
+</script>
