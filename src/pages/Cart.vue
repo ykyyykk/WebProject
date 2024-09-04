@@ -13,7 +13,7 @@
         <router-link
           :to="{
             name: 'ItemDetail',
-            params: { id: item.id, title: item.title, detail: item.detail },
+            params: { id: item.id, title: item.name, detail: item.detail },
           }"
         >
           <img
@@ -24,7 +24,7 @@
           />
         </router-link>
         <div class="d-block align-items-center">
-          <div class="mb-2">{{ item.title }}</div>
+          <div class="mb-2">{{ item.name }}</div>
           <div class="mb-2">${{ item.price }}</div>
           <div class="input-group mb-3 w-50">
             <button class="input-group-text btn btn-outline-secondary">

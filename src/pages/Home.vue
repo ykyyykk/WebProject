@@ -15,11 +15,11 @@
           alt="商品圖片"
         />
         <div class="card-body">
-          <h5 class="card-title">{{ item.title }}</h5>
+          <h5 class="card-title">{{ item.name }}</h5>
           <router-link
             :to="{
               name: 'ItemDetail',
-              params: { id: item.id, title: item.title, detail: item.detail },
+              params: { id: item.id, title: item.name, detail: item.detail },
             }"
             class="text-danger bg-yellow text-decoration-none stretched-link"
           >
@@ -32,16 +32,31 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import axios from "axios";
 import HeaderComponent from "../components/HeaderComponent.vue";
 import SwiperComponent from "../components/SwiperComponent.vue";
 
 export default {
   components: { HeaderComponent, SwiperComponent },
-  computed: {
-    ...mapGetters(["getItems"]),
-    items() {
-      return this.getItems;
+  data() {
+    return {
+      items: [],
+    };
+  },
+  async mounted() {
+    await this.GetAllItem();
+  },
+  methods: {
+    async GetAllItem() {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/api/getallitem"
+        );
+        this.items = response.data.items;
+        console.log("取得所有物品成功");
+      } catch (error) {
+        alert("取得所有物品失敗", error);
+      }
     },
   },
 };

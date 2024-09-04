@@ -32,6 +32,10 @@
         <i class="fa-solid fa-magnifying-glass fs-5"></i>
       </button>
 
+      <router-link :to="{ name: 'AddItem' }" class="bg-transparent text-black">
+        新增物品
+      </router-link>
+
       <router-link :to="{ name: 'Service' }" class="bg-transparent text-black">
         <img
           style="width: 1.3rem; height: 1.3rem"

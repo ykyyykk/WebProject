@@ -1,4 +1,4 @@
-import express from "express";
+import express, { response } from "express";
 import sqlite3 from "sqlite3";
 import bodyParser from "body-parser";
 import path from "path";
@@ -24,6 +24,38 @@ const db = new sqlite3.Database(dbPath, (error) => {
   }
 });
 
+//聽說不要在api裡面含有get post put delete會比較好
+app.post("/api/addnewitem", (request, response) => {
+  const { name, detail, category, price, stock, status } = request.body;
+  const sql = `INSERT INTO Item (name, detail, category, price, stock, status) VALUES(?,?,?,?,?,?)`;
+
+  db.run(sql, [name, detail, category, price, stock, status], function (error) {
+    if (error) {
+      return response.status(500).json({ error: error.message });
+    }
+    response.status(200).json({ success: true });
+  });
+});
+
+app.get("/api/getallitem", (request, response) => {
+  // console.log("/api/getallitem");
+  // console.log(`request.body: ${request.body}`);
+  const sql = `SELECT * FROM Item`;
+
+  //改成all 取得多筆資料
+  db.all(sql, [], (error, rows) => {
+    if (error) {
+      return response.status(500).json({ error: error.message });
+    }
+    if (rows.length > 0) {
+      response.status(200).json({ success: true, items: rows });
+    } else {
+      response.status(404).json({ success: false, message: "No items found" });
+    }
+  });
+});
+
+//TODOError: 還沒設定password
 app.post("/api/register", (request, response) => {
   const { name, phoneNumber, email } = request.body;
   const sql = `INSERT INTO User (name, phoneNumber, email) VALUES(?,?,?)`;
