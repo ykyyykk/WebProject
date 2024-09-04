@@ -6,7 +6,7 @@
     style="height: 4rem"
   >
     <div class="d-flex justify-content-start align-items-center w-100">
-      <button class="border border-0 bg-transparent">
+      <button class="border border-0 bg-transparent" @click="isOpen = true">
         <i class="fa-solid fa-bars fs-2"></i>
       </button>
 
@@ -59,13 +59,18 @@
       </router-link>
     </div>
   </header>
+  <SideBarComponent v-model:isOpen="isOpen" />
 </template>
 
 <script>
+import SideBarComponent from "../components/SideBarComponent.vue";
+
 export default {
+  components: { SideBarComponent },
   data() {
     return {
       isLogin: false,
+      isOpen: false,
     };
   },
   computed: {

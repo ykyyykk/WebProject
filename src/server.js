@@ -37,6 +37,23 @@ app.post("/api/addnewitem", (request, response) => {
   });
 });
 
+app.get("/api/item/:id", (request, response) => {
+  console.log(`request.params: ${request.params}`);
+  const { id } = request.params;
+  const sql = `SELECT * FROM Item WHERE id = ?`;
+
+  db.get(sql, [id], (error, row) => {
+    if (error) {
+      return response.status(500).json({ error: error.message });
+    }
+    if (row) {
+      response.status(200).json({ success: true, item: row });
+    } else {
+      response.status(404).json({ success: false, message: "Item not found" });
+    }
+  });
+});
+
 app.get("/api/getallitem", (request, response) => {
   // console.log("/api/getallitem");
   // console.log(`request.body: ${request.body}`);

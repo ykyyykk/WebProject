@@ -2,6 +2,21 @@
   <HeaderComponent />
   <SmallHeaderComponent pageTitle="繼續購物" />
 
+  <div class="mt-5">
+    <h3>物品詳情</h3>
+    <ul>
+      <li v-for="item in items" :key="item.id">
+        <div>{{ item.id }}</div>
+        <div>{{ item.name }}</div>
+        <div>{{ item.detail }}</div>
+        <div>{{ item.price }}</div>
+        <div>{{ item.stock }}</div>
+        <div>{{ item.category }}</div>
+        <div>{{ item.status }}</div>
+      </li>
+    </ul>
+  </div>
+
   <div class="col-12 mt-5">
     <div class="swiper mySwiper mb-3" style="height: 25rem">
       <div class="swiper-wrapper">
@@ -67,12 +82,13 @@
 
       <div class="mb-3">
         <div>
-          <p>數量</p>
+          <!-- 放棄放在同一行 -->
+          <span>購買數量: </span>
           <NumberInputComponent />
         </div>
 
-        <!-- TODOError 目前還沒有即時更新 -->
-        <div>剩餘庫存: {{ lastAmount }}</div>
+        <!-- TODOError: 目前還沒有即時更新 -->
+        <!-- <div>剩餘庫存: {{ item.stock }}</div> -->
       </div>
       <div class="w-100 d-flex justify-content-between mb-3">
         <button class="btn btn-danger col-5">加入購物車</button>
@@ -84,39 +100,6 @@
         一款簡單又堅固、附輔助輪的 14" 自行車。一款簡單又堅固、附輔助輪的 14"
         自行車。適合身高 90-110 cm 兒童的 14"
         單速自行車，配有輔助輪及簡單的鏈條保護罩。附有輔助輪，擋泥板、腳撐需另購。
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis
-        voluptates eum hic dolorum autem quibusdam iste ab, asperiores
-        consequatur id totam consequuntur exercitationem esse saepe? Fuga
-        necessitatibus aut eaque aliquid. Magnam eligendi voluptatum est maiores
-        incidunt excepturi quaerat deleniti, nemo rerum, nisi, quam eveniet
-        dolore. Fugit, sed laborum. Dignissimos voluptatibus iure soluta minima
-        pariatur asperiores obcaecati, aspernatur atque mollitia cupiditate.
-        Laboriosam, quo! Cupiditate modi ipsa laudantium deserunt sequi fugit
-        eaque non explicabo quae exercitationem dolor ducimus optio, doloremque
-        tempore fuga commodi. Dolor iusto nulla nostrum provident, explicabo qui
-        eaque quae! Dignissimos magni consectetur quia culpa consequatur ipsum
-        modi cupiditate. Minima tenetur quaerat deserunt, vel similique
-        cupiditate est esse maxime iure, et maiores repellat, aliquam vero velit
-        ipsam non quas ad. Assumenda quos odit illo eveniet inventore magni
-        consequatur nulla ea ut accusamus provident alias dolore eligendi quam
-        nam, temporibus earum optio nesciunt enim! Reprehenderit sequi id
-        tempora natus aspernatur. Nemo! Eum, quibusdam nihil dignissimos cum
-        praesentium ad sint quam. Velit corrupti praesentium, delectus laborum
-        modi repudiandae reprehenderit aut eius sequi! Quam dignissimos
-        blanditiis natus laborum consequatur! Illum dignissimos delectus alias!
-        Nobis ut nulla cupiditate amet voluptate maxime aliquam sint, ratione
-        obcaecati saepe, impedit reiciendis voluptates voluptatum numquam,
-        itaque error. Expedita placeat praesentium itaque ratione atque nam quis
-        rerum eligendi mollitia. Aspernatur excepturi fugiat, accusamus eius ab,
-        vero blanditiis molestiae ut quis facilis corrupti saepe quia harum
-        inventore eveniet dolorum reprehenderit, ratione eligendi cumque. Dicta
-        temporibus quidem ipsum? Molestiae, ab amet. Aliquam dolore consectetur
-        esse quasi veniam corporis rerum error nisi. Obcaecati, laboriosam
-        repellendus debitis necessitatibus nemo iste corporis alias asperiores
-        id voluptates eaque consequuntur, delectus facilis at, temporibus vel a.
-        Molestiae harum dolor modi natus ab maxime, commodi porro provident,
-        eius eaque asperiores odit facilis consequatur rem quae veniam. Quos
-        atque rerum quidem eum. Est quae praesentium blanditiis vero! Magni.
       </div>
     </div>
   </div>
@@ -127,18 +110,48 @@ import HeaderComponent from "../../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../../components/SmallHeaderComponent.vue";
 import SwiperComponent from "../../components/SwiperComponent.vue";
 import NumberInputComponent from "../../components/NumberInputComponent.vue";
+import axios from "axios";
 
 export default {
+  //為了不要讓warning跑出來 不要註解掉
+  props: {
+    items: {
+      type: Array,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      item: null,
+    };
+  },
+  async mounted() {
+    const itemId = this.$route.params.id;
+    await this.FetchItemDetails(itemId);
+  },
+  methods: {
+    async FetchItemDetails(id) {
+      console.log(`FetchItemDetails: ${id}`);
+      try {
+        // 與post不同 get需要將資料顯示在url上 隱私較差 但速度比post稍快 適用於讀取數據
+        const response = await axios.get(
+          `http://localhost:3000/api/item/${id}`
+        );
+        console.log(response.data.item);
+        this.item = response.data.item;
+      } catch (error) {
+        alert("取得物品資訊失敗", error);
+      }
+    },
+    Back() {
+      this.$router.go(-1);
+    },
+  },
   components: {
     HeaderComponent,
     SmallHeaderComponent,
     SwiperComponent,
     NumberInputComponent,
-  },
-  methods: {
-    Back() {
-      this.$router.go(-1);
-    },
   },
 };
 </script>

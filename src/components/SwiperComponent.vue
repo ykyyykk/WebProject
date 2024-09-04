@@ -1,5 +1,7 @@
 <template>
   <!-- TODOWarning: 會隨著寬度等比例縮放 -->
+  <!-- TODOWarning: 在每個tag 都加v-touch:pan 會warning暫時刪掉 -->
+  <!-- TODOWarning: 在swiper加入v-touch:pinch 會Warning暫時刪掉 -->
   <swiper
     :cssMode="true"
     :navigation="true"
@@ -7,24 +9,30 @@
     :mousewheel="true"
     :keyboard="true"
     :modules="modules"
-    class="mySwiper"
+    class="mySwiper w-100 border border-1"
+    style="height: 25rem"
   >
-    <swiper-slide>Slide 1</swiper-slide>
-    <swiper-slide>Slide 2</swiper-slide>
-    <swiper-slide>Slide 3</swiper-slide>
+    <!-- TODOWarning: 在Mac檢查這邊有沒有正常滑動 因為預設的CSSMode 是不會被滑鼠拖曳 雖然我想拖 -->
+    <swiper-slide
+      class="d-flex justify-content-center align-items-center text-center"
+      >Slide 1</swiper-slide
+    >
+    <swiper-slide
+      class="d-flex justify-content-center align-items-center text-center"
+      >Slide 2</swiper-slide
+    >
+    <swiper-slide
+      class="d-flex justify-content-center align-items-center text-center"
+      >Slide 3</swiper-slide
+    >
   </swiper>
 </template>
 
 <script>
-// Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-
-// import required modules
 import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper/modules";
 
 export default {
@@ -41,40 +49,6 @@ export default {
 </script>
 
 <style scoped>
-#app {
-  height: 100%;
-}
-html,
-body {
-  position: relative;
-  height: 100%;
-}
-
-body {
-  background: #eee;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  color: #000;
-  margin: 0;
-  padding: 0;
-}
-
-.swiper {
-  width: 100%;
-  height: 100%;
-}
-
-.swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  background: #fff;
-
-  /* Center slide text vertically */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .swiper-slide img {
   display: block;
   width: 100%;
