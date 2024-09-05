@@ -2,45 +2,50 @@ import { createStore } from "vuex";
 
 // 需要先安裝vuex
 // 這邊再把items變全域
+// 透過...mapActions([]) 或 ...mapMutations([]) 改變state裡面的數值
+// 用哪一個取決於你是 異步 還是 同步
 export default createStore({
   state: {
     items: [],
+    isLogin: false,
+    userId: 0,
   },
   mutations: {
-    // 需要修改 items 在這邊加mutation
-    // 用於直接修改store中的狀態
+    // 用於直接修改state中的狀態
     // 必須為同步函數
     // 通過commit調用
+    SetLoginStatus(state, status) {
+      state.isLogin = status;
+    },
+    SetUserId(state, id) {
+      state.userId = id;
+    },
+    SetItems(state, items) {
+      state.items = items;
+    },
     AddItem(state, newItem) {
       // 新增物品第四步
       state.items.push(newItem);
     },
   },
   actions: {
-    // AddNewItem({ commit }) {
-    //   const newItem = {
-    //     id: Date.now(),
-    //     title: "新商品",
-    //     detail: "新商品詳情",
-    //     price: 50,
-    //     stock: 55,
-    //   };
-    //   commit("AddItem", newItem);
-    // },
+    //不建議直接修改state的數值 違反vuex的設計原則
+    //失去通過VuexDevtools追蹤狀態變化的能力
+    SetLogin({ commit }, { userId }) {
+      commit("SetLoginStatus", true);
+      commit("SetUserId", userId);
+    },
+    SetLogout({ commit }) {
+      commit("SetLoginStatus", false);
+      commit("SetUserId", 0);
+    },
+    SetAllItems({ commit }, { items }) {
+      commit("SetItems", items);
+    },
   },
   getters: {
     getItems: (state) => state.items,
-  },
-  methods: {
-    // 可以是同步或異步函數
-    AddNewItem() {
-      this.$store.commit("AddItem", {
-        title: "新商品",
-        id: 4,
-        detail: "新詳細資訊",
-        price: "50",
-        stock: "55",
-      });
-    },
+    isLogin: (state) => state.isLogin,
+    userId: (state) => state.userId,
   },
 });

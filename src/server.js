@@ -25,6 +25,8 @@ const db = new Database(dbPath, { verbose: console.log });
 //   }
 // });
 
+// app;
+
 //聽說不要在api裡面含有get post put delete會比較好
 app.post("/api/addnewitem", (request, response) => {
   const { name, detail, category, price, stock, status } = request.body;
@@ -48,7 +50,7 @@ app.get("/api/item/:id", (request, response) => {
     const stmt = db.prepare(sql);
     const row = stmt.get(id);
     if (row) {
-      response.status(200).json({ success: true, items: row });
+      response.status(200).json({ success: true, item: row });
     } else {
       response.status(404).json({ success: false, message: "item not found" });
     }

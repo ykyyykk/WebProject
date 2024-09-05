@@ -34,11 +34,15 @@
 <script>
 import HeaderComponent from "../components/HeaderComponent.vue";
 import SwiperComponent from "../components/SwiperComponent.vue";
+import { mapGetters } from "vuex";
 
 export default {
   components: { HeaderComponent, SwiperComponent },
-  props: {
-    items: Array,
+  computed: {
+    ...mapGetters(["isLogin", "userId", "getItems"]),
+    items() {
+      return this.getItems;
+    },
   },
 };
 </script>

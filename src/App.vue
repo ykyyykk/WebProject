@@ -1,7 +1,7 @@
 <!-- script template style之間的順序 沒有固定可以隨意調動 -->
 <template>
-  <!-- <HeaderComponent /> -->
-  <router-view :items="items" />
+  <!-- 不要嘗試在這邊 :items="items" 改用vuex的getter 或 computed 來抓items -->
+  <router-view />
 </template>
 
 <script>
@@ -11,23 +11,6 @@ export default {
     return {
       items: [],
     };
-  },
-  async mounted() {
-    await this.GetAllItem();
-  },
-  methods: {
-    async GetAllItem() {
-      console.log("GetAllItem");
-      try {
-        const response = await axios.get(
-          "http://localhost:3000/api/getallitem"
-        );
-        this.items = response.data.items;
-        console.log("取得所有物品成功");
-      } catch (error) {
-        alert("取得所有物品失敗", error);
-      }
-    },
   },
 };
 </script>

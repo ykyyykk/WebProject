@@ -43,7 +43,7 @@
         >
       </div>
 
-      <button @click="Login" class="btn btn-primary w-100 mb-3">登入</button>
+      <button @click="Login()" class="btn btn-primary w-100 mb-3">登入</button>
 
       <div class="d-flex justify-content-end">
         <a class="text-decoration-none" href="#">使用SMS簡訊登入</a>
@@ -91,8 +91,14 @@
 import axios from "axios";
 import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
+import { mapActions } from "vuex/dist/vuex.cjs.js";
+import { useRouter } from "vue-router";
 
 export default {
+  setup() {
+    const router = useRouter();
+    return { router };
+  },
   data() {
     return {
       email: "",
@@ -101,6 +107,7 @@ export default {
   },
   components: { HeaderComponent, SmallHeaderComponent },
   methods: {
+    ...mapActions(["SetLogin"]),
     async Login() {
       try {
         // console.log(`email: ${this.email}`);
@@ -113,7 +120,8 @@ export default {
 
         if (response.data.success) {
           alert("登入成功");
-          //TODOAdd: 登入成功 去會員中心
+          this.SetLogin({ userId: response.data.userId });
+          this.router.push({ name: "Home" });
         } else {
           alert(
             "帳號或密碼錯誤！ 提醒您，為確保登入安全，連續錯誤5次將暫時鎖定該帳號無法進行登入"

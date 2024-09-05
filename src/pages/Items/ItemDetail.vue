@@ -2,23 +2,20 @@
   <HeaderComponent />
   <SmallHeaderComponent pageTitle="繼續購物" />
 
-  <div class="mt-5">
-    <h3>物品詳情</h3>
-    <ul>
-      <li v-for="select in items" :key="select.id">
-        <div>{{ select.id }}</div>
-        <div>{{ select.name }}</div>
-        <div>{{ select.detail }}</div>
-        <div>{{ select.price }}</div>
-        <div>{{ select.stock }}</div>
-        <div>{{ select.category }}</div>
-        <div>{{ select.status }}</div>
-      </li>
-    </ul>
-  </div>
-
   <!-- v-if不能省略 因為item.name的執行順序會比this.item = response.data.items; 還快 會error -->
   <div v-if="item" class="col-12 mt-5">
+    <!-- <div class="mt-5">
+      <h3>物品詳情</h3>
+      <div>物品ID:{{ item.id }}</div>
+      <div>物品名稱:{{ item.name }}</div>
+      <div>物品資訊:{{ item.detail }}</div>
+      <div>物品價格: {{ item.price }}</div>
+      <div>物品庫存: {{ item.stock }}</div>
+      <div>物品分類: {{ item.category }}</div>
+      <div>物品狀態: {{ item.status }}</div>
+      <div>會員ID: {{ userId }}</div>
+    </div> -->
+
     <div class="swiper mySwiper mb-3" style="height: 25rem">
       <div class="swiper-wrapper">
         <div
@@ -85,7 +82,8 @@
         <div>
           <!-- 放棄放在同一行 -->
           <span>購買數量: </span>
-          <NumberInputComponent />
+          <!-- 還沒成功 讀取到變更的amount -->
+          <NumberInputComponent v-model="this.amount" :max="item.stock" />
         </div>
 
         <!-- TODOError: 目前還沒有即時更新 -->
@@ -113,41 +111,60 @@ import SmallHeaderComponent from "../../components/SmallHeaderComponent.vue";
 import SwiperComponent from "../../components/SwiperComponent.vue";
 import NumberInputComponent from "../../components/NumberInputComponent.vue";
 import axios from "axios";
+import { mapGetters } from "vuex";
 
 export default {
-  //為了不要讓warning跑出來 不要註解掉
-  props: {
-    items: {
-      type: Array,
-      required: true,
-    },
-  },
   data() {
     return {
-      item: null,
+      item: "",
+      amount: 1,
     };
   },
   async mounted() {
     const itemId = this.$route.params.id;
     await this.FetchItemDetails(itemId);
   },
+  computed: {
+    ...mapGetters(["isLogin", "userId", "getItems"]),
+  },
   methods: {
     async FetchItemDetails(id) {
-      console.log(`FetchItemDetails: ${id}`);
+      // console.log(`FetchItemDetails: ${id}`);
       try {
         // 與post不同 get需要將資料顯示在url上 隱私較差 但速度比post稍快 適用於讀取數據
         const response = await axios.get(
           `http://localhost:3000/api/item/${id}`
         );
-        console.log(response.data);
-        console.log(response.data.items);
-        this.item = response.data.items;
+        // console.log(response.data);
+        // console.log(response.data.item);
+        this.item = response.data.item;
+        // console.log(this.item);
       } catch (error) {
         alert("取得物品資訊失敗", error);
       }
     },
-    AddToCart() {
+    async AddToCart() {
       console.log("加入購物車");
+      console.log(`userId: ${this.userId}`);
+      // if (!this.isLogin) {
+      //   alert("請先登入再加入購物車");
+      //   return;
+      // }
+      try {
+        console.log(this.item.id);
+        console.log(this.userId);
+        console.log(this.amount);
+        const response = await axios.post(
+          "http://localhost:3000/api/addtocart",
+          {
+            itemId: this.item.id,
+            userId: this.userId,
+            amount: this.amount,
+          }
+        );
+      } catch (error) {
+        alert("新增至購物車失敗", error);
+      }
     },
   },
   components: {
