@@ -99,6 +99,13 @@ import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 
 export default {
+  // 不加這一行 input輸入時會有Warning
+  props: {
+    items: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
     return {
       name: "",

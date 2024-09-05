@@ -103,6 +103,8 @@ export default {
   methods: {
     async Login() {
       try {
+        // console.log(`email: ${this.email}`);
+        // console.log(`password: ${this.password}`);
         // 與get不同 post不需將資料顯示在url上 隱私較好 但速度比get稍慢 適用於提交數據
         const response = await axios.post("http://localhost:3000/api/login", {
           email: this.email,
