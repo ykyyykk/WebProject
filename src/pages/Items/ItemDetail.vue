@@ -5,19 +5,20 @@
   <div class="mt-5">
     <h3>物品詳情</h3>
     <ul>
-      <li v-for="item in items" :key="item.id">
-        <div>{{ item.id }}</div>
-        <div>{{ item.name }}</div>
-        <div>{{ item.detail }}</div>
-        <div>{{ item.price }}</div>
-        <div>{{ item.stock }}</div>
-        <div>{{ item.category }}</div>
-        <div>{{ item.status }}</div>
+      <li v-for="select in items" :key="select.id">
+        <div>{{ select.id }}</div>
+        <div>{{ select.name }}</div>
+        <div>{{ select.detail }}</div>
+        <div>{{ select.price }}</div>
+        <div>{{ select.stock }}</div>
+        <div>{{ select.category }}</div>
+        <div>{{ select.status }}</div>
       </li>
     </ul>
   </div>
 
-  <div class="col-12 mt-5">
+  <!-- v-if不能省略 因為item.name的執行順序會比this.item = response.data.items; 還快 會error -->
+  <div v-if="item" class="col-12 mt-5">
     <div class="swiper mySwiper mb-3" style="height: 25rem">
       <div class="swiper-wrapper">
         <div
@@ -76,9 +77,9 @@
 
     <div class="p-2">
       <p class="fs-5 fw-bolder">
-        14吋 兒童鋼製自行車 (塗鴉款/附輔助輪) DISCOVER 500
+        {{ item.name }}
       </p>
-      <p class="fs-5 fw-bolder">$2,999</p>
+      <p class="fs-5 fw-bolder">${{ item.price }}</p>
 
       <div class="mb-3">
         <div>
@@ -88,21 +89,22 @@
         </div>
 
         <!-- TODOError: 目前還沒有即時更新 -->
-        <!-- <div>剩餘庫存: {{ item.stock }}</div> -->
+        <div>剩餘庫存: {{ item.stock }}</div>
       </div>
       <div class="w-100 d-flex justify-content-between mb-3">
-        <button class="btn btn-danger col-5">加入購物車</button>
+        <button @click="AddToCart()" class="btn btn-danger col-5">
+          加入購物車
+        </button>
         <button class="btn btn-outline-danger col-5">立即購買</button>
       </div>
 
       <div class="fs-5 fw-bolder">商品描述</div>
-      <div class="">
-        一款簡單又堅固、附輔助輪的 14" 自行車。一款簡單又堅固、附輔助輪的 14"
-        自行車。適合身高 90-110 cm 兒童的 14"
-        單速自行車，配有輔助輪及簡單的鏈條保護罩。附有輔助輪，擋泥板、腳撐需另購。
+      <div>
+        {{ item.detail }}
       </div>
     </div>
   </div>
+  <div v-else class="bg-black text-white">載入中...</div>
 </template>
 
 <script>
@@ -137,14 +139,15 @@ export default {
         const response = await axios.get(
           `http://localhost:3000/api/item/${id}`
         );
-        console.log(response.data.item);
-        this.item = response.data.item;
+        console.log(response.data);
+        console.log(response.data.items);
+        this.item = response.data.items;
       } catch (error) {
         alert("取得物品資訊失敗", error);
       }
     },
-    Back() {
-      this.$router.go(-1);
+    AddToCart() {
+      console.log("加入購物車");
     },
   },
   components: {

@@ -12,7 +12,7 @@
     class="mySwiper w-100 border border-1"
     style="height: 25rem"
   >
-    <!-- TODOWarning: 在Mac檢查這邊有沒有正常滑動 因為預設的CSSMode 是不會被滑鼠拖曳 雖然我想拖 -->
+    <!-- TODOWarning: Mac有正常滑動 但是沒有滑鼠拖曳 -->
     <swiper-slide
       class="d-flex justify-content-center align-items-center text-center"
       >Slide 1</swiper-slide
