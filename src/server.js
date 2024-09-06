@@ -22,7 +22,7 @@ app.post("/api/getcartitems", (request, response) => {
   // console.log(11111);
   // console.log(request.body);
   // 包起來才能抓到value 不然是body
-  const { userID } = request.body;
+  // const { userID } = request.body;
   const sql = `SELECT * FROM Cart WHERE userID = ?`;
 
   try {

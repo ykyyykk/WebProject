@@ -56,6 +56,7 @@ import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import axios from "axios";
 import { mapGetters } from "vuex";
 
+// TODOWarning: 購物車 同樣物品會疊加
 export default {
   components: { HeaderComponent, SmallHeaderComponent },
   computed: {
@@ -70,18 +71,18 @@ export default {
   },
   methods: {
     async GetCartItems() {
-      try {
-        // console.log(`getUserID: ${this.getUserID}`);
-        const response = await axios.post(
-          "http://localhost:3000/api/getcartitems",
-          {
-            userID: this.getUserID,
-          }
-        );
-        // console.log(response.data);
-      } catch (error) {
-        alert("錯誤: ", error);
-      }
+      // try {
+      //   console.log(`getUserID: ${this.getUserID}`);
+      //   const response = await axios.post(
+      //     "http://localhost:3000/api/getcartitems",
+      //     {
+      //       userID: this.getUserID,
+      //     }
+      //   );
+      //   // console.log(response.data);
+      // } catch (error) {
+      //   alert("錯誤: ", error);
+      // }
     },
   },
 };
