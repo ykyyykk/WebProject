@@ -34,6 +34,7 @@ export default createStore({
     SetLogin({ commit }, { userID }) {
       commit("SetLoginStatus", true);
       commit("SetUserID", userID);
+      localStorage.setItem("userID", userID);
     },
     SetLogout({ commit }) {
       commit("SetLoginStatus", false);

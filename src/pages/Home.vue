@@ -39,7 +39,7 @@ import { mapGetters } from "vuex";
 export default {
   components: { HeaderComponent, SwiperComponent },
   computed: {
-    ...mapGetters(["isLogin", "getUserId", "getItems"]),
+    ...mapGetters(["isLogin", "getUserID", "getItems"]),
     // 給v-for用的
     items() {
       return this.getItems;

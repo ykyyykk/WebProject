@@ -120,8 +120,9 @@ export default {
 
         if (response.data.success) {
           alert("登入成功");
-          this.SetLogin({ userId: response.data.userId });
-          this.router.push({ name: "Home" });
+          console.log(response.data);
+          this.SetLogin({ userID: response.data.user.id });
+          // this.router.push({ name: "Home" });
         } else {
           alert(
             "帳號或密碼錯誤！ 提醒您，為確保登入安全，連續錯誤5次將暫時鎖定該帳號無法進行登入"

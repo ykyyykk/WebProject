@@ -18,13 +18,17 @@ app.use(bodyParser.json());
 
 const db = new Database(dbPath, { verbose: console.log });
 
-app.get("/api/getcartitems", (request, response) => {
-  const userID = request.body;
+app.post("/api/getcartitems", (request, response) => {
+  // console.log(11111);
+  // console.log(request.body);
+  // 包起來才能抓到value 不然是body
+  const { userID } = request.body;
   const sql = `SELECT * FROM Cart WHERE userID = ?`;
 
   try {
     const stmt = db.prepare(sql);
-    const rows = stmt.get(userID);
+    // 取得多行用all
+    const rows = stmt.all(userID);
     if (rows.length > 0) {
       response.status(200).json({ success: true, items: rows });
     } else {
@@ -63,7 +67,7 @@ app.post("/api/addnewitem", (request, response) => {
 });
 
 app.get("/api/item/:id", (request, response) => {
-  console.log(`request.params: ${request.params}`);
+  // console.log(`request.params: ${request.params}`);
   const { id } = request.params;
   const sql = `SELECT * FROM Item WHERE id = ?`;
 
@@ -81,7 +85,6 @@ app.get("/api/item/:id", (request, response) => {
 });
 
 app.get("/api/getallitem", (request, response) => {
-  // console.log("/api/getallitem");
   // console.log(`request.body: ${request.body}`);
   const sql = `SELECT * FROM Item`;
 
@@ -105,7 +108,7 @@ app.post("/api/register", (request, response) => {
   try {
     const stmt = db.prepare(sql);
     const info = stmt.run(name, phoneNumber, email, password);
-    response.status(200).json({ success: true, userId: info.lastInsertRowid });
+    response.status(200).json({ success: true, userID: info.lastInsertRowid });
   } catch (error) {
     return response.status(500).json({ error: error.message });
   }

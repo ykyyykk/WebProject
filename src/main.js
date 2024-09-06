@@ -10,11 +10,17 @@ import axios from "axios";
 // 全域路由守衛
 router.beforeEach(async (to, from, next) => {
   try {
+    const loadUserID =
+      localStorage.getItem("userID") == null
+        ? 0
+        : localStorage.getItem("userID");
     const response = await axios.get("http://localhost:3000/api/getallitem");
     // 在.vue以外的地方只能使用store.dispatch
     // 他的功能等同於...mapActions 但 ...mapActions只能在.vue以內使用
+    store.dispatch("SetLogin", { userID: loadUserID });
     store.dispatch("SetAllItems", { items: response.data.items });
     console.log("取得所有物品成功");
+    console.log(`userID: ${loadUserID}`);
     next();
   } catch (error) {
     alert("取得所有物品失敗", error);

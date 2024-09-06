@@ -152,13 +152,13 @@ export default {
       // }
       try {
         console.log(this.item.id);
-        console.log(this.userID);
+        console.log(this.getUserID);
         console.log(this.buyAmount);
         const response = await axios.post(
           "http://localhost:3000/api/addtocart",
           {
             itemID: this.item.id,
-            userID: this.userID,
+            userID: this.getUserID,
             buyAmount: this.buyAmount,
           }
         );
