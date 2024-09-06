@@ -2,14 +2,19 @@
   <HeaderComponent />
   <SmallHeaderComponent pageTitle="購物車" />
 
-  <div v-if="items" id="itmesContainer" class="container mt-5">
+  <div v-if="items" id="itmesContainer" class="container mt-5 mb-5">
     <div
       v-for="item in cartItems"
       :key="item.id"
       class="row d-flex justify-content-start align-items-center g-2"
     >
       <div class="d-flex p-2 rounded border border-black mb-2">
-        <input class="ms-2 me-3" type="checkbox" />
+        <input
+          @click="OnCheck(item.id, item.price)"
+          :checked="selectItems.includes(item.id)"
+          class="ms-2 me-3"
+          type="checkbox"
+        />
         <router-link
           :to="{
             name: 'ItemDetail',
@@ -43,6 +48,23 @@
       </div>
     </div>
   </div>
+
+  <!-- 不能省略 為了XS不遮住Item -->
+  <div class="text-center">-</div>
+
+  <div
+    class="d-flex justify-content-between align-items-center fixed-bottom py-1 px-3 bg-warning rounded rounded-2 m-1"
+  >
+    <div>
+      <input @click="OnSelectAll()" type="checkbox" />
+      <span>全選</span>
+      <span class="ms-5">總金額$ {{ totalPrice }}</span>
+    </div>
+
+    <div>
+      <button class="btn btn-primary fs-4 fw-bold">結帳</button>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -60,6 +82,9 @@ export default {
       cartItems: [],
       //TODOWarning: 這邊不知道會不會有問題 每個item都共用
       buyAmount: 1,
+      totalPrice: 0,
+      selectItems: [],
+      isSelectAll: false,
     };
   },
   components: { HeaderComponent, SmallHeaderComponent, NumberInputComponent },
@@ -113,6 +138,36 @@ export default {
         }
       } catch (error) {
         alert(`錯誤: ${error}`);
+      }
+    },
+    OnCheck(id, price) {
+      //include比較適合簡單的東西 例如 值 但Object不適用
+      if (this.selectItems.includes(id)) {
+        //移除特定的id pop是移除最後一個 slice要先拿index splice(index, 1) 有夠奇怪
+        this.selectItems = this.selectItems.filter(
+          (storedID) => storedID !== id
+        );
+        this.totalPrice -= Number(price);
+        this.isSelectAll = false;
+        return;
+      }
+      this.selectItems.push(id);
+      this.totalPrice += Number(price);
+    },
+    OnSelectAll() {
+      if (this.isSelectAll) {
+        this.selectItems = [];
+        this.totalPrice = 0;
+        this.isSelectAll = false;
+        return;
+      }
+      // 重置避免 重復增加
+      this.selectItems = [];
+      this.totalPrice = 0;
+      this.isSelectAll = true;
+      for (let i = 0; i < this.cartItems.length; i++) {
+        this.selectItems.push(this.cartItems[i].id);
+        this.totalPrice += this.cartItems[i].price;
       }
     },
   },
