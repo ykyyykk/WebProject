@@ -18,11 +18,22 @@ app.use(bodyParser.json());
 
 const db = new Database(dbPath, { verbose: console.log });
 
-app.post("/api/getcartitems", (request, response) => {
-  // console.log(11111);
-  // console.log(request.body);
+app.post("/api/deletefromcart", (request, response) => {
+  const { itemID, userID } = request.body;
+  const sql = `DELETE FROM Cart WHERE itemID = ? AND userID = ?;`;
+
+  try {
+    const stmt = db.prepare(sql);
+    const info = stmt.run(itemID, userID);
+    response.status(200).json({ success: true, info: info });
+  } catch (error) {
+    return response.status(500).json({ error: error.message });
+  }
+});
+
+app.get("/api/getcartitems", (request, response) => {
   // 包起來才能抓到value 不然是body
-  const { userID } = request.body;
+  const { userID } = request.query;
   // SQL 查詢通過 userID 在 Cart 表中查詢，並使用 itemID 查找 Item 表中的對應項目
   const sql = `
     SELECT Item.* 
@@ -38,9 +49,11 @@ app.post("/api/getcartitems", (request, response) => {
     if (rows.length > 0) {
       response.status(200).json({ success: true, items: rows });
     } else {
-      response.status(404).json({ success: false, message: "no items found" });
+      //不要用404 這樣在Client會被歸類到error
+      response.status(200).json({ success: false, message: "no items found" });
     }
   } catch (error) {
+    console.log(error);
     response.status(500).json({ error: error.message });
   }
 });

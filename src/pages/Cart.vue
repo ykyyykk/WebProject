@@ -32,7 +32,10 @@
               v-model="this.buyAmount"
               :max="item.stock"
             />
-            <button class="btn btn-outline-danger h-100 ms-2">
+            <button
+              @click="DeleteFromCart(item.id)"
+              class="btn btn-outline-danger h-100 ms-2"
+            >
               <i class="fa-solid fa-trash"></i>
             </button>
           </div>
@@ -49,11 +52,13 @@ import NumberInputComponent from "../components/NumberInputComponent.vue";
 import axios from "axios";
 import { mapGetters } from "vuex";
 
-// TODOWarning: 購物車 同樣物品會疊加
+// TODOWarning: 購物車 同樣的物品應該要疊加
+// TODOWarning: 還不確定要不要開放訪客購買 如果不開放 要檢查userID不為0
 export default {
   data() {
     return {
       cartItems: [],
+      //TODOWarning: 這邊不知道會不會有問題 每個item都共用
       buyAmount: 1,
     };
   },
@@ -71,17 +76,43 @@ export default {
   methods: {
     async GetCartItems() {
       try {
-        console.log(`getUserID: ${this.getUserID}`);
-        const response = await axios.post(
+        // console.log(`getUserID: ${this.getUserID}`);
+        const response = await axios.get(
           "http://localhost:3000/api/getcartitems",
           {
+            params: {
+              userID: this.getUserID,
+            },
+          }
+        );
+        // console.log(response.data);
+        if (response.data.success) {
+          this.cartItems = response.data.items;
+        }
+      } catch (error) {
+        alert(`錯誤: ${error}`);
+      }
+    },
+    async DeleteFromCart(id) {
+      console.log(`DeleteFromCart: ${id}`);
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/api/deletefromcart",
+          {
+            itemID: id,
             userID: this.getUserID,
           }
         );
-        console.log(response.data.items);
-        this.cartItems = response.data.items;
+        // console.log(response.data);
+        //更改的資料筆數
+        const changes = response.data.info.changes;
+        // console.log(changes);
+        if (changes != 0) {
+          this.cartItems = this.cartItems.filter((item) => item.id !== id);
+          console.log("刪掉物品");
+        }
       } catch (error) {
-        alert("錯誤: ", error);
+        alert(`錯誤: ${error}`);
       }
     },
   },

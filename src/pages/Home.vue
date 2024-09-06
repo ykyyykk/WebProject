@@ -2,13 +2,13 @@
   <HeaderComponent />
   <SwiperComponent />
 
-  <div id="itmesContainer" class="container p-2">
-    <div
-      v-for="item in items"
-      :key="item.id"
-      class="row d-flex justify-content-start align-items-center mt-3"
-    >
-      <div class="card col-lg-3 col-sm-4 col-6">
+  <div id="itmesContainer" class="container">
+    <div class="row d-flex justify-content-start align-items-center p-3">
+      <div
+        v-for="item in items"
+        :key="item.id"
+        class="card col-lg-3 col-sm-4 col-6"
+      >
         <img
           src="../assets/img/slide1.png"
           class="card-img-top"
