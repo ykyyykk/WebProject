@@ -1,4 +1,13 @@
 <template>
+  <div
+    v-if="popupShow"
+    @click="HidePopup()"
+    class="z-3 position-absolute w-100 h-100 d-flex justify-content-center align-items-center"
+    :style="{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }"
+  >
+    <!-- TODOError: 醜八怪 太醜了但功能很重要 所以放Error-->
+    <div class="text-center text-dark">已加入購物車</div>
+  </div>
   <HeaderComponent />
   <SmallHeaderComponent pageTitle="繼續購物" />
 
@@ -118,6 +127,7 @@ export default {
     return {
       item: "",
       buyAmount: 1,
+      popupShow: false,
     };
   },
   async mounted() {
@@ -154,6 +164,7 @@ export default {
         // console.log(this.item.id);
         // console.log(this.getUserID);
         // console.log(this.buyAmount);
+        //TODOWarning: 做一個檢查有沒有超過最大最大庫存
         const response = await axios.post(
           "http://localhost:3000/api/addtocart",
           {
@@ -162,9 +173,16 @@ export default {
             buyAmount: this.buyAmount,
           }
         );
+        this.popupShow = true;
       } catch (error) {
         alert("新增至購物車失敗", error);
       }
+    },
+    ShowPopup() {
+      this.popupShow = true;
+    },
+    HidePopup() {
+      this.popupShow = false;
     },
   },
   components: {
