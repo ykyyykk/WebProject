@@ -11,7 +11,7 @@
       <div
         class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
       >
-        <i class="fa-solid fa-user ms-2 me-2"></i>
+        <i class="fa-solid fa-user mx-2"></i>
         <input
           type="text"
           v-model="email"
@@ -25,7 +25,7 @@
       <div
         class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
       >
-        <i class="fa-solid fa-lock ms-2 me-2"></i>
+        <i class="fa-solid fa-lock mx-2"></i>
         <input
           type="text"
           v-model="password"

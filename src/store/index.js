@@ -8,7 +8,7 @@ export default createStore({
   state: {
     items: [],
     isLogin: false,
-    userId: 0,
+    userID: 0,
   },
   mutations: {
     // 用於直接修改state中的狀態
@@ -17,8 +17,8 @@ export default createStore({
     SetLoginStatus(state, status) {
       state.isLogin = status;
     },
-    SetUserId(state, id) {
-      state.userId = id;
+    SetUserID(state, id) {
+      state.userID = id;
     },
     SetItems(state, items) {
       state.items = items;
@@ -31,13 +31,13 @@ export default createStore({
   actions: {
     //不建議直接修改state的數值 違反vuex的設計原則
     //失去通過VuexDevtools追蹤狀態變化的能力
-    SetLogin({ commit }, { userId }) {
+    SetLogin({ commit }, { userID }) {
       commit("SetLoginStatus", true);
-      commit("SetUserId", userId);
+      commit("SetUserID", userID);
     },
     SetLogout({ commit }) {
       commit("SetLoginStatus", false);
-      commit("SetUserId", 0);
+      commit("SetUserID", 0);
     },
     SetAllItems({ commit }, { items }) {
       commit("SetItems", items);
@@ -46,6 +46,6 @@ export default createStore({
   getters: {
     getItems: (state) => state.items,
     isLogin: (state) => state.isLogin,
-    userId: (state) => state.userId,
+    getUserID: (state) => state.userID,
   },
 });

@@ -17,15 +17,36 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const db = new Database(dbPath, { verbose: console.log });
-// const db = new sqlite3.Database(dbPath, (error) => {
-//   if (error) {
-//     console.error("無法連接到資料庫", error.message);
-//   } else {
-//     console.log("成功連接到 SQLite 資料庫");
-//   }
-// });
 
-// app;
+app.get("/api/getcartitems", (request, response) => {
+  const userID = request.body;
+  const sql = `SELECT * FROM Cart WHERE userID = ?`;
+
+  try {
+    const stmt = db.prepare(sql);
+    const rows = stmt.get(userID);
+    if (rows.length > 0) {
+      response.status(200).json({ success: true, items: rows });
+    } else {
+      response.status(404).json({ success: false, message: "no items found" });
+    }
+  } catch (error) {
+    response.status(500).json({ error: error.message });
+  }
+});
+
+app.post("/api/addtocart", (request, response) => {
+  const { itemID, userID, buyAmount } = request.body;
+  const sql = `INSERT INTO Cart (itemID, userID, buyAmount) VALUES(?,?,?)`;
+
+  try {
+    const stmt = db.prepare(sql);
+    const info = stmt.run(itemID, userID, buyAmount);
+    response.status(200).json({ success: true, info: info });
+  } catch (error) {
+    return response.status(500).json({ error: error.message });
+  }
+});
 
 //聽說不要在api裡面含有get post put delete會比較好
 app.post("/api/addnewitem", (request, response) => {
@@ -79,12 +100,11 @@ app.get("/api/getallitem", (request, response) => {
 
 //TODOError: 還沒設定password
 app.post("/api/register", (request, response) => {
-  const { name, phoneNumber, email } = request.body;
-  const sql = `INSERT INTO User (name, phoneNumber, email) VALUES(?,?,?)`;
-
+  const { name, phoneNumber, email, password } = request.body;
+  const sql = `INSERT INTO User (name, phoneNumber, email, password) VALUES(?,?,?,?)`;
   try {
     const stmt = db.prepare(sql);
-    const info = stmt.run(name, phoneNumber, email);
+    const info = stmt.run(name, phoneNumber, email, password);
     response.status(200).json({ success: true, userId: info.lastInsertRowid });
   } catch (error) {
     return response.status(500).json({ error: error.message });

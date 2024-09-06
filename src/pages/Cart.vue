@@ -52,22 +52,27 @@
 <script>
 import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
+import axios from "axios";
+import { mapGetters } from "vuex";
 
 export default {
   components: { HeaderComponent, SmallHeaderComponent },
-  data() {
-    return {
-      items: [
-        { title: "商品名稱0", id: 0, detail: "詳細資訊0", price: "10" },
-        { title: "商品名稱1", id: 1, detail: "詳細資訊1", price: "20" },
-        { title: "商品名稱2", id: 2, detail: "詳細資訊2", price: "30" },
-        { title: "商品名稱3", id: 3, detail: "詳細資訊3", price: "40" },
-      ],
-    };
+  async mounted() {
+    await this.GetCartItems();
   },
   methods: {
-    Back() {
-      this.$router.go(-1);
+    ...mapGetters(["getUserID"]),
+    async GetCartItems() {
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/api/getcartitems",
+          {
+            userID: this.getUserID,
+          }
+        );
+      } catch (error) {
+        alert("錯誤: ", error);
+      }
     },
   },
 };

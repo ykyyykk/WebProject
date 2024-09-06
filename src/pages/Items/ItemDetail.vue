@@ -13,7 +13,7 @@
       <div>物品庫存: {{ item.stock }}</div>
       <div>物品分類: {{ item.category }}</div>
       <div>物品狀態: {{ item.status }}</div>
-      <div>會員ID: {{ userId }}</div>
+      <div>會員ID: {{ userID }}</div>
     </div> -->
 
     <div class="swiper mySwiper mb-3" style="height: 25rem">
@@ -83,7 +83,7 @@
           <!-- 放棄放在同一行 -->
           <span>購買數量: </span>
           <!-- 還沒成功 讀取到變更的amount -->
-          <NumberInputComponent v-model="this.amount" :max="item.stock" />
+          <NumberInputComponent v-model="this.buyAmount" :max="item.stock" />
         </div>
 
         <!-- TODOError: 目前還沒有即時更新 -->
@@ -117,15 +117,15 @@ export default {
   data() {
     return {
       item: "",
-      amount: 1,
+      buyAmount: 1,
     };
   },
   async mounted() {
-    const itemId = this.$route.params.id;
-    await this.FetchItemDetails(itemId);
+    const itemID = this.$route.params.id;
+    await this.FetchItemDetails(itemID);
   },
   computed: {
-    ...mapGetters(["isLogin", "userId", "getItems"]),
+    ...mapGetters(["isLogin", "getUserID", "getItems"]),
   },
   methods: {
     async FetchItemDetails(id) {
@@ -145,21 +145,21 @@ export default {
     },
     async AddToCart() {
       console.log("加入購物車");
-      console.log(`userId: ${this.userId}`);
+      // console.log(`userID: ${this.userID}`);
       // if (!this.isLogin) {
       //   alert("請先登入再加入購物車");
       //   return;
       // }
       try {
         console.log(this.item.id);
-        console.log(this.userId);
-        console.log(this.amount);
+        console.log(this.userID);
+        console.log(this.buyAmount);
         const response = await axios.post(
           "http://localhost:3000/api/addtocart",
           {
-            itemId: this.item.id,
-            userId: this.userId,
-            amount: this.amount,
+            itemID: this.item.id,
+            userID: this.userID,
+            buyAmount: this.buyAmount,
           }
         );
       } catch (error) {

@@ -11,20 +11,21 @@
       <div
         class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
       >
-        <i class="fa-solid fa-user ms-2 me-2"></i>
+        <i class="fa-solid fa-user mx-2"></i>
         <input
           type="text"
           class="form-control border border-0"
           placeholder="姓名"
           v-model="name"
-          aria-label="username"
+          aria-label="name"
           aria-describedby="basic-addon1"
         />
       </div>
+
       <div
         class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
       >
-        <i class="fa-solid fa-phone ms-2 me-2"></i>
+        <i class="fa-solid fa-phone mx-2"></i>
         <input
           type="text"
           class="form-control border border-0"
@@ -34,16 +35,31 @@
           aria-describedby="basic-addon1"
         />
       </div>
+
       <div
         class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
       >
-        <i class="fa-solid fa-envelope ms-2 me-2"></i>
+        <i class="fa-solid fa-envelope mx-2"></i>
         <input
           type="text"
           class="form-control border border-0"
           placeholder="Email"
           v-model="email"
           aria-label="email"
+          aria-describedby="basic-addon1"
+        />
+      </div>
+
+      <div
+        class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
+      >
+        <i class="fa-solid fa-lock mx-2"></i>
+        <input
+          type="text"
+          class="form-control border border-0"
+          placeholder="密碼"
+          v-model="password"
+          aria-label="password"
           aria-describedby="basic-addon1"
         />
       </div>
@@ -111,17 +127,20 @@ export default {
       name: "",
       phoneNumber: "",
       email: "",
+      password: "",
     };
   },
   methods: {
     async Register() {
       try {
+        //TODOWarning: 做一個檢查
         const response = await axios.post(
           "http://localhost:3000/api/register",
           {
             name: this.name,
             phoneNumber: this.phoneNumber,
             email: this.email,
+            password: this.password,
           }
         );
         alert("註冊成功");

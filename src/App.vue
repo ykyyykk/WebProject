@@ -4,17 +4,6 @@
   <router-view />
 </template>
 
-<script>
-import axios from "axios";
-export default {
-  data() {
-    return {
-      items: [],
-    };
-  },
-};
-</script>
-
 <style>
 /* 全域讓預設ScorllBar 瘦一點好看點 */
 html {
