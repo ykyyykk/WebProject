@@ -30,17 +30,13 @@
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        <span>{{ category }}</span>
+        <span>{{ selectCategory }}</span>
       </button>
       <ul class="dropdown-menu">
-        <li>
-          <a class="dropdown-item" @click="SetCategory('分類0')">分類0</a>
-        </li>
-        <li>
-          <a class="dropdown-item" @click="SetCategory('分類1')">分類1</a>
-        </li>
-        <li>
-          <a class="dropdown-item" @click="SetCategory('分類2')">分類2</a>
+        <li v-for="(categorya, index) in categories" :key="index">
+          <a class="dropdown-item" @click="SetCategory(categorya)">
+            {{ categorya }}
+          </a>
         </li>
       </ul>
     </div>
@@ -86,9 +82,10 @@ import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 export default {
   data() {
     return {
+      categories: ["處理器", "主機板", "記憶體", "硬碟", "顯示卡"],
       name: "",
       detail: "",
-      category: "分類0",
+      selectCategory: "未選擇",
       price: 0,
       stock: 0,
       status: "全新",
@@ -97,7 +94,7 @@ export default {
   components: { HeaderComponent, SmallHeaderComponent },
   methods: {
     SetCategory(category) {
-      this.category = category;
+      this.selectCategory = category;
     },
     SetStatus(status) {
       this.status = status;
@@ -109,7 +106,7 @@ export default {
           {
             name: this.name,
             detail: this.detail,
-            category: this.category,
+            category: this.selectCategory,
             price: this.price,
             stock: this.stock,
             status: this.status,

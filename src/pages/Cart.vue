@@ -4,12 +4,12 @@
 
   <div v-if="items" id="itmesContainer" class="container mt-5">
     <div
-      v-for="item in items"
+      v-for="item in cartItems"
       :key="item.id"
       class="row d-flex justify-content-start align-items-center g-2"
     >
       <div class="d-flex p-2 rounded border border-black mb-2">
-        <input class="ms-3 me-3" type="checkbox" />
+        <input class="ms-2 me-3" type="checkbox" />
         <router-link
           :to="{
             name: 'ItemDetail',
@@ -23,23 +23,16 @@
             alt="商品圖片"
           />
         </router-link>
-        <div class="d-block align-items-center">
+        <div class="d-block align-items-center w-100">
           <div class="mb-2">{{ item.name }}</div>
           <div class="mb-2">${{ item.price }}</div>
-          <div class="input-group mb-3 w-50">
-            <button class="input-group-text btn btn-outline-secondary">
-              -
-            </button>
-            <input
-              type="number"
-              class="form-control text-center border border-secondary"
-              placeholder="數量"
-              value="1"
-              min="1"
+          <div class="d-flex w-100">
+            <NumberInputComponent
+              class="w-50"
+              v-model="this.buyAmount"
+              :max="item.stock"
             />
-            <button class="input-group-text btn btn-outline-primary">+</button>
-
-            <button class="input-group-text btn btn-outline-danger">
+            <button class="btn btn-outline-danger h-100 ms-2">
               <i class="fa-solid fa-trash"></i>
             </button>
           </div>
@@ -50,15 +43,21 @@
 </template>
 
 <script>
-import { response } from "express";
 import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
+import NumberInputComponent from "../components/NumberInputComponent.vue";
 import axios from "axios";
 import { mapGetters } from "vuex";
 
 // TODOWarning: 購物車 同樣物品會疊加
 export default {
-  components: { HeaderComponent, SmallHeaderComponent },
+  data() {
+    return {
+      cartItems: [],
+      buyAmount: 1,
+    };
+  },
+  components: { HeaderComponent, SmallHeaderComponent, NumberInputComponent },
   computed: {
     ...mapGetters(["isLogin", "getUserID", "getItems"]),
     // 給v-for用的
@@ -71,18 +70,19 @@ export default {
   },
   methods: {
     async GetCartItems() {
-      // try {
-      //   console.log(`getUserID: ${this.getUserID}`);
-      //   const response = await axios.post(
-      //     "http://localhost:3000/api/getcartitems",
-      //     {
-      //       userID: this.getUserID,
-      //     }
-      //   );
-      //   // console.log(response.data);
-      // } catch (error) {
-      //   alert("錯誤: ", error);
-      // }
+      try {
+        console.log(`getUserID: ${this.getUserID}`);
+        const response = await axios.post(
+          "http://localhost:3000/api/getcartitems",
+          {
+            userID: this.getUserID,
+          }
+        );
+        console.log(response.data.items);
+        this.cartItems = response.data.items;
+      } catch (error) {
+        alert("錯誤: ", error);
+      }
     },
   },
 };

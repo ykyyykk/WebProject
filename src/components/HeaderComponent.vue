@@ -12,7 +12,7 @@
 
       <router-link
         :to="{ name: 'Home' }"
-        class="text-decoration-none ms-3"
+        class="text-decoration-none ms-2"
         style="width: 12rem"
       >
         <img
@@ -22,7 +22,7 @@
       </router-link>
       <input
         type="text"
-        class="form-control ms-3 d-none d-md-block w-50"
+        class="form-control ms-2 d-none d-md-block w-50"
         placeholder="查詢"
       />
     </div>

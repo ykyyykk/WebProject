@@ -7,11 +7,12 @@
       -
     </button>
     <input
-      type="number"
+      type="text"
       class="form-control text-center border border-secondary"
       :value="amount"
       :max="max"
       placeholder="數量"
+      oninput="this.value = this.value.replace(/[^0-9]/g, ''); if (this.value === '' || this.value === '0') this.value = 1;"
     />
     <!-- @input="updateAmount($event)" -->
     <!-- v-model="amount" -->

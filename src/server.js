@@ -1,4 +1,4 @@
-import express, { response } from "express";
+import express from "express";
 import Database from "better-sqlite3";
 import bodyParser from "body-parser";
 import path from "path";
@@ -22,8 +22,14 @@ app.post("/api/getcartitems", (request, response) => {
   // console.log(11111);
   // console.log(request.body);
   // 包起來才能抓到value 不然是body
-  // const { userID } = request.body;
-  const sql = `SELECT * FROM Cart WHERE userID = ?`;
+  const { userID } = request.body;
+  // SQL 查詢通過 userID 在 Cart 表中查詢，並使用 itemID 查找 Item 表中的對應項目
+  const sql = `
+    SELECT Item.* 
+    FROM Cart 
+    JOIN Item ON Cart.itemID = Item.id 
+    WHERE Cart.userID = ?
+  `;
 
   try {
     const stmt = db.prepare(sql);
