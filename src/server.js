@@ -18,6 +18,32 @@ app.use(bodyParser.json());
 
 const db = new Database(dbPath, { verbose: console.log });
 
+app.post("/api/purchaseItem", (request, response) => {
+  const { itemID, buyAmount } = request.body;
+
+  try {
+    const checkSql = `SELECT stock
+                      FROM Item
+                      WHERE id = ?`;
+    const checkStmt = db.prepare(checkSql);
+    const item = checkStmt.get(itemID);
+
+    console.log(item);
+    // if (!item || item.stock < buyAmount) {
+    //   return response.status(400).json({ success: false, message: "庫存不足" });
+    // }
+    // item.stock -= buyAmount;
+    // const updateSql = `UPDATE Item
+    //                    SET stock = ?
+    //                    WHERE id = ?`;
+    // const updateStmt = db.prepare(updateSql);
+    // const info = checkStmt.run(item.stock, itemID);
+    response.status(200).json({ success: true, item: item });
+  } catch (error) {
+    return response.status(500).json({ error: error.message });
+  }
+});
+
 app.post("/api/deletefromcart", (request, response) => {
   const { itemID, userID } = request.body;
   const sql = `DELETE FROM Cart WHERE itemID = ? AND userID = ?;`;

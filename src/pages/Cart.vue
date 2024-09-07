@@ -62,7 +62,9 @@
     </div>
 
     <div>
-      <button class="btn btn-primary fs-4 fw-bold">結帳</button>
+      <button @click="OnCheckOut" class="btn btn-primary fs-4 fw-bold">
+        結帳
+      </button>
     </div>
   </div>
 </template>
@@ -113,6 +115,7 @@ export default {
         // console.log(response.data);
         if (response.data.success) {
           this.cartItems = response.data.items;
+          console.log(this.cartItems);
         }
       } catch (error) {
         alert(`錯誤: ${error}`);
