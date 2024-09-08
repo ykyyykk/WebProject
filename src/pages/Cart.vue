@@ -10,7 +10,7 @@
     >
       <div class="d-flex p-2 rounded border border-black mb-2">
         <input
-          @click="OnCheck(item.id, item.price)"
+          @click="OnSelect(item.id, item.price)"
           :checked="selectItems.includes(item.id)"
           class="ms-2 me-3"
           type="checkbox"
@@ -83,7 +83,6 @@ export default {
     return {
       cartItems: [],
       //TODOWarning: 這邊不知道會不會有問題 每個item都共用
-      buyAmount: 1,
       totalPrice: 0,
       selectItems: [],
       isSelectAll: false,
@@ -171,6 +170,17 @@ export default {
       for (let i = 0; i < this.cartItems.length; i++) {
         this.selectItems.push(this.cartItems[i].id);
         this.totalPrice += this.cartItems[i].price;
+      }
+    },
+    async OnCheckOut() {
+      if (this.selectItems.length <= 0) {
+        alert("請先選擇物品在結帳");
+        return;
+      }
+
+      for (let i = 0; i < this.selectItems.length; i++) {
+        console.log(this.selectItems);
+        // this.DeleteFromCart(this.selectItems);
       }
     },
   },
