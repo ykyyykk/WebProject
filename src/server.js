@@ -146,7 +146,6 @@ app.get("/api/getallitem", (request, response) => {
   }
 });
 
-//TODOError: 還沒設定password
 app.post("/api/register", (request, response) => {
   const { name, phoneNumber, email, password } = request.body;
   const sql = `INSERT INTO User (name, phoneNumber, email, password) VALUES(?,?,?,?)`;

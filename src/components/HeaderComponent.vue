@@ -1,12 +1,14 @@
 <template>
-  <!-- TODOWarning: 會隨著寬度等比例縮放 -->
   <!-- TODOError: 按下搜尋按鈕沒有彈出搜尋視窗 -->
   <header
     class="d-flex justify-content-between align-items-center p-2"
     style="height: 4rem"
   >
     <div class="d-flex justify-content-start align-items-center w-100">
-      <button class="border border-0 bg-transparent" @click="isOpen = true">
+      <button
+        class="border border-0 bg-transparent"
+        @click="isSideBarOpen = true"
+      >
         <i class="fa-solid fa-bars fs-2"></i>
       </button>
 
@@ -28,7 +30,10 @@
     </div>
 
     <div class="d-flex justify-content-end align-items-center gap-2">
-      <button class="border border-0 bg-transparent d-md-none">
+      <button
+        @click="ToggleSearchWindow()"
+        class="border border-0 bg-transparent d-md-none"
+      >
         <i class="fa-solid fa-magnifying-glass fs-5"></i>
       </button>
 
@@ -59,23 +64,32 @@
       </router-link>
     </div>
   </header>
-  <SideBarComponent v-model:isOpen="isOpen" />
+
+  <SideBarComponent v-model:isSideBarOpen="isSideBarOpen" />
+  <SearchWindowComponent :isOpen="isSearchWindowOpen" />
 </template>
 
 <script>
 import SideBarComponent from "../components/SideBarComponent.vue";
+import SearchWindowComponent from "./SearchWindowComponent.vue";
 
 export default {
-  components: { SideBarComponent },
+  components: { SideBarComponent, SearchWindowComponent },
   data() {
     return {
       isLogin: false,
-      isOpen: false,
+      isSideBarOpen: false,
+      isSearchWindowOpen: false,
     };
   },
   computed: {
     CheckLoginStatus() {
       return this.isLogin ? { name: "MemberCenter" } : { name: "Login" };
+    },
+  },
+  methods: {
+    ToggleSearchWindow() {
+      this.isSearchWindowOpen = !this.isSearchWindowOpen;
     },
   },
 };

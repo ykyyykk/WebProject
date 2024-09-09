@@ -15,16 +15,26 @@
     <!-- TODOWarning: Mac有正常滑動 但是沒有滑鼠拖曳 -->
     <swiper-slide
       class="d-flex justify-content-center align-items-center text-center"
-      >Slide 1</swiper-slide
     >
+      <!-- 左右會留空 -->
+      <img class="object-fit-contain" src="../assets/img/slide1.jpg" />
+      <!-- 上下被裁切 -->
+      <!-- <img class="object-fit-cover" src="../assets/img/slide1.jpg" /> -->
+      <!-- 被壓縮 -->
+      <!-- <img class="object-fit-fill" src="../assets/img/slide1.jpg" /> -->
+      <!-- 左右會留空 -->
+      <!-- <img class="object-fit-scale" src="../assets/img/slide1.jpg" /> -->
+      <!-- 上下左右都被裁切 -->
+      <!-- <img class="object-fit-none" src="../assets/img/slide1.jpg" /> -->
+    </swiper-slide>
     <swiper-slide
       class="d-flex justify-content-center align-items-center text-center"
-      >Slide 2</swiper-slide
-    >
+      ><img class="object-fit-contain" src="../assets/img/slide2.jpg"
+    /></swiper-slide>
     <swiper-slide
       class="d-flex justify-content-center align-items-center text-center"
-      >Slide 3</swiper-slide
-    >
+      ><img class="object-fit-contain" src="../assets/img/slide3.jpg"
+    /></swiper-slide>
   </swiper>
 </template>
 

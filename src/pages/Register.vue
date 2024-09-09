@@ -3,7 +3,7 @@
   <SmallHeaderComponent pageTitle="註冊" />
 
   <div
-    class="d-flex flex-column justify-content-center align-items-center m-0 p-0 container overflow-x-hidden"
+    class="d-flex flex-column justify-content-center align-items-center p-0 container overflow-x-hidden"
   >
     <div
       class="d-block justify-content-center align-items-center mt-5 p-2 w-100"

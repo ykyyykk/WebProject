@@ -10,7 +10,7 @@
         class="card col-lg-3 col-sm-4 col-6"
       >
         <img
-          src="../assets/img/slide1.png"
+          src="../assets/img/slide1.jpg"
           class="card-img-top"
           alt="商品圖片"
         />

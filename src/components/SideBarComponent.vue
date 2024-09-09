@@ -3,7 +3,7 @@
   <div
     class="w-100 h-100 z-3 position-absolute top-0 left-0"
     :style="{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }"
-    v-if="isOpen"
+    v-if="isSideBarOpen"
   >
     <div class="w-75 h-100 bg-white opacity-100 border border-black">
       <button
@@ -20,22 +20,24 @@
 <script>
 export default {
   props: {
-    isOpen: {
+    isSideBarOpen: {
       type: Boolean,
       default: false,
     },
   },
   watch: {
-    isOpen(newVal) {
-      // 當 isOpen 為 true 時禁用捲軸，為 false 時恢復
-      document.body.style.overflow = newVal ? "hidden" : "auto";
+    isSideBarOpen(newValue) {
+      if (newValue) {
+        document.body.classList.add("overflow-hidden");
+      } else {
+        document.body.classList.remove("overflow-hidden");
+      }
     },
   },
   methods: {
     Close() {
-      console.log("Close");
       // 沒辦法透過this.isOpen = false 關閉
-      this.$emit("update:isOpen", false);
+      this.$emit("update:isSideBarOpen", false);
     },
   },
 };
