@@ -69,17 +69,18 @@
 <script>
 import SideBarComponent from "../components/SideBarComponent.vue";
 import SearchWindowComponent from "./SearchWindowComponent.vue";
+import { mapGetters } from "vuex";
 
 export default {
   components: { SideBarComponent, SearchWindowComponent },
   data() {
     return {
-      isLogin: false,
       isSideBarOpen: false,
       isSearchWindowOpen: false,
     };
   },
   computed: {
+    ...mapGetters(["isLogin"]),
     CheckLoginStatus() {
       return this.isLogin ? { name: "MemberCenter" } : { name: "Login" };
     },
