@@ -4,11 +4,13 @@ import bodyParser from "body-parser";
 import path from "path";
 import cors from "cors";
 import { fileURLToPath } from "url";
+// import fs from "fs"; // node.js內建
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+// app.use(express.static(path.join(__dirname, 'public')));
 const dbPath = path.resolve(__dirname, "data/ShoppingWebsite.db");
 
 // console.log(`dbPath: ${dbPath}`);
@@ -17,6 +19,25 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const db = new Database(dbPath, { verbose: console.log });
+
+// 失敗 嘗試讀取public/banner
+// app.get("/api/images", (req, res) => {
+//   const directoryPath = path.join(__dirname, "public", "banner");
+
+//   fs.readdir(directoryPath, (err, files) => {
+//     if (err) {
+//       console.error("Error reading directory:", err);
+//       return res.status(500).send("Internal Server Error");
+//     }
+
+//     // Filter for image files (you can add more extensions if needed)
+//     const imagePaths = files
+//       .filter((file) => /\.(jpg|jpeg|png|gif)$/.test(file))
+//       .map((file) => `/banner/${file}`);
+
+//     res.json(imagePaths);
+//   });
+// });
 
 app.post("/api/purchaseItem", (request, response) => {
   const { itemID, buyAmount } = request.body;

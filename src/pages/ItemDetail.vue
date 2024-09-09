@@ -13,73 +13,12 @@
 
   <!-- v-if不能省略 因為item.name的執行順序會比this.item = response.data.items; 還快 會error -->
   <div v-if="item" class="col-12 mt-5">
-    <!-- <div class="mt-5">
-      <h3>物品詳情</h3>
-      <div>物品ID:{{ item.id }}</div>
-      <div>物品名稱:{{ item.name }}</div>
-      <div>物品資訊:{{ item.detail }}</div>
-      <div>物品價格: {{ item.price }}</div>
-      <div>物品庫存: {{ item.stock }}</div>
-      <div>物品分類: {{ item.category }}</div>
-      <div>物品狀態: {{ item.status }}</div>
-      <div>會員ID: {{ userID }}</div>
-    </div> -->
-
-    <div class="swiper mySwiper mb-3" style="height: 25rem">
-      <div class="swiper-wrapper">
-        <div
-          class="swiper-slide d-flex justify-content-center align-items-center"
-        >
-          <img
-            src="../assets/img/product1.jpg"
-            style="width: 100%; height: auto"
-          />
-        </div>
-        <div
-          class="swiper-slide d-flex justify-content-center align-items-center"
-        >
-          <img
-            src="../assets/img/product2.jpg"
-            style="width: 100%; height: auto"
-          />
-        </div>
-        <div
-          class="swiper-slide d-flex justify-content-center align-items-center"
-        >
-          <img
-            src="../assets/img/product1.jpg"
-            style="width: 100%; height: auto"
-          />
-        </div>
-        <div
-          class="swiper-slide d-flex justify-content-center align-items-center"
-        >
-          <img
-            src="../assets/img/product2.jpg"
-            style="width: 100%; height: auto"
-          />
-        </div>
-        <div
-          class="swiper-slide d-flex justify-content-center align-items-center"
-        >
-          <img
-            src="../assets/img/product1.jpg"
-            style="width: 100%; height: auto"
-          />
-        </div>
-        <div
-          class="swiper-slide d-flex justify-content-center align-items-center"
-        >
-          <img
-            src="../assets/img/product2.jpg"
-            style="width: 100%; height: auto"
-          />
-        </div>
-      </div>
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-pagination"></div>
-    </div>
+    <SwiperComponent
+      :pages="[
+        { src: `/public/${item.imageUrl}` },
+        { src: `/public/${item.imageUrl}` },
+      ]"
+    />
 
     <div class="p-2">
       <p class="fs-5 fw-bolder">
@@ -155,15 +94,11 @@ export default {
     },
     async AddToCart() {
       console.log("加入購物車");
-      // console.log(`userID: ${this.userID}`);
       // if (!this.isLogin) {
       //   alert("請先登入再加入購物車");
       //   return;
       // }
       try {
-        // console.log(this.item.id);
-        // console.log(this.getUserID);
-        // console.log(this.buyAmount);
         //TODOWarning: 做一個檢查有沒有超過最大最大庫存
         const response = await axios.post(
           "http://localhost:3000/api/addtocart",

@@ -22,7 +22,7 @@
           }"
         >
           <img
-            src="../assets/img/slide1.png"
+            :src="item.imageUrl"
             class="me-3"
             style="width: 7rem; height: 7rem"
             alt="商品圖片"

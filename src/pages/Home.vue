@@ -1,6 +1,6 @@
 <template>
   <HeaderComponent />
-  <SwiperComponent />
+  <SwiperComponent :pages="pages" />
 
   <div id="itmesContainer" class="container">
     <div class="row d-flex justify-content-start align-items-center p-3">
@@ -24,10 +24,13 @@ import { mapGetters } from "vuex";
 export default {
   components: { HeaderComponent, SwiperComponent, ItemComponent },
   computed: {
-    ...mapGetters(["getItems"]),
+    ...mapGetters(["getItems", "getPages"]),
     // 給v-for用的
     items() {
       return this.getItems;
+    },
+    pages() {
+      return this.getPages;
     },
   },
 };
