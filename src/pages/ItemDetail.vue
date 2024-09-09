@@ -2,11 +2,11 @@
   <div
     v-if="popupShow"
     @click="HidePopup()"
-    class="z-3 position-absolute w-100 h-100 d-flex justify-content-center align-items-center"
+    class="z-3 position-fixed w-100 vh-100 d-flex justify-content-center align-items-center"
     :style="{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }"
   >
     <!-- TODOError: 醜八怪 太醜了但功能很重要 所以放Error-->
-    <div class="text-center text-dark">已加入購物車</div>
+    <div class="text-center text-white">已加入購物車</div>
   </div>
   <HeaderComponent />
   <SmallHeaderComponent pageTitle="繼續購物" />
@@ -31,7 +31,10 @@
           <!-- 放棄放在同一行 -->
           <span>購買數量: </span>
           <!-- 還沒成功 讀取到變更的amount -->
-          <NumberInputComponent v-model="this.buyAmount" :max="item.stock" />
+          <NumberInputComponent
+            v-model:amount="this.amount"
+            v-model:max="this.item.stock"
+          />
         </div>
 
         <!-- TODOError: 目前還沒有即時更新 -->
@@ -65,7 +68,7 @@ export default {
   data() {
     return {
       item: "",
-      buyAmount: 1,
+      amount: 1,
       popupShow: false,
     };
   },
@@ -85,7 +88,7 @@ export default {
           `http://localhost:3000/api/item/${id}`
         );
         // console.log(response.data);
-        // console.log(response.data.item);
+        console.log(response.data.item);
         this.item = response.data.item;
         // console.log(this.item);
       } catch (error) {
@@ -100,12 +103,13 @@ export default {
       // }
       try {
         //TODOWarning: 做一個檢查有沒有超過最大最大庫存
+        console.log(`amount: ${this.amount}`);
         const response = await axios.post(
           "http://localhost:3000/api/addtocart",
           {
             itemID: this.item.id,
             userID: this.getUserID,
-            buyAmount: this.buyAmount,
+            amount: this.amount,
           }
         );
         this.popupShow = true;

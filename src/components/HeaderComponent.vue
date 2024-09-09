@@ -21,6 +21,8 @@
           src="../assets/img/Decathlon_Logo.png"
         />
       </router-link>
+
+      <!-- TODOAdd: 大視窗的搜尋還沒做 -->
       <input
         type="text"
         class="form-control ms-2 d-none d-md-block w-50"

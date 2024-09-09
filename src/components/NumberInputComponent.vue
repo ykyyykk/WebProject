@@ -2,22 +2,22 @@
   <div class="input-group mb-3 w-50">
     <button
       class="input-group-text btn btn-outline-secondary"
-      @click="decrease"
+      @click="Decrease()"
     >
       -
     </button>
     <input
       type="text"
       class="form-control text-center border border-secondary"
-      :value="amount"
+      :value="amount || 1"
       :max="max"
       placeholder="數量"
-      oninput="this.value = this.value.replace(/[^0-9]/g, ''); if (this.value === '' || this.value === '0') this.value = 1;"
+      @input="UpdateAmount"
     />
-    <!-- @input="updateAmount($event)" -->
-    <!-- v-model="amount" -->
-    <!-- value="1" -->
-    <button class="input-group-text btn btn-outline-primary" @click="increase">
+    <button
+      class="input-group-text btn btn-outline-primary"
+      @click="Increase()"
+    >
       +
     </button>
   </div>
@@ -27,49 +27,30 @@
 export default {
   // 沒用還是不會更改
   props: {
-    value: Number,
+    amount: { type: Number, default: 1 },
     max: Number,
   },
-  data() {
-    return {
-      amount: this.value || 1,
-    };
-  },
-  // 沒用還是不會更改
-  // watch: {
-  //   value(newValue) {
-  //     this.amount = newValue; // Watch prop changes to update local data
-  //   },
-  // },
   methods: {
-    increase() {
+    Increase() {
       if (this.amount < this.max) {
-        this.amount++;
+        this.$emit("update:amount", this.amount + 1);
       }
-      console.log("file: inputIncrease.js:11  increase  amount: ", this.amount);
-
-      // 沒用還是不會更改
-      //通知父物件 這個數值改變了 這樣在加入購物車時數值才是正確的
-      // this.$emit("amount", this.amount);
     },
-    decrease() {
+    Decrease() {
       if (this.amount > 1) {
-        this.amount--;
+        this.$emit("update:amount", this.amount - 1);
       }
-      console.log("file: inputIncrease.js:15  decrease  amount: ", this.amount);
-
-      // 沒用還是不會更改
-      // this.$emit("amount", this.amount);
     },
-
-    // 沒用還是不會更改
-    // updateAmount(event) {
-    //   const newValue = Number(event.target.value);
-    //   if (newValue <= this.max && newValue >= 1) {
-    //     this.amount = newValue;
-    //     this.$emit("input", this.amount); // Emit updated amount
-    //   }
-    // },
+    UpdateAmount(event) {
+      console.log(event);
+      let newValue = Number(event.target.value);
+      if (isNaN(newValue) || newValue < 1) {
+        newValue = 1;
+      } else if (newValue > this.max) {
+        newValue = this.max;
+      }
+      this.$emit("update:amount", newValue);
+    },
   },
 };
 </script>

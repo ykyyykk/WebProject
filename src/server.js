@@ -106,12 +106,12 @@ app.get("/api/getcartitems", (request, response) => {
 });
 
 app.post("/api/addtocart", (request, response) => {
-  const { itemID, userID, buyAmount } = request.body;
+  const { itemID, userID, amount } = request.body;
   const sql = `INSERT INTO Cart (itemID, userID, buyAmount) VALUES(?,?,?)`;
 
   try {
     const stmt = db.prepare(sql);
-    const info = stmt.run(itemID, userID, buyAmount);
+    const info = stmt.run(itemID, userID, amount);
     response.status(200).json({ success: true, info: info });
   } catch (error) {
     return response.status(500).json({ error: error.message });
