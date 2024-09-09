@@ -22,7 +22,7 @@
       </div>
     </div>
     <!-- TODOError: 輸入錯誤時有一個popup顯示輸入錯誤 -->
-    <!-- TODOError: Bar改為第二階段 -->
+    <!-- TODOError: 分頁UI改為第二頁 -->
     <!-- TODOAdd: 輸入正確自動跳轉 -->
   </div>
 </template>

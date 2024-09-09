@@ -89,8 +89,6 @@
         <i class="fa-brands fa-line me-auto ms-2"></i>
         <span class="flex-grow-1 text-center">使用 LINE 帳號註冊</span>
       </button>
-
-      <!-- TODOError: 帳號註冊按鈕沒有完全置中 -->
     </div>
   </div>
 

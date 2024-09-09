@@ -1,5 +1,4 @@
 <template>
-  <!-- TODOError: 按下搜尋按鈕沒有彈出搜尋視窗 -->
   <header
     class="d-flex justify-content-between align-items-center p-2"
     style="height: 4rem"
@@ -48,10 +47,6 @@
         />
       </router-link>
 
-      <!-- TODO: 視窗最小時隱藏 按下搜尋按鈕 覆蓋 -->
-      <!-- <input type="text" class="form-control" placeholder="查詢" aria-label="search" aria-describedby="addon-wrapping"/> -->
-      <!-- 判斷會員是否登入 -->
-
       <router-link :to="CheckLoginStatus" class="bg-transparent text-black">
         <i class="fa-solid fa-user"></i>
       </router-link>
@@ -91,6 +86,17 @@ export default {
     ToggleSearchWindow() {
       this.isSearchWindowOpen = !this.isSearchWindowOpen;
     },
+    UpdateWindowWidth() {
+      if (window.innerWidth >= 767) {
+        this.isSearchWindowOpen = false;
+      }
+    },
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.UpdateWindowWidth);
+  },
+  mounted() {
+    window.addEventListener("resize", this.UpdateWindowWidth);
   },
 };
 </script>

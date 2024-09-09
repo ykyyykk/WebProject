@@ -71,7 +71,6 @@
         <i class="fa-brands fa-line me-auto ms-2"></i>
         <span class="flex-grow-1 text-center">使用 LINE 帳號登入</span>
       </button>
-      <!-- TODOError: google帳號登入按鈕沒有完全置中 -->
     </div>
   </div>
   <div class="mb-0 mt-auto">
@@ -86,8 +85,6 @@
 </template>
 
 <script>
-//TODOAdd: 並且返回登入頁面
-
 import axios from "axios";
 import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
@@ -120,16 +117,16 @@ export default {
 
         if (response.data.success) {
           alert("登入成功");
-          console.log(response.data);
+          // console.log(response.data);
           this.SetLogin({ userID: response.data.user.id });
-          // this.router.push({ name: "Home" });
+          this.router.push({ name: "Home" });
         } else {
           alert(
             "帳號或密碼錯誤！ 提醒您，為確保登入安全，連續錯誤5次將暫時鎖定該帳號無法進行登入"
           );
         }
       } catch (error) {
-        // TODOSecond: 連續錯誤5次將暫時鎖定該帳號無法進行登入
+        // TODOWarning: 連續錯誤5次將暫時鎖定該帳號無法進行登入
         alert(
           "帳號或密碼錯誤！ 提醒您，為確保登入安全，連續錯誤5次將暫時鎖定該帳號無法進行登入",
           error
