@@ -57,11 +57,18 @@ const routes = [
     name: "ItemDetail",
     component: ItemDetail,
   },
-  {
-    path: "/searchresult/:name",
-    name: "SearchResult",
-    component: SearchResult,
-  },
+  // {
+  //   path: "/searchresult",
+  //   name: "SearchResult",
+  //   component: SearchResult,
+  //   props: (route) => ({ searchQuery: route.query.search }),
+  // },
+  // {
+  //   path: "/searchresult/:search",
+  //   name: "SearchResult",
+  //   component: SearchResult,
+  // },
+  //實際在運作只有這個 但是是抓全部的item
   {
     path: "/searchresult",
     name: "SearchResult",

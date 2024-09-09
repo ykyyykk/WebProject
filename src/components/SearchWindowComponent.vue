@@ -20,9 +20,12 @@
           @click="SelectItem(item)"
           class="list-group-item"
         >
-          <router-link class="stretched-link text-decoration-none text-black">{{
-            item.name
-          }}</router-link>
+          <!-- TODOWarning: 這裡會Warning 跟中文無關 數字也會 只有在找到東西才會觸發 search 改 aaa 沒用  -->
+          <router-link
+            :to="{ name: 'SearchResult', params: { search: this.searchQuery } }"
+            class="stretched-link text-decoration-none text-black"
+            >{{ item.name }}
+          </router-link>
         </li>
       </ul>
     </div>
@@ -61,7 +64,7 @@ export default {
     SelectItem(item) {
       this.searchQuery = item.name;
       this.showDropdown = false;
-      console.log(`SelectItem: ${item}`);
+      // console.log(`SelectItem: ${item}`);
     },
   },
   props: {
