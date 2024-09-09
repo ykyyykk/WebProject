@@ -120,12 +120,14 @@ app.post("/api/addtocart", (request, response) => {
 
 //聽說不要在api裡面含有get post put delete會比較好
 app.post("/api/addnewitem", (request, response) => {
-  const { name, detail, category, price, stock, status } = request.body;
-  const sql = `INSERT INTO Item (name, detail, category, price, stock, status) VALUES(?,?,?,?,?,?)`;
+  const { name, detail, category, price, stock, status, imageUrl } =
+    request.body;
+  const sql = `INSERT INTO Item (name, detail, category, price, stock, status, imageUrl)
+               VALUES(?,?,?,?,?,?,?)`;
 
   try {
     const stmt = db.prepare(sql);
-    stmt.run(name, detail, category, price, stock, status);
+    stmt.run(name, detail, category, price, stock, status, imageUrl);
     response.status(200).json({ success: true });
   } catch (error) {
     return response.status(500).json({ error: error.message });

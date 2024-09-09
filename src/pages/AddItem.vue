@@ -43,12 +43,12 @@
 
     <div class="mb-3">
       <label class="form-label">價格</label>
-      <input id="product_price" class="form-control" />
+      <input v-model="price" id="product_price" class="form-control" />
     </div>
 
     <div class="mb-3">
       <label class="form-label">商品數量</label>
-      <input id="product_price" class="form-control" />
+      <input v-model="stock" id="product_price" class="form-control" />
     </div>
 
     <div class="dropdown mb-3">
@@ -67,9 +67,7 @@
       </ul>
     </div>
 
-    <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-
-    <!-- 還沒測試過 新增物品第一步-->
+    <!-- 不能把 @submit.prevent="AddNewItem()" 放這邊 會清空 而且不呼叫 -->
     <button class="btn btn-primary">新增物品</button>
   </form>
 </template>
@@ -85,7 +83,7 @@ export default {
       categories: ["處理器", "主機板", "記憶體", "硬碟", "顯示卡"],
       name: "",
       detail: "",
-      selectCategory: "未選擇",
+      selectCategory: "處理器",
       price: 0,
       stock: 0,
       status: "全新",
@@ -101,6 +99,15 @@ export default {
     },
     async AddNewItem() {
       try {
+        const imagePaths = {
+          處理器: "img/CPU.jpg",
+          主機板: "img/MB.jpg",
+          記憶體: "img/RAM.jpg",
+          硬碟: "img/HDD.jpg",
+          顯示卡: "img/GPU.jpg",
+        };
+
+        const path = imagePaths[this.selectCategory] || "img/Ram.jpg";
         const response = await axios.post(
           "http://localhost:3000/api/addnewitem",
           {
@@ -110,6 +117,7 @@ export default {
             price: this.price,
             stock: this.stock,
             status: this.status,
+            imageUrl: path,
           }
         );
         alert("新增物品成功");
@@ -117,24 +125,6 @@ export default {
         alert("新增物品失敗", error);
       }
     },
-    // 以下是已經沒用的 新增物品到store/index.js
-    // // 新增物品第二步
-    // AddNewItem() {
-    //   console.log("AddNewItem");
-    //   const newItem = {
-    //     id: this.$store.state.items.length,
-    //     title: "新商品",
-    //     detail: "新商品詳情",
-    //     price: "50",
-    //     stock: "55",
-    //   };
-    //   // 新增物品第三步 跑到store
-    //   this.$store.commit("AddItem", newItem);
-    // },
-    // 這邊對應到 store.actions.AddNewItem 固定新增同樣的內容
-    // AddNewItem2() {
-    //   this.$store.dispatch("AddNewItem");
-    // },
   },
 };
 </script>

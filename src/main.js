@@ -19,6 +19,7 @@ router.beforeEach(async (to, from, next) => {
     // 他的功能等同於...mapActions 但 ...mapActions只能在.vue以內使用
     store.dispatch("SetLogin", { userID: loadUserID });
     store.dispatch("SetAllItems", { items: response.data.items });
+    //嘗試動態讀取banner 失敗
     // store.dispatch("FetchPages");
     // console.log(`取得所有物品成功: ${response.data.items}`);
     // console.log(`userID: ${loadUserID}`);
