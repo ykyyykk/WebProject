@@ -37,6 +37,7 @@ export default {
   methods: {
     Close() {
       // 沒辦法透過this.isOpen = false 關閉
+      // 告訴父物件isSideBarOpen = false
       this.$emit("update:isSideBarOpen", false);
     },
   },

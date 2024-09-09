@@ -8,8 +8,8 @@ import ForgotPassword from "../pages/ForgotPassword.vue";
 import Login from "../pages/Login.vue";
 import Register from "../pages/Register.vue";
 import NotFound from "../pages/NotFound.vue";
-import Item from "../pages/Items/Item.vue";
-import ItemDetail from "../pages/Items/ItemDetail.vue";
+import ItemDetail from "../pages/ItemDetail.vue";
+import SearchResult from "../pages/SearchResult.vue";
 
 const routes = [
   {
@@ -53,14 +53,19 @@ const routes = [
     component: Register,
   },
   {
-    path: "/item",
-    name: "Item",
-    component: Item,
-  },
-  {
     path: "/itemdetail/:id",
     name: "ItemDetail",
     component: ItemDetail,
+  },
+  {
+    path: "/searchresult/:name",
+    name: "SearchResult",
+    component: SearchResult,
+  },
+  {
+    path: "/searchresult",
+    name: "SearchResult",
+    component: SearchResult,
   },
   {
     // 404轉址

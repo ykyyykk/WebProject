@@ -31,7 +31,7 @@
           class="swiper-slide d-flex justify-content-center align-items-center"
         >
           <img
-            src="../../assets/img/product1.jpg"
+            src="../assets/img/product1.jpg"
             style="width: 100%; height: auto"
           />
         </div>
@@ -39,7 +39,7 @@
           class="swiper-slide d-flex justify-content-center align-items-center"
         >
           <img
-            src="../../assets/img/product2.jpg"
+            src="../assets/img/product2.jpg"
             style="width: 100%; height: auto"
           />
         </div>
@@ -47,7 +47,7 @@
           class="swiper-slide d-flex justify-content-center align-items-center"
         >
           <img
-            src="../../assets/img/product1.jpg"
+            src="../assets/img/product1.jpg"
             style="width: 100%; height: auto"
           />
         </div>
@@ -55,7 +55,7 @@
           class="swiper-slide d-flex justify-content-center align-items-center"
         >
           <img
-            src="../../assets/img/product2.jpg"
+            src="../assets/img/product2.jpg"
             style="width: 100%; height: auto"
           />
         </div>
@@ -63,7 +63,7 @@
           class="swiper-slide d-flex justify-content-center align-items-center"
         >
           <img
-            src="../../assets/img/product1.jpg"
+            src="../assets/img/product1.jpg"
             style="width: 100%; height: auto"
           />
         </div>
@@ -71,7 +71,7 @@
           class="swiper-slide d-flex justify-content-center align-items-center"
         >
           <img
-            src="../../assets/img/product2.jpg"
+            src="../assets/img/product2.jpg"
             style="width: 100%; height: auto"
           />
         </div>
@@ -115,10 +115,10 @@
 </template>
 
 <script>
-import HeaderComponent from "../../components/HeaderComponent.vue";
-import SmallHeaderComponent from "../../components/SmallHeaderComponent.vue";
-import SwiperComponent from "../../components/SwiperComponent.vue";
-import NumberInputComponent from "../../components/NumberInputComponent.vue";
+import HeaderComponent from "../components/HeaderComponent.vue";
+import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
+import SwiperComponent from "../components/SwiperComponent.vue";
+import NumberInputComponent from "../components/NumberInputComponent.vue";
 import axios from "axios";
 import { mapGetters } from "vuex";
 
