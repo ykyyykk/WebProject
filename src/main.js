@@ -9,6 +9,31 @@ import axios from "axios";
 
 // 全域路由守衛
 router.beforeEach(async (to, from, next) => {
+  // const userJSON = localStorage.getItem("user");
+  // try {
+  //   console.log(userJSON);
+  //   if (userJSON) {
+  //     userObject = JSON.parse(userJSON);
+
+  //     if (userObject.id != 0 && userObject.id != undefined) {
+  //       console.log(userObject.id);
+  //       const user = JSON.stringify({
+  //         isLogin: userObject.isLogin,
+  //         email: userObject.email,
+  //         id: userObject.id,
+  //         name: userObject.name,
+  //         password: userObject.password,
+  //         phoneNumber: userObject.phoneNumber,
+  //       });
+  //       store.dispatch("SetLogin", { user: user });
+  //     }
+  //   }
+  // } catch (error) {
+  //   console.error("Invalid user data in localStorage:", userJSON);
+  //   localStorage.removeItem("user");
+  //   // next();
+  //   // return;
+  // }
   try {
     if (
       localStorage.getItem("userID") != null &&

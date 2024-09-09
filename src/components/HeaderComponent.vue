@@ -81,7 +81,9 @@ export default {
   },
   computed: {
     ...mapGetters(["isLogin"]),
+    // ...mapGetters(["isLogin", "getUser"]),
     CheckLoginStatus() {
+      // console.log(this.getUser);
       return this.isLogin ? { name: "MemberCenter" } : { name: "Login" };
     },
   },

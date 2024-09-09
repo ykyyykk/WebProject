@@ -18,6 +18,15 @@ export default createStore({
     items: [],
     isLogin: false,
     userID: 0,
+    // 直接存User失敗 要不斷轉JSON 轉Object 因為localStorage.setItem()只能存字串
+    // user: {
+    //   isLogin: false,
+    //   id: 0,
+    //   name: "",
+    //   phoneNumber: "",
+    //   email: "",
+    //   password: "",
+    // },
     pages,
   },
   mutations: {
@@ -30,6 +39,11 @@ export default createStore({
     SetUserID(state, id) {
       state.userID = id;
     },
+    // SetLoginStatus(state, user) {
+    //   state.user = user;
+    //   // console.log(user);
+    //   localStorage.setItem("user", user);
+    // },
     SetItems(state, items) {
       state.items = items;
     },
@@ -47,6 +61,7 @@ export default createStore({
     SetLogin({ commit }, { userID }) {
       commit("SetLoginStatus", true);
       commit("SetUserID", userID);
+      // commit("SetLoginStatus", user);
       localStorage.setItem("isLogin", true);
       localStorage.setItem("userID", userID);
     },
@@ -54,6 +69,14 @@ export default createStore({
       console.log("SetLogout");
       commit("SetLoginStatus", false);
       commit("SetUserID", 0);
+      // commit("SetLoginStatus", {
+      //   isLogin: false,
+      //   id: 0,
+      //   name: "",
+      //   phoneNumber: "",
+      //   email: "",
+      //   password: "",
+      // });
       localStorage.setItem("isLogin", false);
       localStorage.setItem("userID", 0);
     },
@@ -77,5 +100,8 @@ export default createStore({
     isLogin: (state) => state.isLogin,
     getUserID: (state) => state.userID,
     getPages: (state) => state.pages,
+    // getUser: (state) => state.user,
+    // isLogin: (state) => state.user.isLogin,
+    // getUserID: (state) => state.user.userID,
   },
 });

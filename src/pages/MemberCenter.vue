@@ -13,7 +13,6 @@ export default {
   methods: {
     ...mapActions(["SetLogout"]),
     OnLogout() {
-      console.log("OnLogout");
       this.SetLogout();
     },
   },

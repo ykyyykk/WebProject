@@ -117,7 +117,18 @@ export default {
 
         if (response.data.success) {
           alert("登入成功");
-          // console.log(response.data);
+          // // JSON.stringify ObjectToJSON
+          // // 因為localStorage.setItem()只能存字串 所以要先轉JSON 要用的時候在轉Object
+          // const userJSON = JSON.stringify({
+          //   isLogin: true,
+          //   email: response.data.user.email,
+          //   id: response.data.user.id,
+          //   name: response.data.user.name,
+          //   password: response.data.user.password,
+          //   phoneNumber: response.data.user.phoneNumber,
+          // });
+          // console.log(userJSON);
+          // this.SetLogin({ user: userJSON });
           this.SetLogin({ userID: response.data.user.id });
           this.router.push({ name: "Home" });
         } else {
