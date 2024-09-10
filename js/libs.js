@@ -39,7 +39,7 @@ loadCSS(
 // <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 // animejs
-loadJs("https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js");
+// loadJs("https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js");
 
 // youtube iframe api
 // loadJs("https://www.youtube.com/iframe_api");

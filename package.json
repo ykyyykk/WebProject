@@ -16,12 +16,12 @@
   "description": "",
   "dependencies": {
     "@vitejs/plugin-vue": "^5.1.2",
+    "animejs": "^3.2.2",
     "axios": "^1.7.7",
     "better-sqlite3": "^11.2.1",
     "bootstrap": "^5.3.3",
     "cors": "^2.8.5",
     "express": "^4.19.2",
-    "express-handlebars": "^8.0.1",
     "nodemailer": "^6.9.15",
     "nodemon": "^3.1.4",
     "swiper": "^11.1.12",
