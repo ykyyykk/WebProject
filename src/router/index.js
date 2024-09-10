@@ -10,6 +10,7 @@ import Register from "../pages/Register.vue";
 import NotFound from "../pages/NotFound.vue";
 import ItemDetail from "../pages/ItemDetail.vue";
 import SearchResult from "../pages/SearchResult.vue";
+import Grid from "../pages/Grid.vue";
 
 const routes = [
   {
@@ -51,6 +52,11 @@ const routes = [
     path: "/register",
     name: "Register",
     component: Register,
+  },
+  {
+    path: "/grid",
+    name: "Grid",
+    component: Grid,
   },
   {
     path: "/itemdetail/:id",

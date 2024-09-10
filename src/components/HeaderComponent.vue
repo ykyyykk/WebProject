@@ -22,12 +22,9 @@
         />
       </router-link>
 
-      <!-- TODOAdd: 大視窗的搜尋還沒做 -->
-      <input
-        type="text"
-        class="form-control ms-2 d-none d-md-block w-50"
-        placeholder="查詢"
-      />
+      <div class="form-control ms-2 d-none d-md-block w-50 p-0">
+        <SearchInputComponent />
+      </div>
     </div>
 
     <div class="d-flex justify-content-end align-items-center gap-2">
@@ -63,16 +60,22 @@
   </header>
 
   <SideBarComponent v-model:isSideBarOpen="isSideBarOpen" />
-  <SearchWindowComponent :isOpen="isSearchWindowOpen" />
+  <div
+    class="w-100 h-100 position-absolute left-0 bg-white p-3 z-3"
+    style="top: 4rem"
+    v-if="isSearchWindowOpen"
+  >
+    <SearchInputComponent />
+  </div>
 </template>
 
 <script>
 import SideBarComponent from "../components/SideBarComponent.vue";
-import SearchWindowComponent from "./SearchWindowComponent.vue";
+import SearchInputComponent from "./SearchInputComponent.vue";
 import { mapGetters } from "vuex";
 
 export default {
-  components: { SideBarComponent, SearchWindowComponent },
+  components: { SideBarComponent, SearchInputComponent },
   data() {
     return {
       isSideBarOpen: false,
@@ -90,6 +93,14 @@ export default {
   methods: {
     ToggleSearchWindow() {
       this.isSearchWindowOpen = !this.isSearchWindowOpen;
+
+      if (this.isSearchWindowOpen) {
+        document.body.classList.add("overflow-hidden");
+      } else {
+        document.body.classList.remove("overflow-hidden");
+        this.searchQuery = "";
+        this.showDropdown = false;
+      }
     },
     UpdateWindowWidth() {
       if (window.innerWidth >= 767) {

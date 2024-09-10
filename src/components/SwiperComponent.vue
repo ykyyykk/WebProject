@@ -9,9 +9,11 @@
     :mousewheel="true"
     :keyboard="true"
     :modules="modules"
-    class="mySwiper w-100 border border-1"
+    class="mySwiper w-100 border border-1 z-0"
     style="height: 25rem"
   >
+    <!-- z-0為了不擋到SearchInput -->
+
     <!-- TODOWarning: Mac有正常滑動 但是沒有滑鼠拖曳 -->
     <!-- <swiper-slide -->
     <!-- class="d-flex justify-content-center align-items-center text-center" -->
