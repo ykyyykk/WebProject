@@ -1,5 +1,6 @@
 <template>
-  <div class="input-group mb-3 w-50">
+  <!-- 為了讓Cart中的numberInput 垂直置中取消mb-3 -->
+  <div class="input-group w-50">
     <button
       class="input-group-text btn btn-outline-secondary"
       @click="Decrease()"
@@ -32,7 +33,9 @@ export default {
   },
   methods: {
     Increase() {
+      // console.log(`this.max ${this.max}`);
       if (this.amount < this.max) {
+        // console.log(`amount: ${this.amount}`);
         this.$emit("update:amount", this.amount + 1);
       }
     },

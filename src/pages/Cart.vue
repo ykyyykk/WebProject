@@ -10,7 +10,7 @@
     >
       <div class="d-flex p-2 rounded border border-black mb-2">
         <input
-          @click="OnSelect(item.id, item.price)"
+          @click="OnCheck(item.id, item.price, item.buyAmount)"
           :checked="selectItems.includes(item.id)"
           class="ms-2 me-3"
           type="checkbox"
@@ -31,10 +31,12 @@
         <div class="d-block align-items-center w-100">
           <div class="mb-2">{{ item.name }}</div>
           <div class="mb-2">${{ item.price }}</div>
-          <div class="d-flex w-100">
+          <div class="d-flex align-items-center w-100">
+            <!-- :amount 是單向綁定 給子組件一個叫做amount的變數  -->
+            <!-- v-model:amount:item.buyAmount 是雙向綁定 子物件可以修改amount 進而改變父物件item.buyAmount -->
             <NumberInputComponent
               class="w-50"
-              v-model="this.buyAmount"
+              v-model:amount="item.buyAmount"
               :max="item.stock"
             />
             <button
@@ -43,6 +45,7 @@
             >
               <i class="fa-solid fa-trash"></i>
             </button>
+            <span class="ms-2">剩餘庫存: {{ item.stock }}</span>
           </div>
         </div>
       </div>
@@ -76,6 +79,7 @@ import NumberInputComponent from "../components/NumberInputComponent.vue";
 import axios from "axios";
 import { mapGetters } from "vuex";
 
+// TODOError: 現在還不能調整購物車物品的數量
 // TODOWarning: 購物車 同樣的物品應該要疊加
 // TODOWarning: 還不確定要不要開放訪客購買 如果不開放 要檢查userID不為0
 export default {
@@ -111,10 +115,8 @@ export default {
             },
           }
         );
-        // console.log(response.data);
         if (response.data.success) {
           this.cartItems = response.data.items;
-          console.log(this.cartItems);
         }
       } catch (error) {
         alert(`錯誤: ${error}`);
@@ -130,10 +132,8 @@ export default {
             userID: this.getUserID,
           }
         );
-        // console.log(response.data);
         //更改的資料筆數
         const changes = response.data.info.changes;
-        // console.log(changes);
         if (changes != 0) {
           this.cartItems = this.cartItems.filter((item) => item.id !== id);
           console.log("刪掉物品");
@@ -142,19 +142,20 @@ export default {
         alert(`錯誤: ${error}`);
       }
     },
-    OnCheck(id, price) {
-      //include比較適合簡單的東西 例如 值 但Object不適用
-      if (this.selectItems.includes(id)) {
+    // TODOWarning: 因為現在物品沒有疊加 如果check一個物品 另外一個相同的物品也會跟著check
+    OnCheck(id, price, amount) {
+      // include比較適合簡單的東西 例如 值 但Object不適用
+      const itemExists = this.selectItems.some((item) => item.id === id);
+      if (itemExists) {
         //移除特定的id pop是移除最後一個 slice要先拿index splice(index, 1) 有夠奇怪
-        this.selectItems = this.selectItems.filter(
-          (storedID) => storedID !== id
-        );
-        this.totalPrice -= Number(price);
+        this.selectItems = this.selectItems.filter((item) => item.id !== id);
+        this.totalPrice -= Number(price * amount);
         this.isSelectAll = false;
         return;
       }
-      this.selectItems.push(id);
-      this.totalPrice += Number(price);
+
+      this.selectItems.push({ id: id, amount: amount });
+      this.totalPrice += Number(price * amount);
     },
     OnSelectAll() {
       if (this.isSelectAll) {
@@ -167,10 +168,11 @@ export default {
       this.selectItems = [];
       this.totalPrice = 0;
       this.isSelectAll = true;
-      for (let i = 0; i < this.cartItems.length; i++) {
-        this.selectItems.push(this.cartItems[i].id);
-        this.totalPrice += this.cartItems[i].price;
-      }
+
+      this.cartItems.forEach((item) => {
+        this.selectItems.push({ id: item.id, amount: item.amount });
+        this.totalPrice += item.price * item.amount;
+      });
     },
     async OnCheckOut() {
       if (this.selectItems.length <= 0) {
@@ -178,9 +180,24 @@ export default {
         return;
       }
 
-      for (let i = 0; i < this.selectItems.length; i++) {
-        console.log(this.selectItems);
-        // this.DeleteFromCart(this.selectItems);
+      try {
+        for (let i = 0; i < this.selectItems.length; i++) {
+          console.log(`this.totalPrice: ${this.totalPrice}`);
+          console.log(`this.selectItems: ${this.selectItems}`);
+          const response = await axios.post(
+            "http://localhost:3000/api/purchaseItem",
+            {
+              id: this.selectItems[i].id,
+              amount: this.selectItems[i].amount,
+            }
+          );
+          console.log(`response: ${response}`);
+          if (response.data.success) {
+            await this.DeleteFromCart(this.selectItems[i].id);
+          }
+        }
+      } catch (error) {
+        alert(`Error: ${error}`);
       }
     },
   },

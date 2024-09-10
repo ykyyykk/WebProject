@@ -112,26 +112,30 @@ app.post("/api/sendverification", async (request, response) => {
 // });
 
 app.post("/api/purchaseItem", (request, response) => {
-  const { itemID, buyAmount } = request.body;
-
+  const { id, amount } = request.body;
   try {
-    const checkSql = `SELECT stock
+    const checkSql = `SELECT *
                       FROM Item
                       WHERE id = ?`;
     const checkStmt = db.prepare(checkSql);
-    const item = checkStmt.get(itemID);
+    const item = checkStmt.get(id);
 
     console.log(item);
-    // if (!item || item.stock < buyAmount) {
-    //   return response.status(400).json({ success: false, message: "庫存不足" });
-    // }
-    // item.stock -= buyAmount;
-    // const updateSql = `UPDATE Item
-    //                    SET stock = ?
-    //                    WHERE id = ?`;
-    // const updateStmt = db.prepare(updateSql);
-    // const info = checkStmt.run(item.stock, itemID);
-    response.status(200).json({ success: true, item: item });
+    if (!item) {
+      return response
+        .status(200)
+        .json({ success: false, message: "找不到物品" });
+    }
+    if (item.stock < amount) {
+      return response.status(200).json({ success: false, message: "庫存不足" });
+    }
+    item.stock -= amount;
+    const updateSql = `UPDATE Item
+                       SET stock = ?
+                       WHERE id = ?`;
+    const updateStmt = db.prepare(updateSql);
+    const info = updateStmt.run(item.stock, id);
+    response.status(200).json({ success: true, item: info });
   } catch (error) {
     return response.status(500).json({ error: error.message });
   }
@@ -153,12 +157,13 @@ app.post("/api/deletefromcart", (request, response) => {
 app.get("/api/getcartitems", (request, response) => {
   // 包起來才能抓到value 不然是body
   const { userID } = request.query;
+
   // SQL 查詢通過 userID 在 Cart 表中查詢，並使用 itemID 查找 Item 表中的對應項目
   const sql = `
-    SELECT Item.* 
+    SELECT Item.*, Cart.buyAmount
     FROM Cart 
     JOIN Item ON Cart.itemID = Item.id 
-    WHERE Cart.userID = ?
+    WHERE Cart.userID = ?;
   `;
 
   try {
