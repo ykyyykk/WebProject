@@ -11,6 +11,7 @@ import NotFound from "../pages/NotFound.vue";
 import ItemDetail from "../pages/ItemDetail.vue";
 import SearchResult from "../pages/SearchResult.vue";
 import Grid from "../pages/Grid.vue";
+import Test from "../pages/Test.vue";
 
 const routes = [
   {
@@ -79,6 +80,11 @@ const routes = [
     path: "/searchresult",
     name: "SearchResult",
     component: SearchResult,
+  },
+  {
+    path: "/test",
+    name: "Test",
+    component: Test,
   },
   {
     // 404轉址

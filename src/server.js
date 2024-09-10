@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import path from "path";
 import cors from "cors";
 import { fileURLToPath } from "url";
+import nodemailer from "nodemailer";
 // import fs from "fs"; // node.js內建
 
 const __filename = fileURLToPath(import.meta.url);
@@ -16,9 +17,63 @@ const dbPath = path.resolve(__dirname, "data/ShoppingWebsite.db");
 // console.log(`dbPath: ${dbPath}`);
 
 app.use(cors());
+app.use(express.json());
 app.use(bodyParser.json());
 
 const db = new Database(dbPath, { verbose: console.log });
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+
+  // pass不能更改 後面那一串是 應用程式密碼
+  auth: {
+    user: "louise87276@gmail.com",
+    pass: "hssp gwtv aftv otkb",
+  },
+});
+
+app.post("/api/checkverification", async (request, response) => {
+  const { email, verificationCode } = request.body;
+  const sql = `SELECT * FROM Verification WHERE email = ? AND code = ?`;
+
+  try {
+    const stmt = db.prepare(sql);
+    const row = stmt.get(email, verificationCode);
+    if (row) {
+      response.status(200).json({ success: true, row: row });
+    } else {
+      response.status(200).json({ success: false, message: "驗證碼錯誤" });
+    }
+  } catch (error) {
+    response.status(500).json({ error: error.message });
+  }
+});
+
+app.post("/api/sendverification", async (request, response) => {
+  const { email } = request.body;
+  const verificationCode = Math.floor(100000 + Math.random() * 900000);
+  const sql = `INSERT INTO Verification (email, code, createdAt, expiresAt) VALUES(?,?,?,?)`;
+  const createdAt = Date.now();
+  const expiresAt = Date.now() + 300000; //單位是毫秒
+
+  const mailOption = {
+    from: "louise87276@gmail.com",
+    to: email,
+    subject: "你的驗證碼",
+    text: `你的驗證碼是: ${verificationCode}`,
+  };
+
+  try {
+    const stmt = db.prepare(sql);
+    // 不加toString()後面會有.0
+    stmt.run(email, verificationCode.toString(), createdAt, expiresAt);
+    await transporter.sendMail(mailOption);
+    response.status(200).send("驗證碼已發送");
+  } catch (error) {
+    console.error(`發送驗證碼錯誤: ${error}`);
+    return response.status(500).json({ error: error.message });
+  }
+});
 
 // 失敗 嘗試讀取public/banner
 // app.get("/api/images", (req, res) => {
