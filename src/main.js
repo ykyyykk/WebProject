@@ -47,7 +47,6 @@ router.beforeEach(async (to, from, next) => {
     // 在.vue以外的地方只能使用store.dispatch
     // 他的功能等同於...mapActions 但 ...mapActions只能在.vue以內使用
     store.dispatch("SetAllItems", { items: response.data.items });
-    // console.log(`取得所有物品成功: ${response.data.items}`);
 
     //嘗試動態讀取banner 失敗
     // store.dispatch("FetchPages");

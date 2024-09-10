@@ -51,10 +51,12 @@ export default {
   },
   components: { HeaderComponent, ItemComponent },
   computed: {
-    ...mapGetters(["getItems"]),
+    ...mapGetters(["getItems", "getSearchQuery"]),
     // 給v-for用的
     items() {
-      return this.getItems;
+      return this.getItems.filter((item) =>
+        item.name.toLowerCase().includes(this.getSearchQuery.toLowerCase())
+      );
     },
   },
   methods: {

@@ -27,6 +27,7 @@ export default createStore({
     //   email: "",
     //   password: "",
     // },
+    searchQuery: "",
     pages,
   },
   mutations: {
@@ -44,15 +45,14 @@ export default createStore({
     //   // console.log(user);
     //   localStorage.setItem("user", user);
     // },
-    SetItems(state, items) {
+    SetAllItems(state, items) {
       state.items = items;
     },
     SetPages(state, pages) {
       state.pages = pages;
     },
-    AddItem(state, newItem) {
-      // 新增物品第四步
-      state.items.push(newItem);
+    SetSearchQuery(state, searchQuery) {
+      state.searchQuery = searchQuery;
     },
   },
   actions: {
@@ -80,8 +80,11 @@ export default createStore({
       localStorage.setItem("isLogin", false);
       localStorage.setItem("userID", 0);
     },
+    SetSearchQuery({ commit }, { searchQuery }) {
+      commit("SetSearchQuery", searchQuery);
+    },
     SetAllItems({ commit }, { items }) {
-      commit("SetItems", items);
+      commit("SetAllItems", items);
     },
     // 失敗 嘗試讀取public/banner
     // async FetchPages({ commit }) {
@@ -100,6 +103,7 @@ export default createStore({
     isLogin: (state) => state.isLogin,
     getUserID: (state) => state.userID,
     getPages: (state) => state.pages,
+    getSearchQuery: (state) => state.searchQuery,
     // getUser: (state) => state.user,
     // isLogin: (state) => state.user.isLogin,
     // getUserID: (state) => state.user.userID,

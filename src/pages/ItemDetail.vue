@@ -101,7 +101,6 @@ export default {
       //   return;
       // }
       try {
-        //TODOWarning: 做一個檢查有沒有超過最大最大庫存
         console.log(`amount: ${this.amount}`);
         const response = await axios.post(
           "http://localhost:3000/api/addtocart",

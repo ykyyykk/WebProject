@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex/dist/vuex.cjs.js";
+import { mapGetters, mapActions } from "vuex/dist/vuex.cjs.js";
 
 export default {
   data() {
@@ -41,6 +41,7 @@ export default {
     ...mapGetters(["getItems"]),
   },
   methods: {
+    ...mapActions(["SetSearchQuery"]),
     OnInput() {
       // 中文要等Enter才會有結果
       // input字串字數
@@ -48,6 +49,8 @@ export default {
         this.filterItems = this.getItems.filter((item) =>
           item.name.toLowerCase().includes(this.searchQuery.toLowerCase())
         );
+
+        this.SetSearchQuery({ searchQuery: this.searchQuery });
         this.showDropdown = this.filterItems.length > 0;
       } else {
         this.showDropdown = false;
@@ -56,7 +59,7 @@ export default {
     SelectSearchItem(item) {
       this.searchQuery = item.name;
       this.showDropdown = false;
-      // console.log(`SelectItem: ${item}`);
+      this.SetSearchQuery({ searchQuery: this.searchQuery });
     },
     HandleClickOutside(event) {
       const searchComponent = this.$el;

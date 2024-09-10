@@ -49,7 +49,6 @@
           aria-describedby="basic-addon1"
         />
 
-        <!-- TODOWarning: 設定1分鐘後才能再取驗證碼 -->
         <button
           @click="OnSendVerificationCode()"
           class="btn btn-primary"
@@ -83,7 +82,6 @@
           v-model="verificationCode"
           aria-label="verification code"
         />
-        <!-- TODOWarning: 當驗證碼.length == 6 && 驗證碼 != last驗證碼 checking == false -->
         <button
           @click="CheckVerification()"
           class="btn btn-primary"
