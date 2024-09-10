@@ -6,7 +6,7 @@
     class="d-flex flex-column justify-content-center align-items-center p-0 container overflow-x-hidden"
   >
     <div
-      class="d-block justify-content-center align-items-center mt-5 p-2 w-100"
+      class="d-block justify-content-center align-items-center mt-5 p-3 w-100"
     >
       <div
         class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"

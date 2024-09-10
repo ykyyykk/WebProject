@@ -8,7 +8,7 @@
       :key="item.id"
       class="row d-flex justify-content-start align-items-center g-2"
     >
-      <div class="d-flex p-2 rounded border border-black mb-2">
+      <div class="d-flex p-3 rounded border border-black mb-2">
         <input
           @click="OnCheck(item.id, item.price, item.buyAmount)"
           :checked="selectItems.includes(item.id)"
@@ -65,7 +65,7 @@
     </div>
 
     <div>
-      <button @click="OnCheckOut" class="btn btn-primary fs-4 fw-bold">
+      <button @click="OnCheckOut" class="btn btn-primary fs-4 fw-bolder">
         結帳
       </button>
     </div>

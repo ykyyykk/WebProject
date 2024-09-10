@@ -12,8 +12,8 @@
     :mousewheel="true"
     :keyboard="true"
     :modules="modules"
-    class="mySwiper w-100 border border-1 z-0"
-    style="height: 25rem"
+    class="mySwiper shadow-sm w-100 z-0"
+    style="height: 20rem"
   >
     <!-- z-0為了不擋到SearchInput -->
 
@@ -31,7 +31,8 @@
       v-for="page in pages"
       :key="page"
       class="d-flex justify-content-center align-items-center text-center"
-      ><img :src="page.src" class="d-block w-100 h-100 object-fit-contain" />
+    >
+      <img :src="page.src" class="d-block w-100 h-100 object-fit-contain" />
     </swiper-slide>
   </swiper>
 </template>

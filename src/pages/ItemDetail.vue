@@ -20,7 +20,7 @@
       ]"
     />
 
-    <div class="p-2">
+    <div class="p-3">
       <p class="fs-5 fw-bolder">
         {{ item.name }}
       </p>

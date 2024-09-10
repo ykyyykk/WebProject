@@ -40,11 +40,7 @@
       </div>
     </div>
     <div class="row d-flex justify-content-start align-items-center p-3">
-      <div
-        v-for="item in items"
-        :key="item.id"
-        class="card col-lg-3 col-sm-4 col-6"
-      >
+      <div v-for="item in items" :key="item.id" class="col-lg-3 col-sm-4 col-6">
         <ItemComponent :item="item" />
       </div>
     </div>

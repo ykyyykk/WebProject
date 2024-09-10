@@ -1,6 +1,6 @@
 <template>
   <header
-    class="d-flex justify-content-between align-items-center p-2"
+    class="d-flex justify-content-between align-items-center p-3"
     style="height: 4rem"
   >
     <div class="d-flex justify-content-start align-items-center w-100">
@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <div class="d-flex justify-content-end align-items-center gap-2">
+    <div class="d-flex justify-content-end align-items-center gap-3">
       <button
         @click="ToggleSearchWindow()"
         class="border border-0 bg-transparent d-md-none"
