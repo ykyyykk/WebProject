@@ -37,7 +37,6 @@
           />
         </div>
 
-        <!-- TODOError: 目前還沒有即時更新 -->
         <div>剩餘庫存: {{ item.stock }}</div>
       </div>
       <div class="w-100 d-flex justify-content-between mb-3">
