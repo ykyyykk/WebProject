@@ -16,6 +16,7 @@
         class="list-group-item"
       >
         <!-- TODOWarning: 這裡會Warning 跟中文無關 數字也會 只有在找到東西才會觸發 search 改 aaa 沒用  -->
+        <!-- TODOAdd: XS搜尋時 按下Enter 就後關閉searchInputComponent -->
         <router-link
           :to="{ name: 'SearchResult', params: { search: this.searchQuery } }"
           class="stretched-link text-decoration-none text-black"

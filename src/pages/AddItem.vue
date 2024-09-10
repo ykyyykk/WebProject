@@ -97,6 +97,7 @@ export default {
     SetStatus(status) {
       this.status = status;
     },
+    // TODOAdd: 圖片上傳
     async AddNewItem() {
       try {
         const imagePaths = {

@@ -3,6 +3,8 @@
   <!-- TODOWarning: Mac有正常滑動 但是沒有滑鼠拖曳 -->
   <!-- TODOWarning: 在每個tag 都加v-touch:pan 會warning暫時刪掉 -->
   <!-- TODOWarning: 在swiper加入v-touch:pinch 會Warning暫時刪掉 -->
+  <!-- TODOAdd: 設定秒數 自動輪播 -->
+  <!-- TODOAdd: 廣告XS 一次一張 LG一次兩張-->
   <swiper
     :cssMode="true"
     :navigation="true"

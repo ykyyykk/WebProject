@@ -5,6 +5,7 @@
     <div class="d-flex justify-content-between align-items-center">
       <div>{{ items.length }} 件商品</div>
 
+      <!-- TODOAdd: 銷量Sort -->
       <div class="btn-group">
         <button
           type="button"
@@ -23,6 +24,16 @@
           <li>
             <a @click="ChangeSortTag('價格: 高至低')" class="dropdown-item"
               >價格: 高至低</a
+            >
+          </li>
+          <li>
+            <a @click="ChangeSortTag('銷量: 高至低')" class="dropdown-item"
+              >銷量: 高至低</a
+            >
+          </li>
+          <li>
+            <a @click="ChangeSortTag('銷量: 高至低')" class="dropdown-item"
+              >銷量: 高至低</a
             >
           </li>
         </ul>
@@ -54,9 +65,20 @@ export default {
     ...mapGetters(["getItems", "getSearchQuery"]),
     // 給v-for用的
     items() {
-      return this.getItems.filter((item) =>
+      let filterItems = this.getItems.filter((item) =>
         item.name.toLowerCase().includes(this.getSearchQuery.toLowerCase())
       );
+      switch (this.sortTag) {
+        case "價格: 低至高":
+          return filterItems.sort(function (a, b) {
+            return a.price - b.price;
+          });
+        case "價格: 高至低":
+          return filterItems.sort(function (a, b) {
+            return b.price - a.price;
+          });
+      }
+      return filterItems;
     },
   },
   methods: {
