@@ -50,7 +50,24 @@ app.post("/api/checkverification", async (request, response) => {
 });
 
 app.post("/api/sendverification", async (request, response) => {
+  //檢查是否重複註冊
   const { email } = request.body;
+  const checkSql = `SELECT email FROM User WHERE email = ?`;
+  try {
+    const stmt = db.prepare(checkSql);
+    const row = stmt.get(email);
+    console.log(row);
+    if (row) {
+      response
+        .status(200)
+        .json({ success: false, message: "此信箱已經註冊過了" });
+      return;
+    }
+  } catch (error) {
+    console.error(`發送驗證碼錯誤: ${error}`);
+    return response.status(500).json({ error: error.message });
+  }
+
   const verificationCode = Math.floor(100000 + Math.random() * 900000);
   const sql = `INSERT INTO Verification (email, code, createdAt, expiresAt) VALUES(?,?,?,?)`;
   const createdAt = Date.now();
@@ -68,7 +85,7 @@ app.post("/api/sendverification", async (request, response) => {
     // 不加toString()後面會有.0
     stmt.run(email, verificationCode.toString(), createdAt, expiresAt);
     await transporter.sendMail(mailOption);
-    response.status(200).send("驗證碼已發送");
+    response.status(200).json({ success: true, message: "驗證碼已發送" });
   } catch (error) {
     console.error(`發送驗證碼錯誤: ${error}`);
     return response.status(500).json({ error: error.message });

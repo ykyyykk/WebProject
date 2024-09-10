@@ -53,9 +53,9 @@
         <button
           @click="OnSendVerificationCode()"
           class="btn btn-primary"
-          :disabled="CanSendVerification"
+          :disabled="CantSendVerification"
         >
-          發送驗證碼
+          發送驗證碼 {{ this.GetDuration }}
         </button>
       </div>
 
@@ -87,7 +87,7 @@
         <button
           @click="CheckVerification()"
           class="btn btn-primary"
-          :disabled="CanCheckVerification"
+          :disabled="CantCheckVerification"
         >
           確認
         </button>
@@ -156,13 +156,14 @@ export default {
       email: "",
       password: "",
       verificationCode: "",
-      codeSent: false,
       verified: false,
       checking: false,
+      sendDuration: 0,
+      intervalID: "",
     };
   },
   computed: {
-    CanCheckVerification() {
+    CantCheckVerification() {
       return (
         this.name == "" ||
         this.phoneNumber == "" ||
@@ -171,14 +172,26 @@ export default {
         this.verificationCode.length < 6
       );
     },
-    CanSendVerification() {
-      return this.email == "";
+    CantSendVerification() {
+      return this.email == "" || this.sendDuration > 0;
+    },
+    GetDuration() {
+      if (this.sendDuration <= 0) {
+        return "";
+      }
+
+      const minutes = Math.floor(this.sendDuration / 60000); // 計算分鐘
+      const seconds = Math.floor((this.sendDuration % 60000) / 1000); // 計算秒數
+
+      // 確保秒數顯示兩位數，如 00:01
+      const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+
+      return `${minutes}:${formattedSeconds}`;
     },
   },
   methods: {
     async Register() {
       try {
-        //TODOWarning: 做一個檢查
         const response = await axios.post(
           "http://localhost:3000/api/register",
           {
@@ -199,15 +212,28 @@ export default {
         return;
       }
       try {
+        // await 等太久 先關 等錯誤再開
+        // 60000 毫秒等於 1 分鐘
+        this.sendDuration = 60000;
+        this.ClearTimer();
+        this.intervalID = setInterval(() => {
+          this.TimerCheck();
+        }, 1000);
+
         const response = await axios.post(
           "http://localhost:3000/api/sendverification",
           {
             email: this.email,
           }
         );
-        this.codeSent = true;
+        if (!response.data.success) {
+          this.ClearTimer();
+          alert(`${response.data.message}`);
+          return;
+        }
         alert(`已寄送驗證信至: ${this.email}`);
       } catch (error) {
+        this.ClearTimer();
         alert(`驗證信寄送失敗: ${error}`);
       }
     },
@@ -230,6 +256,16 @@ export default {
       } catch (error) {
         alert(`驗證碼錯誤: ${error}`);
       }
+    },
+    TimerCheck() {
+      this.sendDuration -= 1000;
+      if (this.sendDuration <= 0) {
+        this.ClearTimer();
+      }
+    },
+    ClearTimer() {
+      this.sendDuration = 0;
+      clearInterval(this.intervalID);
     },
   },
   components: { HeaderComponent, SmallHeaderComponent },

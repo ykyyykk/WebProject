@@ -83,7 +83,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["isLogin"]),
+    ...mapGetters(["isLogin", "getUsername"]),
     // ...mapGetters(["isLogin", "getUser"]),
     CheckLoginStatus() {
       // console.log(this.getUser);
