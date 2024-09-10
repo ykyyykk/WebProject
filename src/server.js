@@ -129,12 +129,15 @@ app.post("/api/purchaseItem", (request, response) => {
     if (item.stock < amount) {
       return response.status(200).json({ success: false, message: "庫存不足" });
     }
+
     item.stock -= amount;
+    item.saleAmount += amount;
     const updateSql = `UPDATE Item
-                       SET stock = ?
+                       SET stock = ?, saleAmount = ? 
                        WHERE id = ?`;
     const updateStmt = db.prepare(updateSql);
-    const info = updateStmt.run(item.stock, id);
+    const info = updateStmt.run(item.stock, item.saleAmount, id);
+
     response.status(200).json({ success: true, item: info });
   } catch (error) {
     return response.status(500).json({ error: error.message });

@@ -27,8 +27,8 @@
             >
           </li>
           <li>
-            <a @click="ChangeSortTag('銷量: 高至低')" class="dropdown-item"
-              >銷量: 高至低</a
+            <a @click="ChangeSortTag('銷量: 低至高')" class="dropdown-item"
+              >銷量: 低至高</a
             >
           </li>
           <li>
@@ -76,6 +76,14 @@ export default {
         case "價格: 高至低":
           return filterItems.sort(function (a, b) {
             return b.price - a.price;
+          });
+        case "銷量: 低至高":
+          return filterItems.sort(function (a, b) {
+            return a.saleAmount - b.saleAmount;
+          });
+        case "銷量: 高至低":
+          return filterItems.sort(function (a, b) {
+            return b.saleAmount - a.saleAmount;
           });
       }
       return filterItems;
