@@ -15,7 +15,7 @@
 
   <div id="itmesContainer" class="m-0 w-100 p-0">
     <div
-      class="row d-flex justify-content-center align-items-center p-3 w-100 m-0"
+      class="row d-flex justify-content-start align-items-center p-3 w-100 m-0"
     >
       <div v-for="item in items" :key="item.id" class="col-lg-3 col-sm-4 col-6">
         <ItemComponent :item="item" />

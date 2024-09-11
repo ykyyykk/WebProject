@@ -36,18 +36,35 @@ router.beforeEach(async (to, from, next) => {
   //   // return;
   // }
   try {
+    let userID = 0;
     if (
       localStorage.getItem("userID") != null &&
       localStorage.getItem("userID") != 0
     ) {
-      const userID = localStorage.getItem("userID");
+      userID = localStorage.getItem("userID");
       store.dispatch("SetLogin", { userID: userID });
       console.log(`userID: ${userID}`);
     }
-    const response = await axios.get("http://localhost:3000/api/getallitem");
+    const allItemsResponse = await axios.get(
+      "http://localhost:3000/api/getallitem"
+    );
     // 在.vue以外的地方只能使用store.dispatch
     // 他的功能等同於...mapActions 但 ...mapActions只能在.vue以內使用
-    store.dispatch("SetAllItems", { items: response.data.items });
+    store.dispatch("SetAllItems", { items: allItemsResponse.data.items });
+
+    const cartItemsResponse = await axios.get(
+      "http://localhost:3000/api/getcartitems",
+      {
+        params: {
+          userID: userID,
+        },
+      }
+    );
+    if (cartItemsResponse.data.success) {
+      store.dispatch("SetCartItems", {
+        cartItems: cartItemsResponse.data.items,
+      });
+    }
 
     //嘗試動態讀取banner 失敗
     // store.dispatch("FetchPages");

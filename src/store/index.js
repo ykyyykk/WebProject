@@ -16,6 +16,7 @@ const pages = [
 export default createStore({
   state: {
     items: [],
+    cartItems: [],
     isLogin: false,
     userID: 0,
     // 直接存User失敗 要不斷轉JSON 轉Object 因為localStorage.setItem()只能存字串
@@ -54,6 +55,9 @@ export default createStore({
     SetSearchQuery(state, searchQuery) {
       state.searchQuery = searchQuery;
     },
+    SetCartItems(state, cartItems) {
+      state.cartItems = cartItems;
+    },
   },
   actions: {
     //不建議直接修改state的數值 違反vuex的設計原則
@@ -86,6 +90,9 @@ export default createStore({
     SetAllItems({ commit }, { items }) {
       commit("SetAllItems", items);
     },
+    SetCartItems({ commit }, { cartItems }) {
+      commit("SetCartItems", cartItems);
+    },
     // 失敗 嘗試讀取public/banner
     // async FetchPages({ commit }) {
     //   try {
@@ -100,6 +107,7 @@ export default createStore({
   },
   getters: {
     getItems: (state) => state.items,
+    getCartItems: (state) => state.cartItems,
     isLogin: (state) => state.isLogin,
     getUserID: (state) => state.userID,
     getPages: (state) => state.pages,
