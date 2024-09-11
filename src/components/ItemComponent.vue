@@ -17,16 +17,16 @@
         class="d-flex justify-content-center align-content-center"
         style="height: 300px"
       >
+        <!-- TODORWD -->
+        <!-- 統一300px太高 auto不統一但剛好 -->
+        <!-- style="height: auto" -->
         <img :src="item.imageUrl" class="w-100 object-fit-scale" />
       </div>
     </router-link>
     <div class="d-flex justify-content-between align-items-center">
-      <div class="">
-        <p
-          class="fs-6 fw-bolder m-0"
-          style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap"
-        >
-          {{ Overflow(item.name) }}
+      <div id="left" class="col-xxl-11 col-10">
+        <p class="fs-6 fw-bolder m-0 single-ellipsis">
+          {{ item.name }}
         </p>
         <span>${{ item.price }}</span>
       </div>
@@ -35,6 +35,10 @@
         @click="ToggleCartItem(item.id, $event)"
         :class="[
           'btn',
+          'col-xxl-1',
+          'col-2',
+          'd-flex',
+          'justify-content-center',
           IsItemInCart(item.id) ? 'btn-danger' : 'btn-outline-danger',
         ]"
       >
@@ -57,26 +61,10 @@ export default {
   },
   computed: {
     ...mapGetters(["getUserID", "getCartItems"]),
-    getTextLength() {
-      // TODORWD: 這邊沒有RWD 手動去拉 還是會超出界線
-      if (window.innerWidth <= 575) return 16;
-      else if (window.innerWidth <= 767) return 14;
-      else if (window.innerWidth <= 991) return 22;
-      else if (window.innerWidth <= 1199) return 20;
-      else if (window.innerWidth <= 1399) return 25;
-      else if (window.innerWidth <= 1920) return 30;
-    },
   },
   methods: {
     IsItemInCart(id) {
       return this.getCartItems.some((cartItem) => cartItem.id === id);
-    },
-    Overflow(itemName) {
-      if (itemName.length > this.getTextLength) {
-        itemName = itemName.trimStart();
-        itemName = itemName.slice(0, this.getTextLength) + "...";
-      }
-      return itemName;
     },
     async ToggleCartItem(id, event) {
       // 直接把button傳進來
@@ -129,3 +117,12 @@ export default {
   },
 };
 </script>
+
+<style>
+/* 超過第二行被...取代 */
+.single-ellipsis {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+</style>

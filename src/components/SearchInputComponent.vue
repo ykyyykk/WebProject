@@ -2,6 +2,7 @@
   <input
     v-model="searchQuery"
     @input="OnInput()"
+    v-on:keyup.enter="this.ToggleSearchWindow()"
     type="text"
     class="form-control"
     placeholder="查詢"
@@ -29,8 +30,13 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex/dist/vuex.cjs.js";
+import { useRouter } from "vue-router";
 
 export default {
+  setup() {
+    const router = useRouter();
+    return { router };
+  },
   data() {
     return {
       searchQuery: "",
@@ -66,6 +72,14 @@ export default {
       const searchComponent = this.$el;
       if (!searchComponent.contains(event.target)) {
         this.showDropdown = false;
+      }
+    },
+    ToggleSearchWindow() {
+      this.showDropdown = false;
+      this.$emit("ToggleSearchWindow");
+      // 檢查當前路由是否已經是SearchResult
+      if (this.$route.name !== "SearchResult") {
+        this.router.push({ name: "SearchResult" });
       }
     },
   },

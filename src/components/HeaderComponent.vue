@@ -65,7 +65,7 @@
     style="top: 4rem"
     v-if="isSearchWindowOpen"
   >
-    <SearchInputComponent />
+    <SearchInputComponent @ToggleSearchWindow="ToggleSearchWindow" />
   </div>
 </template>
 
