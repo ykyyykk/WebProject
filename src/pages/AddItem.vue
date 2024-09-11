@@ -117,17 +117,20 @@ export default {
     },
     async Test() {
       try {
-        console.log(`this.productImages: ${this.productImages}`);
-
         const formData = new FormData();
         this.productImages.forEach((image) => {
-          formData.append("images", image); // 'images' should match the name used in the server-side code
+          formData.append("images", image.file);
         });
 
         // Send the FormData object in the POST request
         const response = await axios.post(
           "http://localhost:3000/api/upload",
-          formData
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
         );
 
         console.log(response.data); // Log the response for debugging

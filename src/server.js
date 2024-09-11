@@ -4,14 +4,32 @@ import bodyParser from "body-parser";
 import path from "path";
 import cors from "cors";
 import multer from "multer";
+//為了使用__dirname 和 __filename
 import { fileURLToPath } from "url";
 import nodemailer from "nodemailer";
 // import fs from "fs"; // node.js內建
 
+// WebProject/
+// │
+// ├── public/         # 在src之外的東西不會被打包
+// │   └── img/        # 客戶上傳的圖片
+// │
+// ├── src/            #
+// │   └── assets/     # 其他靜態的文件
+// │       └── logo/   # logo icon之類的
+// │
+// └── server.js       # 伺服器Code
+
+//設定__filename 為server.目前位置 所以是D:\Desktop\Git\WebProject\src\server.js
 const __filename = fileURLToPath(import.meta.url);
+//設定__dirname 為目前__filename 的上一層 所以是D:\Desktop\Git\WebProject\src
 const __dirname = path.dirname(__filename);
 
+// console.log(`__filename: ${__filename}`);
+// console.log(`__dirname: ${__dirname}`);
+
 const app = express();
+// 拼接絕對路徑
 const dbPath = path.resolve(__dirname, "data/ShoppingWebsite.db");
 
 // console.log(`dbPath: ${dbPath}`);
@@ -19,14 +37,16 @@ const dbPath = path.resolve(__dirname, "data/ShoppingWebsite.db");
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, "public"))); // 提供靜態文件
+// 提供靜態文件的路徑
+app.use(express.static(path.join(__dirname, "public")));
 
+// verbose是將SQL的輸出 放在console
 const db = new Database(dbPath, { verbose: console.log });
 
 const storage = multer.diskStorage({
   destination: (request, file, cb) => {
     //指定儲存路徑
-    cb(null, path.join(__dirname, "public/img"));
+    cb(null, path.join(__dirname, "../public/img"));
   },
   filename: (request, file, cb) => {
     //用時間當欓名

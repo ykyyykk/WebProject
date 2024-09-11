@@ -103,7 +103,6 @@ export default {
             url: URL.createObjectURL(files[i]),
             file: files[i],
           });
-          console.log(URL.createObjectURL(files[i]));
         }
       }
       this.$emit("update:images", this.images);
