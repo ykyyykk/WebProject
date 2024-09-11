@@ -6,9 +6,5 @@ import vue from "@vitejs/plugin-vue";
 // MPA會在這邊做page設定 有點像是router.js做的事
 export default defineConfig({
   plugins: [vue()],
-  publicPath: "/WebProject/",
+  base: "/WebProject/", // 这相当于 vue.config.js 中的 publicPath
 });
-
-// module.exports = {
-//   publicPath: "/WebProject/",
-// };
