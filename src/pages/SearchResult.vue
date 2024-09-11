@@ -5,7 +5,6 @@
     <div class="d-flex justify-content-between align-items-center">
       <div>{{ items.length }} 件商品</div>
 
-      <!-- TODOAdd: 銷量Sort -->
       <div class="btn-group">
         <button
           type="button"
