@@ -2,28 +2,31 @@
   <HeaderComponent />
   <SmallHeaderComponent pageTitle="新增商品" />
 
-  <form @submit.prevent="AddNewItem()" class="p-3 w-100 h-100 mt-5">
+  <form @submit.prevent="Test()" class="p-3 w-100 h-100 mt-5">
     <div class="mb-3">
-      <label class="form-label">商品圖片</label>
-      <input class="form-control" type="file" id="product_image" />
+      <label class="form-label fw-bolder">商品圖片</label>
+      <FileInputComponent v-model:images="productImages" />
     </div>
 
     <div class="mb-3">
-      <label class="form-label">商品名稱</label>
+      <label class="form-label fw-bolder">商品名稱</label>
       <input
-        class="form-control"
+        class="form-control border border-danger border-2"
         v-model="name"
         aria-describedby="product_name"
       />
     </div>
 
     <div class="mb-3">
-      <label class="form-label">商品描述</label>
-      <input v-model="detail" class="form-control" />
+      <label class="form-label fw-bolder">商品描述</label>
+      <input
+        v-model="detail"
+        class="form-control border border-danger border-2"
+      />
     </div>
 
     <div class="dropdown mb-3">
-      <span>商品分類: </span>
+      <span class="fw-bolder">商品分類: </span>
       <button
         class="btn btn-secondary dropdown-toggle"
         type="button"
@@ -42,17 +45,23 @@
     </div>
 
     <div class="mb-3">
-      <label class="form-label">價格</label>
-      <input v-model="price" id="product_price" class="form-control" />
+      <label class="form-label fw-bolder">價格</label>
+      <input
+        v-model="price"
+        class="form-control border border-danger border-2"
+      />
     </div>
 
     <div class="mb-3">
-      <label class="form-label">商品數量</label>
-      <input v-model="stock" id="product_price" class="form-control" />
+      <label class="form-label fw-bolder">商品數量</label>
+      <input
+        v-model="stock"
+        class="form-control border border-danger border-2"
+      />
     </div>
 
     <div class="dropdown mb-3">
-      <span>商品狀態: </span>
+      <span class="fw-bolder">商品狀態: </span>
       <button
         class="btn btn-secondary dropdown-toggle"
         type="button"
@@ -68,7 +77,9 @@
     </div>
 
     <!-- 不能把 @submit.prevent="AddNewItem()" 放這邊 會清空 而且不呼叫 -->
-    <button class="btn btn-primary">新增物品</button>
+    <button type="submit" class="btn btn-primary" :disabled="!canUpload">
+      新增物品
+    </button>
   </form>
 </template>
 
@@ -76,20 +87,27 @@
 import axios from "axios";
 import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
+import FileInputComponent from "../components/FileInputComponent.vue";
 
 export default {
   data() {
     return {
-      categories: ["處理器", "主機板", "記憶體", "硬碟", "顯示卡"],
+      productImages: [],
       name: "",
       detail: "",
+      categories: ["處理器", "主機板", "記憶體", "硬碟", "顯示卡"],
       selectCategory: "處理器",
       price: 0,
       stock: 0,
       status: "全新",
     };
   },
-  components: { HeaderComponent, SmallHeaderComponent },
+  components: { HeaderComponent, SmallHeaderComponent, FileInputComponent },
+  computed: {
+    canUpload() {
+      return this.productImages.length > 0;
+    },
+  },
   methods: {
     SetCategory(category) {
       this.selectCategory = category;
@@ -97,8 +115,33 @@ export default {
     SetStatus(status) {
       this.status = status;
     },
+    async Test() {
+      try {
+        console.log(`this.productImages: ${this.productImages}`);
+
+        const formData = new FormData();
+        this.productImages.forEach((image) => {
+          formData.append("images", image); // 'images' should match the name used in the server-side code
+        });
+
+        // Send the FormData object in the POST request
+        const response = await axios.post(
+          "http://localhost:3000/api/upload",
+          formData
+        );
+
+        console.log(response.data); // Log the response for debugging
+      } catch (error) {
+        alert(`上傳失敗: ${error}`);
+      }
+    },
     // TODOAdd: 圖片上傳
     async AddNewItem() {
+      console.log(
+        "file: AddItem.vue:132  AddNewItem  AddNewItem: ",
+        AddNewItem
+      );
+      console.log("商品圖片:", this.productImages);
       try {
         const imagePaths = {
           處理器: "img/CPU.jpg",

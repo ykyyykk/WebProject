@@ -39,12 +39,12 @@
 
     <div class="mb-3">
       <label class="form-label">價格</label>
-      <input id="product_price" class="form-control" />
+      <input class="form-control" />
     </div>
 
     <div class="mb-3">
       <label class="form-label">商品數量</label>
-      <input id="product_price" class="form-control" />
+      <input class="form-control" />
     </div>
 
     <div class="dropdown mb-3">

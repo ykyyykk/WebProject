@@ -3,6 +3,7 @@ import Database from "better-sqlite3";
 import bodyParser from "body-parser";
 import path from "path";
 import cors from "cors";
+import multer from "multer";
 import { fileURLToPath } from "url";
 import nodemailer from "nodemailer";
 // import fs from "fs"; // node.js內建
@@ -11,7 +12,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-// app.use(express.static(path.join(__dirname, 'public')));
 const dbPath = path.resolve(__dirname, "data/ShoppingWebsite.db");
 
 // console.log(`dbPath: ${dbPath}`);
@@ -19,8 +19,32 @@ const dbPath = path.resolve(__dirname, "data/ShoppingWebsite.db");
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, "public"))); // 提供靜態文件
 
 const db = new Database(dbPath, { verbose: console.log });
+
+const storage = multer.diskStorage({
+  destination: (request, file, cb) => {
+    //指定儲存路徑
+    cb(null, path.join(__dirname, "public/img"));
+  },
+  filename: (request, file, cb) => {
+    //用時間當欓名
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
+const upload = multer({ storage });
+
+app.post("/api/upload", upload.array("images"), (request, response) => {
+  console.log(`request: ${JSON.stringify(request.body)}`);
+  console.log(`Number of files uploaded: ${request.files.length}`);
+  console.log(request.files);
+  if (!request.files || request.files.length === 0) {
+    console.log("失敗");
+    return response.status(400).json({ error: "請選擇要上傳的圖片" });
+  }
+  response.json({ message: "圖片上傳成功", files: request.files });
+});
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
