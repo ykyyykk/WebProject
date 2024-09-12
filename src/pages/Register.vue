@@ -96,6 +96,7 @@
       <button
         class="btn btn-outline-dark w-100 mb-3 d-flex justify-content-center align-items-center"
       >
+        <!-- TODOAdd:Google註冊 -->
         <i class="fa-brands fa-google me-auto ms-2"></i>
         <span class="flex-grow-1 text-center">使用 Google 帳號註冊</span>
       </button>
@@ -103,6 +104,7 @@
       <button
         class="btn btn-outline-dark w-100 mb-3 d-flex justify-content-center align-items-center"
       >
+        <!-- TODOAdd:Facebook註冊 -->
         <i class="fa-brands fa-facebook me-auto ms-2"></i>
         <span class="flex-grow-1 text-center"
           >使用 Facebook 帳號註冊</span
@@ -110,6 +112,7 @@
       ><button
         class="btn btn-outline-dark w-100 mb-3 d-flex justify-content-center align-items-center"
       >
+        <!-- TODOAdd:Line註冊 -->
         <i class="fa-brands fa-line me-auto ms-2"></i>
         <span class="flex-grow-1 text-center">使用 LINE 帳號註冊</span>
       </button>

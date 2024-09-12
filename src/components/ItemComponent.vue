@@ -21,7 +21,7 @@
         <!-- 統一300px太高 auto不統一但剛好 -->
         <!-- style="height: auto" -->
         <img
-          :src="this.getThumbnail(item.thumbnail, item.category)"
+          :src="this.GetThumbnail(item.thumbnail, item.category)"
           class="w-100 object-fit-scale"
         />
       </div>
@@ -66,9 +66,9 @@ export default {
     ...mapGetters(["getUserID", "getCartItems"]),
   },
   methods: {
-    getThumbnail(thumbnail, category) {
+    GetThumbnail(thumbnail, category) {
       if (thumbnail != "") {
-        return thumbnail;
+        return `img/${thumbnail}`;
       }
       switch (category) {
         case "處理器":

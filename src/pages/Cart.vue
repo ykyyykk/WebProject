@@ -8,7 +8,7 @@
       :key="item.id"
       class="row d-flex justify-content-start align-items-center g-2"
     >
-      <div class="d-flex p-3 rounded border border-black mb-2">
+      <div class="d-flex p-3 rounded border border-black mb-3">
         <input
           @click="OnCheck(item.id, item.price, item.buyAmount)"
           :checked="selectItems.includes(item.id)"
@@ -22,15 +22,15 @@
           }"
         >
           <img
-            :src="item.thumbnail"
+            :src="`${this.GetThumbnail(item.thumbnail, item.category)}`"
             class="me-3"
             style="width: 7rem; height: 7rem"
             alt="商品圖片"
           />
         </router-link>
         <div class="d-block align-items-center w-100">
-          <div class="mb-2">{{ item.name }}</div>
-          <div class="mb-2">${{ item.price }}</div>
+          <div class="mb-3">{{ item.name }}</div>
+          <div class="mb-3">${{ item.price }}</div>
           <div class="d-flex align-items-center w-100">
             <!-- :amount 是單向綁定 給子組件一個叫做amount的變數  -->
             <!-- v-model:amount:item.buyAmount 是雙向綁定 子物件可以修改amount 進而改變父物件item.buyAmount -->
@@ -104,6 +104,24 @@ export default {
     await this.GetCartItems();
   },
   methods: {
+    GetThumbnail(thumbnail, category) {
+      if (thumbnail != "") {
+        return `img/${thumbnail}`;
+      }
+      switch (category) {
+        case "處理器":
+          return "img/CPU.jpg";
+        case "主機板":
+          return "img/MB.jpg";
+        case "記憶體":
+          return "img/Ram.jpg";
+        case "硬碟":
+          return "img/HDD.jpg";
+        case "顯示卡":
+          return "img/GPU.jpg";
+      }
+      return;
+    },
     async GetCartItems() {
       try {
         // console.log(`getUserID: ${this.getUserID}`);

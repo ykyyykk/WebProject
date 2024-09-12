@@ -13,13 +13,7 @@
 
   <!-- v-if不能省略 因為item.name的執行順序會比this.item = response.data.items; 還快 會error -->
   <div v-if="item" class="col-12 mt-5">
-    <SwiperComponent
-      :pages="[
-        // 取得這個id所有圖片
-        { src: `/publicdsd/${item.imageUrl}` },
-        { src: `/public/${item.imageUrl}` },
-      ]"
-    />
+    <SwiperComponent :pages="this.pages" />
 
     <div class="p-3">
       <p class="fs-5 fw-bolder">
@@ -28,9 +22,9 @@
       <p class="fs-5 fw-bolder">${{ item.price }}</p>
 
       <div class="mb-3">
-        <div>
+        <div class="mb-3">
           <!-- 放棄放在同一行 -->
-          <span>購買數量: </span>
+          <p class="mb-3">購買數量:</p>
           <!-- 還沒成功 讀取到變更的amount -->
           <NumberInputComponent
             v-model:amount="this.amount"
@@ -70,6 +64,7 @@ export default {
       item: "",
       amount: 1,
       popupShow: false,
+      pages: [],
     };
   },
   async mounted() {
@@ -80,20 +75,64 @@ export default {
     ...mapGetters(["isLogin", "getUserID", "getItems"]),
   },
   methods: {
+    GetThumbnail(thumbnail, category) {
+      if (thumbnail != "") {
+        return null;
+      }
+      switch (category) {
+        case "處理器":
+          return "img/CPU.jpg";
+        case "主機板":
+          return "img/MB.jpg";
+        case "記憶體":
+          return "img/Ram.jpg";
+        case "硬碟":
+          return "img/HDD.jpg";
+        case "顯示卡":
+          return "img/GPU.jpg";
+      }
+      return;
+    },
+    async GetItemImage(id, thumbnail, category) {
+      // 為了不讓同一張圖片出現兩次
+      if (this.GetThumbnail(thumbnail, category) != null) {
+        this.pages.push({
+          src: `/public/${this.GetThumbnail(thumbnail, category)}`,
+        });
+      }
+
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/api/getitemimage",
+          {
+            itemID: id,
+          }
+        );
+
+        // 當找不到image時
+        if (response.data.items === undefined) {
+          return;
+        }
+
+        const responseItems = response.data.items;
+        for (let i = 0; i < responseItems.length; i++) {
+          this.pages.push({ src: `/public/img/${responseItems[i].imageUrl}` });
+        }
+      } catch (error) {
+        alert(`取得商品圖片失敗: ${error}`);
+      }
+    },
     async FetchItemDetails(id) {
-      // console.log(`FetchItemDetails: ${id}`);
       try {
         // 與post不同 get需要將資料顯示在url上 隱私較差 但速度比post稍快 適用於讀取數據
         const response = await axios.get(
           `http://localhost:3000/api/item/${id}`
         );
-        // console.log(response.data);
-        console.log(response.data.item);
         this.item = response.data.item;
-        // console.log(this.item);
       } catch (error) {
         alert("取得物品資訊失敗", error);
       }
+      this.GetItemImage(this.item.id, this.item.thumbnail, this.item.category);
     },
     async AddToCart() {
       console.log("加入購物車");
@@ -102,7 +141,6 @@ export default {
       //   return;
       // }
       try {
-        console.log(`amount: ${this.amount}`);
         const response = await axios.post(
           "http://localhost:3000/api/addtocart",
           {

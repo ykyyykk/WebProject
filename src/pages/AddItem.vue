@@ -144,19 +144,10 @@ export default {
     async AddNewItem() {
       const uploadResponse = await this.UploadImage();
 
-      // console.log(uploadResponse);
       if (!uploadResponse) {
         return;
       }
       try {
-        // const imagePaths = {
-        //   處理器: "img/CPU.jpg",
-        //   主機板: "img/MB.jpg",
-        //   記憶體: "img/RAM.jpg",
-        //   硬碟: "img/HDD.jpg",
-        //   顯示卡: "img/GPU.jpg",
-        // };
-
         const itemID = uploadResponse.data.files[0].filename.split("-")[0];
         const uploadedFiles = uploadResponse.data.files;
         const imageUrls = uploadedFiles.map((file) => file.filename);

@@ -1,7 +1,7 @@
 <template>
   <!-- 拖放區域 -->
   <div
-    class="d-block align-items-center border border-danger border-2 rounded p-2 mb-3"
+    class="d-block align-items-center border border-danger border-2 rounded p-3 mb-3"
     :class="{ 'bg-light': isDragging }"
     @dragover.prevent="onDragOver"
     @dragleave.prevent="onDragLeave"
@@ -9,7 +9,7 @@
   >
     <span
       v-if="!isDragging"
-      class="d-flex align-items-center justify-content-center mb-2"
+      class="d-flex align-items-center justify-content-center mb-3"
     >
       拖曳圖片至此或
       <span class="btn btn-link p-0 text-decoration-none" @click="selectFiles">
@@ -17,7 +17,7 @@
       </span>
     </span>
 
-    <span v-else class="d-flex align-items-center justify-content-center mb-2"
+    <span v-else class="d-flex align-items-center justify-content-center mb-3"
       >在此處放下</span
     >
 

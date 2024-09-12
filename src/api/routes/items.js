@@ -32,13 +32,14 @@ router.post("/uploadimage", upload.array("images"), (request, response) => {
 
 //聽說不要在api裡面含有get post put delete會比較好
 router.post("/addnewitem", (request, response) => {
-  const { id, name, detail, category, price, stock, status } = request.body;
-  const sql = `INSERT INTO Item (id,name, detail, category, price, stock, status)
-               VALUES(?,?,?,?,?,?,?)`;
+  const { id, name, detail, category, price, stock, status, thumnail } =
+    request.body;
+  const sql = `INSERT INTO Item (id,name, detail, category, price, stock, status, thumnail)
+               VALUES(?,?,?,?,?,?,?,?)`;
 
   try {
     const stmt = db.prepare(sql);
-    stmt.run(id, name, detail, category, price, stock, status);
+    stmt.run(id, name, detail, category, price, stock, status, thumnail);
     response.status(200).json({ success: true });
   } catch (error) {
     next(error);
@@ -89,6 +90,25 @@ router.get("/getallitem", (request, response) => {
       response.status(200).json({ success: true, items: rows });
     } else {
       response.status(404).json({ success: false, message: "no items found" });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/getitemimage", (request, response) => {
+  // console.log(`request.body: ${request.body}`);
+  const { itemID } = request.body;
+  const sql = `SELECT * FROM Image WHERE itemID = ?`;
+
+  try {
+    const stmt = db.prepare(sql);
+    const rows = stmt.all(itemID.toString());
+    console.log(`rows: ${rows}`);
+    if (rows.length > 0) {
+      response.status(200).json({ success: true, items: rows });
+    } else {
+      response.status(200).json({ success: false, message: "no items found" });
     }
   } catch (error) {
     next(error);
