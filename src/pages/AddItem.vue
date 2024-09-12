@@ -2,7 +2,7 @@
   <HeaderComponent />
   <SmallHeaderComponent pageTitle="新增商品" />
 
-  <form @submit.prevent="Test()" class="p-3 w-100 h-100 mt-5">
+  <form @submit.prevent="AddNewItem()" class="p-3 w-100 h-100 mt-5">
     <div class="mb-3">
       <label class="form-label fw-bolder">商品圖片</label>
       <FileInputComponent v-model:images="productImages" />
@@ -115,16 +115,19 @@ export default {
     SetStatus(status) {
       this.status = status;
     },
-    async Test() {
+    async UploadImage() {
       try {
         const formData = new FormData();
         this.productImages.forEach((image) => {
+          // console.log(image.name);
+          // console.log(image.url);
+          // console.log(image.file);
           formData.append("images", image.file);
         });
 
         // Send the FormData object in the POST request
         const response = await axios.post(
-          "http://localhost:3000/api/upload",
+          "http://localhost:3000/api/uploadimage",
           formData,
           {
             headers: {
@@ -132,39 +135,55 @@ export default {
             },
           }
         );
-
-        console.log(response.data); // Log the response for debugging
+        return response;
       } catch (error) {
-        alert(`上傳失敗: ${error}`);
+        alert(`上傳圖片失敗: ${error}`);
+        return false;
       }
     },
-    // TODOAdd: 圖片上傳
     async AddNewItem() {
-      try {
-        const imagePaths = {
-          處理器: "img/CPU.jpg",
-          主機板: "img/MB.jpg",
-          記憶體: "img/RAM.jpg",
-          硬碟: "img/HDD.jpg",
-          顯示卡: "img/GPU.jpg",
-        };
+      const uploadResponse = await this.UploadImage();
 
-        const path = imagePaths[this.selectCategory] || "img/Ram.jpg";
-        const response = await axios.post(
+      // console.log(uploadResponse);
+      if (!uploadResponse) {
+        return;
+      }
+      try {
+        // const imagePaths = {
+        //   處理器: "img/CPU.jpg",
+        //   主機板: "img/MB.jpg",
+        //   記憶體: "img/RAM.jpg",
+        //   硬碟: "img/HDD.jpg",
+        //   顯示卡: "img/GPU.jpg",
+        // };
+
+        const itemID = uploadResponse.data.files[0].filename.split("-")[0];
+        const uploadedFiles = uploadResponse.data.files;
+        const imageUrls = uploadedFiles.map((file) => file.filename);
+        await axios.post("http://localhost:3000/api/insertmultipleimages", {
+          itemID: itemID,
+          imageUrls: imageUrls,
+        });
+
+        this.detail =
+          this.detail === "" ? `高效能${this.selectCategory}` : this.detail;
+        const addItemResponse = await axios.post(
           "http://localhost:3000/api/addnewitem",
           {
+            id: itemID,
             name: this.name,
             detail: this.detail,
             category: this.selectCategory,
             price: this.price,
             stock: this.stock,
             status: this.status,
-            imageUrl: path,
+            thumbnail: uploadedFiles[0].filename,
           }
         );
         alert("新增物品成功");
       } catch (error) {
         alert("新增物品失敗", error);
+        return;
       }
     },
   },

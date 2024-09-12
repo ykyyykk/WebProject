@@ -36,25 +36,25 @@
       </button>
 
       <router-link :to="{ name: 'AddItem' }" class="bg-transparent text-black">
-        新增物品
+        <i class="fa-solid fa-arrow-up-from-bracket fs-5"></i>
       </router-link>
 
       <router-link :to="{ name: 'Service' }" class="bg-transparent text-black">
-        <img
-          style="width: 1.3rem; height: 1.3rem"
-          src="../assets/img/customer-service.png"
-        />
+        <i class="fa-regular fa-circle-question fs-5"></i>
       </router-link>
 
+      <!-- TODOAdd: 新增通知 -->
+      <!-- TODOAdd: 通知同步發送email-->
+      <!-- TODOAdd: 取消訂閱通知email-->
       <router-link :to="CheckLoginStatus" class="bg-transparent text-black">
-        <i class="fa-solid fa-user"></i>
+        <i class="fa-solid fa-user fs-5"></i>
       </router-link>
 
       <router-link
         :to="{ name: 'Cart' }"
         class="bg-transparent text-black ms-auto me-2"
       >
-        <i class="fa-solid fa-cart-shopping"></i>
+        <i class="fa-solid fa-cart-shopping fs-5"></i>
       </router-link>
     </div>
   </header>

@@ -22,7 +22,7 @@
           }"
         >
           <img
-            :src="item.imageUrl"
+            :src="item.thumbnail"
             class="me-3"
             style="width: 7rem; height: 7rem"
             alt="商品圖片"

@@ -17,10 +17,13 @@
         class="d-flex justify-content-center align-content-center"
         style="height: 300px"
       >
-        <!-- TODORWD -->
+        <!-- TODORWD: -->
         <!-- 統一300px太高 auto不統一但剛好 -->
         <!-- style="height: auto" -->
-        <img :src="item.imageUrl" class="w-100 object-fit-scale" />
+        <img
+          :src="this.getThumbnail(item.thumbnail, item.category)"
+          class="w-100 object-fit-scale"
+        />
       </div>
     </router-link>
     <div class="d-flex justify-content-between align-items-center">
@@ -63,6 +66,24 @@ export default {
     ...mapGetters(["getUserID", "getCartItems"]),
   },
   methods: {
+    getThumbnail(thumbnail, category) {
+      if (thumbnail != "") {
+        return thumbnail;
+      }
+      switch (category) {
+        case "處理器":
+          return "img/CPU.jpg";
+        case "主機板":
+          return "img/MB.jpg";
+        case "記憶體":
+          return "img/Ram.jpg";
+        case "硬碟":
+          return "img/HDD.jpg";
+        case "顯示卡":
+          return "img/GPU.jpg";
+      }
+      return;
+    },
     IsItemInCart(id) {
       return this.getCartItems.some((cartItem) => cartItem.id === id);
     },

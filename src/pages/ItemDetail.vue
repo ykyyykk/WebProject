@@ -15,7 +15,8 @@
   <div v-if="item" class="col-12 mt-5">
     <SwiperComponent
       :pages="[
-        { src: `/public/${item.imageUrl}` },
+        // 取得這個id所有圖片
+        { src: `/publicdsd/${item.imageUrl}` },
         { src: `/public/${item.imageUrl}` },
       ]"
     />

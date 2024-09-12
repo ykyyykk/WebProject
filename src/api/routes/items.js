@@ -9,7 +9,7 @@ const router = express.Router();
 const storage = multer.diskStorage({
   destination: (request, file, cb) => {
     //指定儲存路徑
-    cb(null, path.join(__dirname, "../public/img"));
+    cb(null, path.join(__dirname, "../../public/img"));
   },
   filename: (request, file, cb) => {
     //用時間當欓名
@@ -18,23 +18,42 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-router.post("/upload", upload.array("images"), (request, response) => {
+router.post("/uploadimage", upload.array("images"), (request, response) => {
   if (!request.files || request.files.length === 0) {
     next(error);
   }
-  response.json({ message: "圖片上傳成功", files: request.files });
+  console.log(`request.files: ${request.files}`);
+  response.status(200).json({
+    success: true,
+    message: "圖片上傳成功",
+    files: request.files,
+  });
 });
 
 //聽說不要在api裡面含有get post put delete會比較好
 router.post("/addnewitem", (request, response) => {
-  const { name, detail, category, price, stock, status, imageUrl } =
-    request.body;
-  const sql = `INSERT INTO Item (name, detail, category, price, stock, status, imageUrl)
+  const { id, name, detail, category, price, stock, status } = request.body;
+  const sql = `INSERT INTO Item (id,name, detail, category, price, stock, status)
                VALUES(?,?,?,?,?,?,?)`;
 
   try {
     const stmt = db.prepare(sql);
-    stmt.run(name, detail, category, price, stock, status, imageUrl);
+    stmt.run(id, name, detail, category, price, stock, status);
+    response.status(200).json({ success: true });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/insertmultipleimages", (request, response) => {
+  const { itemID, imageUrls } = request.body;
+  const sql = `INSERT INTO Image (itemID, imageUrl)
+               VALUES(?,?)`;
+  try {
+    const stmt = db.prepare(sql);
+    for (let i = 0; i < imageUrls.length; i++) {
+      stmt.run(itemID.toString(), imageUrls[i]);
+    }
     response.status(200).json({ success: true });
   } catch (error) {
     next(error);
