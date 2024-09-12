@@ -1,7 +1,6 @@
 <template>
   <HeaderComponent />
   <SmallHeaderComponent pageTitle="登入" />
-  <!-- <GoogleLoginComponent /> -->
   <GoogleLoginComponent2 />
 
   <div
@@ -92,7 +91,6 @@ import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import { mapActions } from "vuex/dist/vuex.cjs.js";
 import { useRouter } from "vue-router";
-import GoogleLoginComponent from "../components/GoogleLoginComponent.vue";
 import GoogleLoginComponent2 from "../components/GoogleLoginComponent2.vue";
 
 export default {
@@ -109,7 +107,6 @@ export default {
   components: {
     HeaderComponent,
     SmallHeaderComponent,
-    GoogleLoginComponent,
     GoogleLoginComponent2,
   },
   methods: {

@@ -10,10 +10,14 @@ export default {
   setup() {
     function googleSignin() {
       googleTokenLogin().then((response) => {
+        // 授權範圍
+        // console.log("Granted scopes:", response.scope);
         axios
-          .post("google-signin", { token: response.access_token })
+          .post("http://localhost:3000/api/googlesignin", {
+            token: response.access_token,
+          })
           .then((response) => {
-            console.log(`response: ${response}`);
+            console.log(`response: ${JSON.stringify(response)}`);
           })
           .catch((error) => {
             console.error(`Error: ${error}`);
