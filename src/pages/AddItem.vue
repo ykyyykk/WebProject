@@ -140,11 +140,6 @@ export default {
     },
     // TODOAdd: 圖片上傳
     async AddNewItem() {
-      console.log(
-        "file: AddItem.vue:132  AddNewItem  AddNewItem: ",
-        AddNewItem
-      );
-      console.log("商品圖片:", this.productImages);
       try {
         const imagePaths = {
           處理器: "img/CPU.jpg",
