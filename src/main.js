@@ -7,6 +7,15 @@ import "bootstrap/dist/js/bootstrap.js";
 import "animejs/lib/anime.es.js";
 import store from "./store";
 import axios from "axios";
+import vue3GoogleLogin from "vue3-google-login";
+import gAuthPlugin from "vue3-google-oauth2";
+
+const GoogleLoginOptions = {
+  clientId:
+    "80477468988-2fldqciks5d038o7i2qrbvssoa7entnt.apps.googleusercontent.com",
+};
+let gauthClientId =
+  "80477468988-2fldqciks5d038o7i2qrbvssoa7entnt.apps.googleusercontent.com";
 
 // 全域路由守衛
 router.beforeEach(async (to, from, next) => {
@@ -78,4 +87,10 @@ router.beforeEach(async (to, from, next) => {
 const app = createApp(App);
 app.use(store);
 app.use(router);
+app.use(vue3GoogleLogin, GoogleLoginOptions);
+// app.use(gAuthPlugin, {
+//   clientId: gauthClientId,
+//   scope: "email",
+//   prompt: "consent",
+// });
 app.mount("#app");

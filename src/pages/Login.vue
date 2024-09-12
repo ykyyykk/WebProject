@@ -1,6 +1,8 @@
 <template>
   <HeaderComponent />
   <SmallHeaderComponent pageTitle="登入" />
+  <!-- <GoogleLoginComponent /> -->
+  <GoogleLoginComponent2 />
 
   <div
     class="d-flex flex-column justify-content-center align-items-center p-0 container overflow-x-hidden"
@@ -90,6 +92,8 @@ import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import { mapActions } from "vuex/dist/vuex.cjs.js";
 import { useRouter } from "vue-router";
+import GoogleLoginComponent from "../components/GoogleLoginComponent.vue";
+import GoogleLoginComponent2 from "../components/GoogleLoginComponent2.vue";
 
 export default {
   setup() {
@@ -102,7 +106,12 @@ export default {
       password: "",
     };
   },
-  components: { HeaderComponent, SmallHeaderComponent },
+  components: {
+    HeaderComponent,
+    SmallHeaderComponent,
+    GoogleLoginComponent,
+    GoogleLoginComponent2,
+  },
   methods: {
     ...mapActions(["SetLogin"]),
     async Login() {
