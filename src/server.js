@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import authRoutes from "./api/routes/auth.js";
 import itemRoutes from "./api/routes/items.js";
 import cartRoutes from "./api/routes/cart.js";
-import googleLogin from "./api/routes/googleLogin.js";
+import googleAuth from "./api/routes/googleAuth.js";
 import { ErrorHandler } from "./api/middleware/errorhandler.js";
 import { __dirname } from "./utils/path.js";
 import path from "path";
@@ -34,7 +34,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/api", authRoutes);
 app.use("/api", itemRoutes);
 app.use("/api", cartRoutes);
-app.use("/api", googleLogin);
+app.use("/api", googleAuth);
 app.use(ErrorHandler);
 
 const PORT = process.env.PORT || 3000;

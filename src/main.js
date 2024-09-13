@@ -53,7 +53,8 @@ router.beforeEach(async (to, from, next) => {
     next();
   } catch (error) {
     alert("取得所有物品失敗", error);
-    next(false); // 阻止導航
+    // next(false); // 阻止導航
+    next(); // 阻止導航
   }
 });
 

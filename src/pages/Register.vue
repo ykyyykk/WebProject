@@ -93,13 +93,7 @@
 
       <div class="text-center mb-3">或</div>
 
-      <button
-        class="btn btn-outline-dark w-100 mb-3 d-flex justify-content-center align-items-center"
-      >
-        <!-- TODOAdd:Google註冊 -->
-        <i class="fa-brands fa-google me-auto ms-2"></i>
-        <span class="flex-grow-1 text-center">使用 Google 帳號註冊</span>
-      </button>
+      <GoogleRegisterComponent />
 
       <button
         class="btn btn-outline-dark w-100 mb-3 d-flex justify-content-center align-items-center"
@@ -136,6 +130,7 @@
 import axios from "axios";
 import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
+import GoogleRegisterComponent from "../components/GoogleRegisterComponent.vue";
 import { useRouter } from "vue-router";
 
 export default {
@@ -269,6 +264,10 @@ export default {
       clearInterval(this.intervalID);
     },
   },
-  components: { HeaderComponent, SmallHeaderComponent },
+  components: {
+    HeaderComponent,
+    SmallHeaderComponent,
+    GoogleRegisterComponent,
+  },
 };
 </script>
