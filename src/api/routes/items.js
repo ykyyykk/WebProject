@@ -18,6 +18,10 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+router.post("/api/test", async (request, response) => {
+  console.log("WebProject Test");
+});
+
 router.post("/uploadimage", upload.array("images"), (request, response) => {
   if (!request.files || request.files.length === 0) {
     next(error);
@@ -85,6 +89,7 @@ router.get("/getallitem", (request, response) => {
     const stmt = db.prepare(sql);
     const rows = stmt.all();
     if (rows.length > 0) {
+      console.log("取得所有物品成功");
       response.status(200).json({ success: true, items: rows });
     } else {
       response.status(404).json({ success: false, message: "no items found" });

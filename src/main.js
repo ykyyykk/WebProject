@@ -36,6 +36,16 @@ router.beforeEach(async (to, from, next) => {
     // 在.vue以外的地方只能使用store.dispatch
     // 他的功能等同於...mapActions 但 ...mapActions只能在.vue以內使用
     store.dispatch("SetAllItems", { items: allItemsResponse.data.items });
+    try {
+      const csharpServerResponse = await axios
+        .post
+        // 成功
+        // "http://localhost:5000/api/test"
+        ();
+      console.log(csharpServerResponse.data);
+    } catch (error) {
+      console.error("Error calling test endpoint: ", error);
+    }
 
     const cartItemsResponse = await axios.get(
       "http://localhost:3000/api/getcartitems",
@@ -50,11 +60,12 @@ router.beforeEach(async (to, from, next) => {
         cartItems: cartItemsResponse.data.items,
       });
     }
+    console.log("取得所有物品成功");
     next();
   } catch (error) {
     alert("取得所有物品失敗", error);
-    // next(false); // 阻止導航
-    next(); // 阻止導航
+    // next(false); // 阻止導航 暫時註解避免 部署時沒有畫面
+    next();
   }
 });
 
