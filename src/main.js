@@ -9,7 +9,6 @@ import store from "./store";
 import axios from "axios";
 // 需要更多複雜功能 例如 Google Drive、Google Calendar 需要改安裝 vue3-google-oauth2;
 import vue3GoogleLogin from "vue3-google-login";
-import gAuthPlugin from "vue3-google-oauth2";
 
 const GoogleLoginOptions = {
   clientId:
@@ -21,31 +20,6 @@ const GoogleLoginOptions = {
 };
 // 全域路由守衛
 router.beforeEach(async (to, from, next) => {
-  // const userJSON = localStorage.getItem("user");
-  // try {
-  //   console.log(userJSON);
-  //   if (userJSON) {
-  //     userObject = JSON.parse(userJSON);
-
-  //     if (userObject.id != 0 && userObject.id != undefined) {
-  //       console.log(userObject.id);
-  //       const user = JSON.stringify({
-  //         isLogin: userObject.isLogin,
-  //         email: userObject.email,
-  //         id: userObject.id,
-  //         name: userObject.name,
-  //         password: userObject.password,
-  //         phoneNumber: userObject.phoneNumber,
-  //       });
-  //       store.dispatch("SetLogin", { user: user });
-  //     }
-  //   }
-  // } catch (error) {
-  //   console.error("Invalid user data in localStorage:", userJSON);
-  //   localStorage.removeItem("user");
-  //   // next();
-  //   // return;
-  // }
   try {
     let userID = 0;
     if (
@@ -76,9 +50,6 @@ router.beforeEach(async (to, from, next) => {
         cartItems: cartItemsResponse.data.items,
       });
     }
-
-    //嘗試動態讀取banner 失敗
-    // store.dispatch("FetchPages");
     next();
   } catch (error) {
     alert("取得所有物品失敗", error);

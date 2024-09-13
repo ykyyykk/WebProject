@@ -1,7 +1,6 @@
 <template>
   <HeaderComponent />
   <SmallHeaderComponent pageTitle="登入" />
-  <GoogleLoginComponent2 />
 
   <div
     class="d-flex flex-column justify-content-center align-items-center p-0 container overflow-x-hidden"
@@ -52,12 +51,7 @@
 
       <div class="text-center mb-3">或</div>
 
-      <button
-        class="btn btn-outline-dark w-100 mb-3 d-flex justify-content-center align-items-center"
-      >
-        <i class="fa-brands fa-google me-auto ms-2"></i>
-        <span class="flex-grow-1 text-center">使用 Google 帳號登入</span>
-      </button>
+      <GoogleLoginComponent />
 
       <button
         class="btn btn-outline-dark w-100 mb-3 d-flex justify-content-center align-items-center"
@@ -91,7 +85,7 @@ import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import { mapActions } from "vuex/dist/vuex.cjs.js";
 import { useRouter } from "vue-router";
-import GoogleLoginComponent2 from "../components/GoogleLoginComponent2.vue";
+import GoogleLoginComponent from "../components/GoogleLoginComponent.vue";
 
 export default {
   setup() {
@@ -107,14 +101,12 @@ export default {
   components: {
     HeaderComponent,
     SmallHeaderComponent,
-    GoogleLoginComponent2,
+    GoogleLoginComponent,
   },
   methods: {
     ...mapActions(["SetLogin"]),
     async Login() {
       try {
-        // console.log(`email: ${this.email}`);
-        // console.log(`password: ${this.password}`);
         // 與get不同 post不需將資料顯示在url上 隱私較好 但速度比get稍慢 適用於提交數據
         const response = await axios.post("http://localhost:3000/api/login", {
           email: this.email,

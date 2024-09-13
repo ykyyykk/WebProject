@@ -62,7 +62,6 @@ router.post("/insertmultipleimages", (request, response) => {
 });
 
 router.get("/item/:id", (request, response) => {
-  // console.log(`request.params: ${request.params}`);
   const { id } = request.params;
   const sql = `SELECT * FROM Item WHERE id = ?`;
 
@@ -80,7 +79,6 @@ router.get("/item/:id", (request, response) => {
 });
 
 router.get("/getallitem", (request, response) => {
-  // console.log(`request.body: ${request.body}`);
   const sql = `SELECT * FROM Item`;
 
   try {
@@ -97,7 +95,6 @@ router.get("/getallitem", (request, response) => {
 });
 
 router.post("/getitemimage", (request, response) => {
-  // console.log(`request.body: ${request.body}`);
   const { itemID } = request.body;
   const sql = `SELECT * FROM Image WHERE itemID = ?`;
 
