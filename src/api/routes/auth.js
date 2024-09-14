@@ -57,18 +57,19 @@ router.post("/sendverification", async (request, response) => {
   const createdAt = Date.now();
   const expiresAt = Date.now() + 300000; //單位是毫秒
 
-  const mailOption = {
-    from: "louise87276@gmail.com",
-    to: email,
-    subject: "你的驗證碼",
-    text: `你的驗證碼是: ${verificationCode}`,
-  };
-
   try {
     const stmt = db.prepare(sql);
     // 不加toString()後面會有.0
     stmt.run(email, verificationCode.toString(), createdAt, expiresAt);
+
+    const mailOption = {
+      from: "louise87276@gmail.com",
+      to: email,
+      subject: "你的驗證碼",
+      text: `你的驗證碼是: ${verificationCode}`,
+    };
     await transporter.sendMail(mailOption);
+
     response.status(200).json({ success: true, message: "驗證碼已發送" });
   } catch (error) {
     console.error(`發送驗證碼錯誤: ${error}`);
