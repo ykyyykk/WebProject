@@ -18,10 +18,6 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-router.post("/api/test", async (request, response) => {
-  console.log("WebProject Test");
-});
-
 router.post("/uploadimage", upload.array("images"), (request, response) => {
   if (!request.files || request.files.length === 0) {
     next(error);
