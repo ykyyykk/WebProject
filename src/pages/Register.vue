@@ -238,6 +238,7 @@ export default {
       console.log(`this.verificationCode: ${this.verificationCode}`);
       try {
         const response = await axios.post(
+          // "http://localhost:5000/api/checkverification",
           "http://localhost:3000/api/checkverification",
           {
             email: this.email,
