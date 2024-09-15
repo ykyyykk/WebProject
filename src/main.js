@@ -18,6 +18,7 @@ const GoogleLoginOptions = {
   scope:
     "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
 };
+
 // 全域路由守衛
 router.beforeEach(async (to, from, next) => {
   try {
@@ -31,13 +32,16 @@ router.beforeEach(async (to, from, next) => {
       console.log(`userID: ${userID}`);
     }
     const allItemsResponse = await axios.get(
-      "http://localhost:3000/api/getallitem"
+      "http://localhost:5000/api/getallitem"
+      // "http://localhost:3000/api/getallitem"
     );
+
     // 在.vue以外的地方只能使用store.dispatch
     // 他的功能等同於...mapActions 但 ...mapActions只能在.vue以內使用
     store.dispatch("SetAllItems", { items: allItemsResponse.data.items });
     const cartItemsResponse = await axios.get(
-      "http://localhost:3000/api/getcartitems",
+      "http://localhost:5000/api/getcartitems",
+      // "http://localhost:3000/api/getcartitems",
       {
         params: {
           userID: userID,

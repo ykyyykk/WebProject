@@ -108,14 +108,11 @@ export default {
       //   return;
       // }
       try {
-        const response = await axios.post(
-          "http://localhost:3000/api/addtocart",
-          {
-            itemID: id,
-            userID: this.getUserID,
-            amount: amount,
-          }
-        );
+        await axios.post("http://localhost:3000/api/addtocart", {
+          itemID: id,
+          userID: this.getUserID,
+          amount: amount,
+        });
         console.log("新增至購物車成功");
       } catch (error) {
         alert("新增至購物車失敗", error);

@@ -113,7 +113,7 @@ router.post("/getitemimage", (request, response) => {
   }
 });
 
-router.post("/purchaseItem", (request, response) => {
+router.post("/purchaseitem", (request, response) => {
   const { id, amount } = request.body;
   try {
     const checkSql = `SELECT *
@@ -138,9 +138,9 @@ router.post("/purchaseItem", (request, response) => {
                        SET stock = ?, saleAmount = ? 
                        WHERE id = ?`;
     const updateStmt = db.prepare(updateSql);
-    const info = updateStmt.run(item.stock, item.saleAmount, id);
+    updateStmt.run(item.stock, item.saleAmount, id);
 
-    response.status(200).json({ success: true, item: info });
+    response.status(200).json({ success: true });
   } catch (error) {
     next(error);
   }

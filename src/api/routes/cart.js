@@ -3,7 +3,8 @@ import { db } from "../../config/sqlite3.js";
 
 const router = express.Router();
 
-router.post("/deletefromcart", (request, response) => {
+//TODOWarning: 這裡從post改成delete還沒測試過
+router.delete("/deletefromcart", (request, response) => {
   const { itemID, userID } = request.body;
   const sql = `DELETE FROM Cart WHERE itemID = ? AND userID = ?;`;
 

@@ -203,7 +203,7 @@ export default {
           console.log(`this.totalPrice: ${this.totalPrice}`);
           console.log(`this.selectItems: ${this.selectItems}`);
           const response = await axios.post(
-            "http://localhost:3000/api/purchaseItem",
+            "http://localhost:3000/api/purchaseitem",
             {
               id: this.selectItems[i].id,
               amount: this.selectItems[i].amount,
