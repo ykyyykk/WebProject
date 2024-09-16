@@ -17,6 +17,8 @@
     <div
       class="row d-flex justify-content-start align-items-center p-3 w-100 m-0"
     >
+      <!-- 測試用為了看到 url -->
+      <!-- <h1>this.url: {{ this.url }}</h1> -->
       <div v-for="item in items" :key="item.id" class="col-lg-3 col-sm-4 col-6">
         <ItemComponent :item="item" />
       </div>
@@ -29,8 +31,14 @@ import HeaderComponent from "../components/HeaderComponent.vue";
 import SwiperComponent from "../components/SwiperComponent.vue";
 import ItemComponent from "../components/ItemComponent.vue";
 import { mapGetters } from "vuex";
+// import { API_BASE_URL } from "../config/api";
 
 export default {
+  // data() {
+  //   return {
+  //     url: `${API_BASE_URL}`,
+  //   };
+  // },
   components: { HeaderComponent, SwiperComponent, ItemComponent },
   computed: {
     ...mapGetters(["getItems", "getPages"]),

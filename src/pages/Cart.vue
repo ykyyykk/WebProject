@@ -83,7 +83,6 @@ import { mapGetters } from "vuex";
 import { API_BASE_URL } from "../config/api";
 import { debounce } from "lodash";
 
-// TODOError: 現在還不能調整購物車物品的數量
 // TODOWarning: 購物車 同樣的物品應該要疊加
 // TODOWarning: 還不確定要不要開放訪客購買 如果不開放 要檢查userID不為0
 export default {
