@@ -70,9 +70,9 @@
 </template>
 
 <script>
+import { mapState } from "vuex/dist/vuex.cjs.js";
 import SideBarComponent from "../components/SideBarComponent.vue";
 import SearchInputComponent from "./SearchInputComponent.vue";
-import { mapGetters } from "vuex";
 
 export default {
   components: { SideBarComponent, SearchInputComponent },
@@ -83,11 +83,9 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["isLogin", "getUsername"]),
-    // ...mapGetters(["isLogin", "getUser"]),
+    ...mapState(["user"]),
     CheckLoginStatus() {
-      // console.log(this.getUser);
-      return this.isLogin ? { name: "MemberCenter" } : { name: "Login" };
+      return this.user == null ? { name: "Login" } : { name: "MemberCenter" };
     },
   },
   methods: {

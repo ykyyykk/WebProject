@@ -23,26 +23,32 @@ const GoogleLoginOptions = {
 // 全域路由守衛
 router.beforeEach(async (to, from, next) => {
   try {
-    let userID = 0;
-    if (
-      localStorage.getItem("userID") != null &&
-      localStorage.getItem("userID") != 0
-    ) {
-      userID = localStorage.getItem("userID");
-      store.dispatch("SetLogin", { userID: userID });
-      console.log(`userID: ${userID}`);
-    }
+    // localStorage的初始值是 null 不是 undefined
+    const userJson = localStorage.getItem("user");
 
-    const allItemsResponse = await axios.get(`${API_BASE_URL}/api/getallitem`);
+    console.log(`store.state.user: ${store.state.user}`);
+    console.log(`userJson: ${userJson}`);
+    // 改code的時候會發生
+    if (userJson != null && store.state.user == null) {
+      store.dispatch("SetLogin", { user: JSON.parse(userJson) });
+    }
 
     // 在.vue以外的地方只能使用store.dispatch
     // 他的功能等同於...mapActions 但 ...mapActions只能在.vue以內使用
+    const allItemsResponse = await axios.get(`${API_BASE_URL}/api/getallitem`);
+    console.log("取得所有物品成功");
     store.dispatch("SetAllItems", { items: allItemsResponse.data.items });
+
+    if (store.state.user == null) {
+      next();
+      return;
+    }
+
     const cartItemsResponse = await axios.get(
       `${API_BASE_URL}/api/getcartitems`,
       {
         params: {
-          userID: userID,
+          userID: store.state.user.id,
         },
       }
     );
@@ -51,7 +57,6 @@ router.beforeEach(async (to, from, next) => {
         cartItems: cartItemsResponse.data.items,
       });
     }
-    console.log("取得所有物品成功");
     next();
   } catch (error) {
     alert("取得所有物品失敗", error);

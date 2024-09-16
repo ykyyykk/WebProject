@@ -18,20 +18,24 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-router.post("/uploadimage", upload.array("images"), (request, response) => {
-  if (!request.files || request.files.length === 0) {
-    next(error);
+router.post(
+  "/uploadimage",
+  upload.array("images"),
+  (request, response, next) => {
+    if (!request.files || request.files.length === 0) {
+      next(error);
+    }
+    console.log(`request.files: ${request.files}`);
+    response.status(200).json({
+      success: true,
+      message: "圖片上傳成功",
+      files: request.files,
+    });
   }
-  console.log(`request.files: ${request.files}`);
-  response.status(200).json({
-    success: true,
-    message: "圖片上傳成功",
-    files: request.files,
-  });
-});
+);
 
 //聽說不要在api裡面含有get post put delete會比較好
-router.post("/addnewitem", (request, response) => {
+router.post("/addnewitem", (request, response, next) => {
   const { id, name, detail, category, price, stock, status, thumnail } =
     request.body;
   const sql = `INSERT INTO Item (id,name, detail, category, price, stock, status, thumnail)
@@ -46,7 +50,7 @@ router.post("/addnewitem", (request, response) => {
   }
 });
 
-router.post("/insertmultipleimages", (request, response) => {
+router.post("/insertmultipleimages", (request, response, next) => {
   const { itemID, imageUrls } = request.body;
   const sql = `INSERT INTO Image (itemID, imageUrl)
                VALUES(?,?)`;
@@ -61,7 +65,7 @@ router.post("/insertmultipleimages", (request, response) => {
   }
 });
 
-router.get("/item/:id", (request, response) => {
+router.get("/item/:id", (request, response, next) => {
   const { id } = request.params;
   const sql = `SELECT * FROM Item WHERE id = ?`;
 
@@ -78,7 +82,7 @@ router.get("/item/:id", (request, response) => {
   }
 });
 
-router.get("/getallitem", (request, response) => {
+router.get("/getallitem", (request, response, next) => {
   const sql = `SELECT * FROM Item`;
 
   try {
@@ -95,7 +99,7 @@ router.get("/getallitem", (request, response) => {
   }
 });
 
-router.post("/getitemimage", (request, response) => {
+router.post("/getitemimage", (request, response, next) => {
   const { itemID } = request.body;
   const sql = `SELECT * FROM Image WHERE itemID = ?`;
 
@@ -113,7 +117,7 @@ router.post("/getitemimage", (request, response) => {
   }
 });
 
-router.post("/purchaseitem", (request, response) => {
+router.post("/purchaseitem", (request, response, next) => {
   const { id, amount } = request.body;
   try {
     const checkSql = `SELECT *

@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex/dist/vuex.cjs.js";
+import { mapActions, mapState } from "vuex/dist/vuex.cjs.js";
 import { useRouter } from "vue-router";
 
 export default {
@@ -44,7 +44,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getItems"]),
+    ...mapState(["items"]),
   },
   methods: {
     ...mapActions(["SetSearchQuery"]),
@@ -52,7 +52,7 @@ export default {
       // 中文要等Enter才會有結果
       // input字串字數
       if (this.searchQuery.length > 0) {
-        this.filterItems = this.getItems.filter((item) =>
+        this.filterItems = this.items.filter((item) =>
           item.name.toLowerCase().includes(this.searchQuery.toLowerCase())
         );
 

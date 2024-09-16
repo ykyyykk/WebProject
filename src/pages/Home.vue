@@ -30,7 +30,7 @@
 import HeaderComponent from "../components/HeaderComponent.vue";
 import SwiperComponent from "../components/SwiperComponent.vue";
 import ItemComponent from "../components/ItemComponent.vue";
-import { mapGetters } from "vuex";
+import { mapState } from "vuex/dist/vuex.cjs.js";
 // import { API_BASE_URL } from "../config/api";
 
 export default {
@@ -41,14 +41,7 @@ export default {
   // },
   components: { HeaderComponent, SwiperComponent, ItemComponent },
   computed: {
-    ...mapGetters(["getItems", "getPages"]),
-    // 給v-for用的
-    items() {
-      return this.getItems;
-    },
-    pages() {
-      return this.getPages;
-    },
+    ...mapState(["items", "pages"]),
   },
 };
 </script>

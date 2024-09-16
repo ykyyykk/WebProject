@@ -1,11 +1,14 @@
 <template>
   <HeaderComponent />
-  <SmallHeaderComponet pageTitle="產品管理" />
+  <SmallHeaderComponent pageTitle="產品管理" />
 
   <div class="p-3 w-100 h-100 mt-5">
     <a class="btn btn-outline-primary" href="product_management.html">
       產品管理
     </a>
+    <button class="btn btn-outline-primary" @click="CleanExpiresVerification()">
+      清理驗證碼
+    </button>
 
     <div class="mb-5">
       <h4>訂單管理</h4>
@@ -50,9 +53,24 @@
 
 <script>
 import HeaderComponent from "../components/HeaderComponent.vue";
-import SmallHeaderComponet from "../components/SmallHeaderComponent.vue";
+import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 
 export default {
-  components: { HeaderComponent, SmallHeaderComponet },
+  components: { HeaderComponent, SmallHeaderComponent },
+  methods: {
+    async CleanExpiresVerification() {
+      try {
+        const response = await axios.delete(
+          `${API_BASE_URL}/api/deleteexpiresverification`
+        );
+
+        if (response.data.success) {
+          console.log(`response.data: ${JSON.stringify(response.data)}`);
+        }
+      } catch (error) {
+        console.log(`error: ${error}`);
+      }
+    },
+  },
 };
 </script>

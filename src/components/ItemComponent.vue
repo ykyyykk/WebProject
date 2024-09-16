@@ -52,9 +52,9 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import axios from "axios";
 import { API_BASE_URL } from "../config/api";
+import { mapState } from "vuex/dist/vuex.cjs.js";
 
 export default {
   props: {
@@ -64,7 +64,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["getUserID", "getCartItems"]),
+    ...mapState(["user", "cartItems"]),
   },
   methods: {
     GetThumbnail(thumbnail, category) {
@@ -86,13 +86,13 @@ export default {
       return;
     },
     IsItemInCart(id) {
-      return this.getCartItems.some((cartItem) => cartItem.id === id);
+      return this.cartItems.some((cartItem) => cartItem.id === id);
     },
     async ToggleCartItem(id, event) {
       // 直接把button傳進來
       const button = event.currentTarget;
       const isCurrentlyInCart = button.classList.contains("btn-danger");
-      //不要用this.IsItemInCart 因為this.getCartItems不會即時更新
+      //不要用this.IsItemInCart 因為this.cartItems
       if (isCurrentlyInCart) {
         await this.RemoveFromCart(id);
         button.classList.remove("btn-danger");
@@ -104,14 +104,14 @@ export default {
       }
     },
     async AddToCart(id, amount) {
-      // if (!this.isLogin) {
-      //   alert("請先登入再加入購物車");
-      //   return;
-      // }
+      if (this.user == null) {
+        alert("請先登入再加入購物車");
+        return;
+      }
       try {
         await axios.post(`${API_BASE_URL}/api/addtocart`, {
           itemID: id,
-          userID: this.getUserID,
+          userID: this.user.id,
           amount: amount,
         });
         console.log("新增至購物車成功");
@@ -122,10 +122,10 @@ export default {
     async RemoveFromCart(id) {
       try {
         console.log(`id: ${id}`);
-        console.log(`this.getUserID: ${this.getUserID}`);
+        console.log(`this.user.id: ${this.user.id}`);
         //DELETE 通常不包含 request 需要從URL獲取參數
         await axios.delete(
-          `${API_BASE_URL}/api/deletefromcart/${id}/${this.getUserID}`
+          `${API_BASE_URL}/api/deletefromcart/${id}/${this.user.id}`
         );
         console.log("移除至購物車成功");
       } catch (error) {

@@ -4,7 +4,7 @@ import { transporter } from "../../config/email.js";
 
 const router = express.Router();
 
-router.post("/register", (request, response) => {
+router.post("/register", (request, response, next) => {
   const { name, phoneNumber, email, password } = request.body;
   const sql = `INSERT INTO User (name, phoneNumber, email, password) VALUES(?,?,?,?)`;
   try {
@@ -16,7 +16,7 @@ router.post("/register", (request, response) => {
   }
 });
 
-router.post("/login", (request, response) => {
+router.post("/login", (request, response, next) => {
   const { email, password } = request.body;
   const sql = `SELECT * FROM User WHERE email = ? AND password = ?`;
 
@@ -33,7 +33,7 @@ router.post("/login", (request, response) => {
   }
 });
 
-router.post("/sendverification", async (request, response) => {
+router.post("/sendverification", async (request, response, next) => {
   //檢查是否重複註冊
   const { email } = request.body;
   const checkSql = `SELECT email FROM User WHERE email = ?`;
@@ -77,7 +77,7 @@ router.post("/sendverification", async (request, response) => {
   }
 });
 
-router.post("/checkverification", async (request, response) => {
+router.post("/checkverification", async (request, response, next) => {
   const { email, verificationCode } = request.body;
   const sql = `SELECT * FROM Verification WHERE email = ? AND code = ?`;
 
@@ -88,6 +88,23 @@ router.post("/checkverification", async (request, response) => {
       response.status(200).json({ success: true, row: row });
     } else {
       response.status(200).json({ success: false, message: "驗證碼錯誤" });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/deleteexpiresverification", (request, response, next) => {
+  console.log(Date.now());
+  const sql = `DELETE FROM Verification WHERE expiresAt <= ?`;
+
+  try {
+    const stmt = db.prepare(sql);
+    const row = stmt.run(Date.now());
+    if (row) {
+      response.status(200).json({ success: true, data: row });
+    } else {
+      response.status(404).json({ success: false, message: "User not found" });
     }
   } catch (error) {
     next(error);

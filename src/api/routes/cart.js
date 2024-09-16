@@ -16,7 +16,7 @@ router.delete("/deletefromcart/:itemID/:userID", (request, response, next) => {
   }
 });
 
-router.get("/getcartitems", (request, response) => {
+router.get("/getcartitems", (request, response, next) => {
   // 包起來才能抓到value 不然是body
   const { userID } = request.query;
 
@@ -43,7 +43,7 @@ router.get("/getcartitems", (request, response) => {
   }
 });
 
-router.post("/addtocart", (request, response) => {
+router.post("/addtocart", (request, response, next) => {
   const { itemID, userID, amount } = request.body;
   const sql = `INSERT INTO Cart (itemID, userID, buyAmount) VALUES(?,?,?)`;
 
@@ -56,7 +56,7 @@ router.post("/addtocart", (request, response) => {
   }
 });
 
-router.post("/changecartamount", (request, response) => {
+router.post("/changecartamount", (request, response, next) => {
   const { itemID, userID, amount } = request.body;
   const sql = `UPDATE Cart SET buyAmount = ? WHERE itemID = ? AND userID = ?`;
 

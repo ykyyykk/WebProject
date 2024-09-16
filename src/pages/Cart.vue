@@ -79,9 +79,9 @@ import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import NumberInputComponent from "../components/NumberInputComponent.vue";
 import axios from "axios";
-import { mapGetters } from "vuex";
 import { API_BASE_URL } from "../config/api";
 import { debounce } from "lodash";
+import { mapState } from "vuex/dist/vuex.cjs.js";
 
 // TODOWarning: 購物車 同樣的物品應該要疊加
 // TODOWarning: 還不確定要不要開放訪客購買 如果不開放 要檢查userID不為0
@@ -103,11 +103,7 @@ export default {
   },
   components: { HeaderComponent, SmallHeaderComponent, NumberInputComponent },
   computed: {
-    ...mapGetters(["isLogin", "getUserID", "getItems"]),
-    // 給v-for用的
-    items() {
-      return this.getItems;
-    },
+    ...mapState(["user", "items"]),
   },
   async mounted() {
     await this.GetCartItems();
@@ -126,7 +122,7 @@ export default {
       try {
         await axios.post(`${API_BASE_URL}/api/changecartamount`, {
           itemID: itemID,
-          userID: this.getUserID,
+          userID: this.user.id,
           amount: amount,
         });
         console.log("購物車數量變更成功");
@@ -155,10 +151,9 @@ export default {
     },
     async GetCartItems() {
       try {
-        // console.log(`getUserID: ${this.getUserID}`);
         const response = await axios.get(`${API_BASE_URL}/api/getcartitems`, {
           params: {
-            userID: this.getUserID,
+            userID: this.user.id,
           },
         });
         if (response.data.success) {
@@ -172,7 +167,7 @@ export default {
       console.log(`DeleteFromCart: ${id}`);
       try {
         const response = await axios.delete(
-          `${API_BASE_URL}/api/deletefromcart/${id}/${this.getUserID}`
+          `${API_BASE_URL}/api/deletefromcart/${id}/${this.user.id}`
         );
         //更改的資料筆數
         const changes = response.data.info.changes;

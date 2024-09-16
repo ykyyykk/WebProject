@@ -17,17 +17,8 @@ export default createStore({
   state: {
     items: [],
     cartItems: [],
-    isLogin: false,
-    userID: 0,
     // 直接存User失敗 要不斷轉JSON 轉Object 因為localStorage.setItem()只能存字串
-    // user: {
-    //   isLogin: false,
-    //   id: 0,
-    //   name: "",
-    //   phoneNumber: "",
-    //   email: "",
-    //   password: "",
-    // },
+    user: null,
     searchQuery: "",
     pages,
   },
@@ -35,17 +26,9 @@ export default createStore({
     // 用於直接修改state中的狀態
     // 必須為同步函數
     // 通過commit調用
-    SetLoginStatus(state, status) {
-      state.isLogin = status;
+    SetLoginStatus(state, user) {
+      state.user = user;
     },
-    SetUserID(state, id) {
-      state.userID = id;
-    },
-    // SetLoginStatus(state, user) {
-    //   state.user = user;
-    //   // console.log(user);
-    //   localStorage.setItem("user", user);
-    // },
     SetAllItems(state, items) {
       state.items = items;
     },
@@ -62,27 +45,11 @@ export default createStore({
   actions: {
     //不建議直接修改state的數值 違反vuex的設計原則
     //失去通過VuexDevtools追蹤狀態變化的能力
-    SetLogin({ commit }, { userID }) {
-      commit("SetLoginStatus", true);
-      commit("SetUserID", userID);
-      // commit("SetLoginStatus", user);
-      localStorage.setItem("isLogin", true);
-      localStorage.setItem("userID", userID);
+    SetLogin({ commit }, { user }) {
+      commit("SetLoginStatus", user);
     },
     SetLogout({ commit }) {
-      console.log("SetLogout");
-      commit("SetLoginStatus", false);
-      commit("SetUserID", 0);
-      // commit("SetLoginStatus", {
-      //   isLogin: false,
-      //   id: 0,
-      //   name: "",
-      //   phoneNumber: "",
-      //   email: "",
-      //   password: "",
-      // });
-      localStorage.setItem("isLogin", false);
-      localStorage.setItem("userID", 0);
+      commit("SetLoginStatus", null);
     },
     SetSearchQuery({ commit }, { searchQuery }) {
       commit("SetSearchQuery", searchQuery);
@@ -104,16 +71,5 @@ export default createStore({
     //     console.error("Error fetching pages:", error);
     //   }
     // },
-  },
-  getters: {
-    getItems: (state) => state.items,
-    getCartItems: (state) => state.cartItems,
-    isLogin: (state) => state.isLogin,
-    getUserID: (state) => state.userID,
-    getPages: (state) => state.pages,
-    getSearchQuery: (state) => state.searchQuery,
-    // getUser: (state) => state.user,
-    // isLogin: (state) => state.user.isLogin,
-    // getUserID: (state) => state.user.userID,
   },
 });

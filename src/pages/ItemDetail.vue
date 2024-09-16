@@ -56,8 +56,8 @@ import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import SwiperComponent from "../components/SwiperComponent.vue";
 import NumberInputComponent from "../components/NumberInputComponent.vue";
 import axios from "axios";
-import { mapGetters } from "vuex";
 import { API_BASE_URL } from "../config/api";
+import { mapState } from "vuex/dist/vuex.cjs.js";
 
 export default {
   data() {
@@ -73,7 +73,7 @@ export default {
     await this.FetchItemDetails(itemID);
   },
   computed: {
-    ...mapGetters(["isLogin", "getUserID", "getItems"]),
+    ...mapState(["user", "items"]),
   },
   methods: {
     GetThumbnail(thumbnail, category) {
@@ -132,14 +132,14 @@ export default {
     },
     async AddToCart() {
       console.log("加入購物車");
-      // if (!this.isLogin) {
-      //   alert("請先登入再加入購物車");
-      //   return;
-      // }
+      if (this.user == null) {
+        alert("請先登入再加入購物車");
+        return;
+      }
       try {
         await axios.post(`${API_BASE_URL}/api/addtocart`, {
           itemID: this.item.id,
-          userID: this.getUserID,
+          userID: this.user.id,
           amount: this.amount,
         });
         this.popupShow = true;

@@ -47,9 +47,9 @@
 </template>
 
 <script>
+import { mapState } from "vuex/dist/vuex.cjs.js";
 import HeaderComponent from "../components/HeaderComponent.vue";
 import ItemComponent from "../components/ItemComponent.vue";
-import { mapGetters } from "vuex";
 
 export default {
   data() {
@@ -57,11 +57,11 @@ export default {
   },
   components: { HeaderComponent, ItemComponent },
   computed: {
-    ...mapGetters(["getItems", "getSearchQuery"]),
+    ...mapState(["items,searchQuery"]),
     // 給v-for用的
     items() {
-      let filterItems = this.getItems.filter((item) =>
-        item.name.toLowerCase().includes(this.getSearchQuery.toLowerCase())
+      let filterItems = this.items.filter((item) =>
+        item.name.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
       switch (this.sortTag) {
         case "價格: 低至高":

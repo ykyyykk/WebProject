@@ -3,70 +3,66 @@
   <SmallHeaderComponent pageTitle="登入" />
 
   <div
-    class="d-flex flex-column justify-content-center align-items-center p-0 container overflow-x-hidden"
+    class="d-block justify-content-center align-items-center mt-5 p-3 w-100 overflow-x-hidden container"
   >
     <div
-      class="d-block justify-content-center align-items-center mt-5 p-3 w-100"
+      class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
     >
-      <div
-        class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
-      >
-        <i class="fa-solid fa-user mx-2"></i>
-        <input
-          type="text"
-          v-model="email"
-          class="form-control border border-0"
-          placeholder="Email"
-          aria-label="Email"
-          aria-describedby="basic-addon1"
-        />
-      </div>
-
-      <div
-        class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
-      >
-        <i class="fa-solid fa-lock mx-2"></i>
-        <input
-          type="text"
-          v-model="password"
-          class="form-control border border-0"
-          placeholder="密碼"
-          aria-label="password"
-          aria-describedby="basic-addon1"
-        />
-        <i class="fa-solid fa-eye-slash me-3"></i>
-        <router-link
-          :to="{ name: 'ForgotPassword' }"
-          class="me-2 text-decoration-none"
-          href="forgot_password.html"
-          >忘記密碼</router-link
-        >
-      </div>
-
-      <button @click="Login()" class="btn btn-primary w-100 mb-3">登入</button>
-
-      <div class="d-flex justify-content-end">
-        <a class="text-decoration-none" href="#">使用SMS簡訊登入</a>
-      </div>
-
-      <div class="text-center mb-3">或</div>
-
-      <GoogleLoginComponent />
-
-      <button
-        class="btn btn-outline-dark w-100 mb-3 d-flex justify-content-center align-items-center"
-      >
-        <i class="fa-brands fa-facebook me-auto ms-2"></i>
-        <span class="flex-grow-1 text-center"
-          >使用 Facebook 帳號登入</span
-        ></button
-      ><button
-        class="btn btn-outline-dark w-100 mb-3 d-flex justify-content-center align-items-center"
-      >
-        <i class="fa-brands fa-line me-auto ms-2"></i>
-        <span class="flex-grow-1 text-center">使用 LINE 帳號登入</span>
-      </button>
+      <i class="fa-solid fa-envelope mx-2"></i>
+      <input
+        type="text"
+        class="form-control border border-0"
+        placeholder="Email"
+        v-model="email"
+        aria-label="Email"
+        aria-describedby="basic-addon1"
+      />
     </div>
+
+    <div
+      class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
+    >
+      <i class="fa-solid fa-lock mx-2"></i>
+      <input
+        type="text"
+        v-model="password"
+        class="form-control border border-0"
+        placeholder="密碼"
+        aria-label="password"
+        aria-describedby="basic-addon1"
+      />
+      <i class="fa-solid fa-eye-slash me-3"></i>
+      <router-link
+        :to="{ name: 'ForgotPassword' }"
+        class="me-2 text-decoration-none"
+        href="forgot_password.html"
+        >忘記密碼</router-link
+      >
+    </div>
+
+    <button @click="Login()" class="btn btn-primary w-100 mb-3">登入</button>
+
+    <div class="d-flex justify-content-end">
+      <a class="text-decoration-none" href="#">使用SMS簡訊登入</a>
+    </div>
+
+    <div class="text-center mb-3">或</div>
+
+    <GoogleLoginComponent />
+
+    <button
+      class="btn btn-outline-dark w-100 mb-3 d-flex justify-content-center align-items-center"
+    >
+      <i class="fa-brands fa-facebook me-auto ms-2"></i>
+      <span class="flex-grow-1 text-center"
+        >使用 Facebook 帳號登入</span
+      ></button
+    ><button
+      class="btn btn-outline-dark w-100 mb-3 d-flex justify-content-center align-items-center"
+    >
+      <i class="fa-brands fa-line me-auto ms-2"></i>
+      <span class="flex-grow-1 text-center">使用 LINE 帳號登入</span>
+    </button>
   </div>
   <div class="mb-0 mt-auto">
     <p class="text-center">登入後，表示你同意蝦皮的服務條款以及隱私權政策</p>
@@ -116,19 +112,12 @@ export default {
 
         if (response.data.success) {
           alert("登入成功");
+          console.log(`response.data: ${JSON.stringify(response.data.user)}`);
+          console.log(`id: ${response.data.user.id}`);
           // // JSON.stringify ObjectToJSON
           // // 因為localStorage.setItem()只能存字串 所以要先轉JSON 要用的時候在轉Object
-          // const userJSON = JSON.stringify({
-          //   isLogin: true,
-          //   email: response.data.user.email,
-          //   id: response.data.user.id,
-          //   name: response.data.user.name,
-          //   password: response.data.user.password,
-          //   phoneNumber: response.data.user.phoneNumber,
-          // });
-          // console.log(userJSON);
-          // this.SetLogin({ user: userJSON });
-          this.SetLogin({ userID: response.data.user.id });
+          localStorage.setItem("user", JSON.stringify(response.data.user));
+          this.SetLogin({ user: response.data.user });
           this.router.push({ name: "Home" });
         } else {
           alert(

@@ -3,114 +3,110 @@
   <SmallHeaderComponent pageTitle="註冊" />
 
   <div
-    class="d-flex flex-column justify-content-center align-items-center p-0 container overflow-x-hidden"
+    class="d-block justify-content-center align-items-center mt-5 p-3 w-100 overflow-x-hidden container"
   >
     <div
-      class="d-block justify-content-center align-items-center mt-5 p-3 w-100"
+      class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
     >
-      <div
-        class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
-      >
-        <i class="fa-solid fa-user mx-2"></i>
-        <input
-          type="text"
-          class="form-control border border-0"
-          placeholder="姓名"
-          v-model="name"
-          aria-label="name"
-          aria-describedby="basic-addon1"
-        />
-      </div>
+      <i class="fa-solid fa-user mx-2"></i>
+      <input
+        type="text"
+        class="form-control border border-0"
+        placeholder="姓名"
+        v-model="name"
+        aria-label="name"
+        aria-describedby="basic-addon1"
+      />
+    </div>
 
-      <div
-        class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
-      >
-        <i class="fa-solid fa-phone mx-2"></i>
-        <input
-          type="text"
-          class="form-control border border-0"
-          placeholder="電話"
-          v-model="phoneNumber"
-          aria-label="phonenumber"
-          aria-describedby="basic-addon1"
-        />
-      </div>
+    <div
+      class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
+    >
+      <i class="fa-solid fa-phone mx-2"></i>
+      <input
+        type="text"
+        class="form-control border border-0"
+        placeholder="電話"
+        v-model="phoneNumber"
+        aria-label="phonenumber"
+        aria-describedby="basic-addon1"
+      />
+    </div>
 
-      <div
-        class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
-      >
-        <i class="fa-solid fa-envelope mx-2"></i>
-        <input
-          type="text"
-          class="form-control border border-0"
-          placeholder="Email"
-          v-model="email"
-          aria-label="email"
-          aria-describedby="basic-addon1"
-        />
-
-        <button
-          @click="OnSendVerificationCode()"
-          class="btn btn-primary"
-          :disabled="CantSendVerification"
-        >
-          發送驗證碼 {{ this.GetDuration }}
-        </button>
-      </div>
-
-      <div
-        class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
-      >
-        <i class="fa-solid fa-lock mx-2"></i>
-        <input
-          type="text"
-          class="form-control border border-0"
-          placeholder="密碼"
-          v-model="password"
-          aria-label="password"
-          aria-describedby="basic-addon1"
-        />
-      </div>
-
-      <div
-        class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
-      >
-        <input
-          type="text"
-          class="form-control"
-          placeholder="驗證碼"
-          v-model="verificationCode"
-          aria-label="verification code"
-        />
-        <button
-          @click="CheckVerification()"
-          class="btn btn-primary"
-          :disabled="CantCheckVerification"
-        >
-          確認
-        </button>
-      </div>
-
-      <div class="text-center mb-3">或</div>
-
-      <GoogleRegisterComponent />
+    <div
+      class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
+    >
+      <i class="fa-solid fa-envelope mx-2"></i>
+      <input
+        type="text"
+        class="form-control border border-0"
+        placeholder="Email"
+        v-model="email"
+        aria-label="email"
+        aria-describedby="basic-addon1"
+      />
 
       <button
-        class="btn btn-outline-dark w-100 mb-3 d-flex justify-content-center align-items-center"
+        @click="OnSendVerificationCode()"
+        class="btn btn-primary"
+        :disabled="CantSendVerification"
       >
-        <!-- TODOAdd:Facebook註冊 -->
-        <i class="fa-brands fa-facebook me-auto ms-2"></i>
-        <span class="flex-grow-1 text-center"
-          >使用 Facebook 帳號註冊</span
-        ></button
-      ><button
-        class="btn btn-outline-dark w-100 mb-3 d-flex justify-content-center align-items-center"
-      >
-        <!-- TODOAdd:Line註冊 -->
-        <i class="fa-brands fa-line me-auto ms-2"></i>
-        <span class="flex-grow-1 text-center">使用 LINE 帳號註冊</span>
+        發送驗證碼 {{ this.GetDuration }}
       </button>
     </div>
+
+    <div
+      class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
+    >
+      <i class="fa-solid fa-lock mx-2"></i>
+      <input
+        type="text"
+        class="form-control border border-0"
+        placeholder="密碼"
+        v-model="password"
+        aria-label="password"
+        aria-describedby="basic-addon1"
+      />
+    </div>
+
+    <div
+      class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
+    >
+      <input
+        type="text"
+        class="form-control"
+        placeholder="驗證碼"
+        v-model="verificationCode"
+        aria-label="verification code"
+      />
+      <button
+        @click="CheckVerification()"
+        class="btn btn-primary"
+        :disabled="CantCheckVerification"
+      >
+        確認
+      </button>
+    </div>
+
+    <div class="text-center mb-3">或</div>
+
+    <GoogleRegisterComponent />
+
+    <button
+      class="btn btn-outline-dark w-100 mb-3 d-flex justify-content-center align-items-center"
+    >
+      <!-- TODOAdd:Facebook註冊 -->
+      <i class="fa-brands fa-facebook me-auto ms-2"></i>
+      <span class="flex-grow-1 text-center"
+        >使用 Facebook 帳號註冊</span
+      ></button
+    ><button
+      class="btn btn-outline-dark w-100 mb-3 d-flex justify-content-center align-items-center"
+    >
+      <!-- TODOAdd:Line註冊 -->
+      <i class="fa-brands fa-line me-auto ms-2"></i>
+      <span class="flex-grow-1 text-center">使用 LINE 帳號註冊</span>
+    </button>
   </div>
 
   <div class="mb-0 mt-auto">
