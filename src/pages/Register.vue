@@ -132,6 +132,7 @@ import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import GoogleRegisterComponent from "../components/GoogleRegisterComponent.vue";
 import { useRouter } from "vue-router";
+import { API_BASE_URL } from "../config/api";
 
 export default {
   setup() {
@@ -188,15 +189,12 @@ export default {
   methods: {
     async Register() {
       try {
-        const response = await axios.post(
-          "http://localhost:3000/api/register",
-          {
-            name: this.name,
-            phoneNumber: this.phoneNumber,
-            email: this.email,
-            password: this.password,
-          }
-        );
+        await axios.post(`${API_BASE_URL}/api/register`, {
+          name: this.name,
+          phoneNumber: this.phoneNumber,
+          email: this.email,
+          password: this.password,
+        });
         alert("註冊成功");
       } catch (error) {
         alert("註冊失敗", error);
@@ -217,7 +215,7 @@ export default {
         }, 1000);
 
         const response = await axios.post(
-          "http://localhost:3000/api/sendverification",
+          `${API_BASE_URL}/api/sendverification`,
           {
             email: this.email,
           }
@@ -238,8 +236,7 @@ export default {
       console.log(`this.verificationCode: ${this.verificationCode}`);
       try {
         const response = await axios.post(
-          // "http://localhost:5000/api/checkverification",
-          "http://localhost:3000/api/checkverification",
+          `${API_BASE_URL}/api/checkverification`,
           {
             email: this.email,
             verificationCode: this.verificationCode,

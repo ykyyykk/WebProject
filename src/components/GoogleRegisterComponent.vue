@@ -12,6 +12,7 @@
 <script>
 import axios from "axios";
 import { googleTokenLogin } from "vue3-google-login";
+import { API_BASE_URL } from "../config/api";
 
 export default {
   methods: {
@@ -21,7 +22,7 @@ export default {
 
         // Post the token to your server
         const loginResponse = await axios.post(
-          "http://localhost:3000/api/googlesignin",
+          `${API_BASE_URL}/api/googlesignin`,
           {
             token: response.access_token,
           }
@@ -37,7 +38,7 @@ export default {
         const password = loginResponse.data.user.sub;
 
         // Register user
-        await axios.post("http://localhost:3000/api/register", {
+        await axios.post(`${API_BASE_URL}/api/register`, {
           name: name,
           phoneNumber: phoneNumber,
           email: email,

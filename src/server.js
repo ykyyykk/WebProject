@@ -15,7 +15,10 @@ const app = express();
 app.use(
   cors({
     origin: ["http://localhost:5173", "http://your-deployment-url.com"], // 允许多个来源
-    methods: ["GET", "POST"], // 允许的方法
+    // 允許的方法 如果沒有就不沒辦法使用
+    // has been blocked by CORS policy: Method DELETE is not allowed
+    // by Access-Control-Allow-Methods in preflight response.
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true, // 如果有需要，可以允许发送 cookie
   })
 );

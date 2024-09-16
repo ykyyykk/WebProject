@@ -57,6 +57,7 @@ import SwiperComponent from "../components/SwiperComponent.vue";
 import NumberInputComponent from "../components/NumberInputComponent.vue";
 import axios from "axios";
 import { mapGetters } from "vuex";
+import { API_BASE_URL } from "../config/api";
 
 export default {
   data() {
@@ -102,12 +103,9 @@ export default {
       }
 
       try {
-        const response = await axios.post(
-          "http://localhost:3000/api/getitemimage",
-          {
-            itemID: id,
-          }
-        );
+        const response = await axios.post(`${API_BASE_URL}/api/getitemimage`, {
+          itemID: id,
+        });
 
         // 當找不到image時
         if (response.data.items === undefined) {
@@ -125,9 +123,7 @@ export default {
     async FetchItemDetails(id) {
       try {
         // 與post不同 get需要將資料顯示在url上 隱私較差 但速度比post稍快 適用於讀取數據
-        const response = await axios.get(
-          `http://localhost:3000/api/item/${id}`
-        );
+        const response = await axios.get(`${API_BASE_URL}/api/item/${id}`);
         this.item = response.data.item;
       } catch (error) {
         alert("取得物品資訊失敗", error);
@@ -141,14 +137,11 @@ export default {
       //   return;
       // }
       try {
-        const response = await axios.post(
-          "http://localhost:3000/api/addtocart",
-          {
-            itemID: this.item.id,
-            userID: this.getUserID,
-            amount: this.amount,
-          }
-        );
+        await axios.post(`${API_BASE_URL}/api/addtocart`, {
+          itemID: this.item.id,
+          userID: this.getUserID,
+          amount: this.amount,
+        });
         this.popupShow = true;
       } catch (error) {
         alert("新增至購物車失敗", error);

@@ -88,6 +88,7 @@ import axios from "axios";
 import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import FileInputComponent from "../components/FileInputComponent.vue";
+import { API_BASE_URL } from "../config/api";
 
 export default {
   data() {
@@ -127,7 +128,7 @@ export default {
 
         // Send the FormData object in the POST request
         const response = await axios.post(
-          "http://localhost:3000/api/uploadimage",
+          `${API_BASE_URL}/api/uploadimage`,
           formData,
           {
             headers: {
@@ -151,26 +152,23 @@ export default {
         const itemID = uploadResponse.data.files[0].filename.split("-")[0];
         const uploadedFiles = uploadResponse.data.files;
         const imageUrls = uploadedFiles.map((file) => file.filename);
-        await axios.post("http://localhost:3000/api/insertmultipleimages", {
+        await axios.post(`${API_BASE_URL}/api/insertmultipleimages`, {
           itemID: itemID,
           imageUrls: imageUrls,
         });
 
         this.detail =
           this.detail === "" ? `高效能${this.selectCategory}` : this.detail;
-        const addItemResponse = await axios.post(
-          "http://localhost:3000/api/addnewitem",
-          {
-            id: itemID,
-            name: this.name,
-            detail: this.detail,
-            category: this.selectCategory,
-            price: this.price,
-            stock: this.stock,
-            status: this.status,
-            thumbnail: uploadedFiles[0].filename,
-          }
-        );
+        await axios.post(`${API_BASE_URL}/api/addnewitem`, {
+          id: itemID,
+          name: this.name,
+          detail: this.detail,
+          category: this.selectCategory,
+          price: this.price,
+          stock: this.stock,
+          status: this.status,
+          thumbnail: uploadedFiles[0].filename,
+        });
         alert("新增物品成功");
       } catch (error) {
         alert("新增物品失敗", error);

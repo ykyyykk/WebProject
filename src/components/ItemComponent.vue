@@ -54,6 +54,7 @@
 <script>
 import { mapGetters } from "vuex";
 import axios from "axios";
+import { API_BASE_URL } from "../config/api";
 
 export default {
   props: {
@@ -108,7 +109,7 @@ export default {
       //   return;
       // }
       try {
-        await axios.post("http://localhost:3000/api/addtocart", {
+        await axios.post(`${API_BASE_URL}/api/addtocart`, {
           itemID: id,
           userID: this.getUserID,
           amount: amount,
@@ -120,12 +121,11 @@ export default {
     },
     async RemoveFromCart(id) {
       try {
-        const response = await axios.post(
-          "http://localhost:3000/api/deletefromcart",
-          {
-            itemID: id,
-            userID: this.getUserID,
-          }
+        console.log(`id: ${id}`);
+        console.log(`this.getUserID: ${this.getUserID}`);
+        //DELETE 通常不包含 request 需要從URL獲取參數
+        await axios.delete(
+          `${API_BASE_URL}/api/deletefromcart/${id}/${this.getUserID}`
         );
         console.log("移除至購物車成功");
       } catch (error) {

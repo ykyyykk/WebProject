@@ -86,6 +86,7 @@ import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import { mapActions } from "vuex/dist/vuex.cjs.js";
 import { useRouter } from "vue-router";
 import GoogleLoginComponent from "../components/GoogleLoginComponent.vue";
+import { API_BASE_URL } from "../config/api";
 
 export default {
   setup() {
@@ -108,7 +109,7 @@ export default {
     async Login() {
       try {
         // 與get不同 post不需將資料顯示在url上 隱私較好 但速度比get稍慢 適用於提交數據
-        const response = await axios.post("http://localhost:3000/api/login", {
+        const response = await axios.post(`${API_BASE_URL}/api/login`, {
           email: this.email,
           password: this.password,
         });

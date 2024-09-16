@@ -9,6 +9,7 @@ import store from "./store";
 import axios from "axios";
 // 需要更多複雜功能 例如 Google Drive、Google Calendar 需要改安裝 vue3-google-oauth2;
 import vue3GoogleLogin from "vue3-google-login";
+import { API_BASE_URL } from "./config/api.js";
 
 const GoogleLoginOptions = {
   clientId:
@@ -31,17 +32,14 @@ router.beforeEach(async (to, from, next) => {
       store.dispatch("SetLogin", { userID: userID });
       console.log(`userID: ${userID}`);
     }
-    const allItemsResponse = await axios.get(
-      // "http://localhost:5000/api/getallitem"
-      "http://localhost:3000/api/getallitem"
-    );
+
+    const allItemsResponse = await axios.get(`${API_BASE_URL}/api/getallitem`);
 
     // 在.vue以外的地方只能使用store.dispatch
     // 他的功能等同於...mapActions 但 ...mapActions只能在.vue以內使用
     store.dispatch("SetAllItems", { items: allItemsResponse.data.items });
     const cartItemsResponse = await axios.get(
-      // "http://localhost:5000/api/getcartitems",
-      "http://localhost:3000/api/getcartitems",
+      `${API_BASE_URL}/api/getcartitems`,
       {
         params: {
           userID: userID,

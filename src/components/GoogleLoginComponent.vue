@@ -13,6 +13,7 @@
 import axios from "axios";
 import { googleTokenLogin } from "vue3-google-login";
 import { useRouter } from "vue-router";
+import { API_BASE_URL } from "../config/api";
 
 export default {
   setup() {
@@ -25,7 +26,7 @@ export default {
         const response = await googleTokenLogin();
 
         const loginResponse = await axios.post(
-          "http://localhost:3000/api/googlesignin",
+          `${API_BASE_URL}/api/googlesignin`,
           {
             token: response.access_token,
           }
@@ -36,7 +37,7 @@ export default {
         console.log(email);
         console.log(password);
 
-        await axios.post("http://localhost:3000/api/login", {
+        await axios.post(`${API_BASE_URL}/api/login`, {
           email: email,
           password: password,
         });

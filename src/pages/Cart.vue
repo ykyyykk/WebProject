@@ -78,6 +78,7 @@ import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import NumberInputComponent from "../components/NumberInputComponent.vue";
 import axios from "axios";
 import { mapGetters } from "vuex";
+import { API_BASE_URL } from "../config/api";
 
 // TODOError: 現在還不能調整購物車物品的數量
 // TODOWarning: 購物車 同樣的物品應該要疊加
@@ -125,14 +126,11 @@ export default {
     async GetCartItems() {
       try {
         // console.log(`getUserID: ${this.getUserID}`);
-        const response = await axios.get(
-          "http://localhost:3000/api/getcartitems",
-          {
-            params: {
-              userID: this.getUserID,
-            },
-          }
-        );
+        const response = await axios.get(`${API_BASE_URL}/api/getcartitems`, {
+          params: {
+            userID: this.getUserID,
+          },
+        });
         if (response.data.success) {
           this.cartItems = response.data.items;
         }
@@ -144,7 +142,7 @@ export default {
       console.log(`DeleteFromCart: ${id}`);
       try {
         const response = await axios.post(
-          "http://localhost:3000/api/deletefromcart",
+          `${API_BASE_URL}/api/deletefromcart`,
           {
             itemID: id,
             userID: this.getUserID,
@@ -203,7 +201,7 @@ export default {
           console.log(`this.totalPrice: ${this.totalPrice}`);
           console.log(`this.selectItems: ${this.selectItems}`);
           const response = await axios.post(
-            "http://localhost:3000/api/purchaseitem",
+            `${API_BASE_URL}/api/purchaseitem`,
             {
               id: this.selectItems[i].id,
               amount: this.selectItems[i].amount,

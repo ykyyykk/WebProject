@@ -2,8 +2,10 @@
   "name": "webteamproject",
   "version": "1.0.0",
   "main": "index.js",
+  "comment": "使用 ESModules 需要用import/export 而不是 CommonJs 的 require/exports",
   "type": "module",
   "scripts": {
+    "comment": "dev 測試, build 建置, startMac Mac測試 加 開啟node.js, startWin Windows測試 加 開啟node.js",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
@@ -15,6 +17,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "comment": "所有package",
     "@vitejs/plugin-vue": "^5.1.2",
     "animejs": "^3.2.2",
     "axios": "^1.7.7",
