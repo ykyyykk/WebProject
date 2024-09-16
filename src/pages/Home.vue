@@ -1,6 +1,7 @@
 <template>
   <HeaderComponent />
   <SwiperComponent :pages="pages" />
+  <ElevatorComponent />
 
   <!-- 沒用 要先裝popover插件 -->
   <!-- <button
@@ -30,6 +31,7 @@
 import HeaderComponent from "../components/HeaderComponent.vue";
 import SwiperComponent from "../components/SwiperComponent.vue";
 import ItemComponent from "../components/ItemComponent.vue";
+import ElevatorComponent from "../components/ElevatorComponent.vue";
 import { mapState } from "vuex/dist/vuex.cjs.js";
 // import { API_BASE_URL } from "../config/api";
 
@@ -39,7 +41,12 @@ export default {
   //     url: `${API_BASE_URL}`,
   //   };
   // },
-  components: { HeaderComponent, SwiperComponent, ItemComponent },
+  components: {
+    HeaderComponent,
+    SwiperComponent,
+    ItemComponent,
+    ElevatorComponent,
+  },
   computed: {
     ...mapState(["items", "pages"]),
   },

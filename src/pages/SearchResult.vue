@@ -1,9 +1,10 @@
 <template>
   <HeaderComponent />
+  <ElevatorComponent />
 
-  <div id="itmesContainer" class="container">
+  <div id="itmesContainer" class="container mt-5">
     <div class="d-flex justify-content-between align-items-center">
-      <div>{{ items.length }} 件商品</div>
+      <div>{{ this.GetFilterItems.length }} 件商品</div>
 
       <div class="btn-group">
         <button
@@ -39,7 +40,11 @@
       </div>
     </div>
     <div class="row d-flex justify-content-start align-items-center p-3">
-      <div v-for="item in items" :key="item.id" class="col-lg-3 col-sm-4 col-6">
+      <div
+        v-for="item in this.GetFilterItems"
+        :key="item.id"
+        class="col-lg-3 col-sm-4 col-6"
+      >
         <ItemComponent :item="item" />
       </div>
     </div>
@@ -50,18 +55,23 @@
 import { mapState } from "vuex/dist/vuex.cjs.js";
 import HeaderComponent from "../components/HeaderComponent.vue";
 import ItemComponent from "../components/ItemComponent.vue";
+import ElevatorComponent from "../components/ElevatorComponent.vue";
 
 export default {
   data() {
-    return { sortTag: "" };
+    return {
+      sortTag: "",
+    };
   },
-  components: { HeaderComponent, ItemComponent },
+  components: { HeaderComponent, ItemComponent, ElevatorComponent },
   computed: {
     ...mapState(["items,searchQuery"]),
     // 給v-for用的
-    items() {
-      let filterItems = this.items.filter((item) =>
-        item.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+    GetFilterItems() {
+      let filterItems = this.$store.state.items.filter((item) =>
+        item.name
+          .toLowerCase()
+          .includes(this.$store.state.searchQuery.toLowerCase())
       );
       switch (this.sortTag) {
         case "價格: 低至高":

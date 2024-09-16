@@ -51,16 +51,12 @@ export default {
     OnInput() {
       // 中文要等Enter才會有結果
       // input字串字數
-      if (this.searchQuery.length > 0) {
-        this.filterItems = this.items.filter((item) =>
-          item.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-        );
-
-        this.SetSearchQuery({ searchQuery: this.searchQuery });
-        this.showDropdown = this.filterItems.length > 0;
-      } else {
-        this.showDropdown = false;
-      }
+      // 為了搜尋後 能刪掉關鍵字 看到所有物品
+      this.filterItems = this.items.filter((item) =>
+        item.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+      this.SetSearchQuery({ searchQuery: this.searchQuery });
+      this.showDropdown = this.searchQuery.length > 0;
     },
     SelectSearchItem(item) {
       this.searchQuery = item.name;
@@ -78,7 +74,7 @@ export default {
       this.$emit("ToggleSearchWindow");
       // 檢查當前路由是否已經是SearchResult
       if (this.$route.name !== "SearchResult") {
-        this.router.push({ name: "SearchResult" });
+        this.$router.push({ name: "SearchResult" });
       }
     },
   },

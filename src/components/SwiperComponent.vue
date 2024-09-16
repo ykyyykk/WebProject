@@ -106,17 +106,6 @@ export default {
 };
 </script>
 
-<!-- <style scoped>
-.progress-bar {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 4px;
-  width: 0;
-  background-color: var(--bs-primary);
-}
-</style> -->
-
 <!-- 左右會留空 -->
 <!-- <img class="object-fit-contain" src="../assets/img/slide1.jpg" /> -->
 <!-- <img class="object-fit-scale" src="../assets/img/slide1.jpg" /> -->
@@ -131,30 +120,4 @@ export default {
 <!-- TODOWarning: Mac有正常滑動 但是沒有滑鼠拖曳 -->
 <!-- TODOWarning: 在每個tag 都加v-touch:pan 會warning暫時刪掉 -->
 <!-- TODOWarning: 在swiper加入v-touch:pinch 會Warning暫時刪掉 -->
-<!-- TODOAdd: 設定秒數 自動輪播 -->
 <!-- TODOAdd: 廣告XS 一次一張 LG一次兩張-->
-
-<!-- ScrollButton.js -->
-<!-- var scroll_to_top_btn;
-var scroll_to_bottom_btn;
-
-document.addEventListener("DOMContentLoaded", () => {
-  scroll_to_top_btn = document.getElementById("ScrollToTop");
-  scroll_to_bottom_btn = document.getElementById("ScrollToBottom");
-
-  scroll_to_top_btn.addEventListener("click", () => {
-    console.log("scroll to top");
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth" /* 平滑捲動 */,
-    });
-  });
-
-  scroll_to_bottom_btn.addEventListener("click", () => {
-    console.log("scroll to bottom");
-    window.scrollTo({
-      top: document.body.scrollHeight,
-      behavior: "smooth",
-    });
-  });
-}); -->
