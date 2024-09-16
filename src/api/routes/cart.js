@@ -10,7 +10,6 @@ router.delete("/deletefromcart/:itemID/:userID", (request, response, next) => {
   try {
     const stmt = db.prepare(sql);
     const info = stmt.run(itemID, userID);
-    console.log(`info: ${JSON.stringify(info)}`);
     response.status(200).json({ success: true, info: info });
   } catch (error) {
     next(error);
@@ -52,6 +51,19 @@ router.post("/addtocart", (request, response) => {
     const stmt = db.prepare(sql);
     const info = stmt.run(itemID, userID, amount);
     response.status(200).json({ success: true, info: info });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/changecartamount", (request, response) => {
+  const { itemID, userID, amount } = request.body;
+  const sql = `UPDATE Cart SET buyAmount = ? WHERE itemID = ? AND userID = ?`;
+
+  try {
+    const stmt = db.prepare(sql);
+    const data = stmt.run(amount, itemID, userID);
+    console.log(`data: ${JSON.stringify(data)}`);
   } catch (error) {
     next(error);
   }

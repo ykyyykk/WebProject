@@ -34,10 +34,12 @@
           <div class="d-flex align-items-center w-100">
             <!-- :amount 是單向綁定 給子組件一個叫做amount的變數  -->
             <!-- v-model:amount:item.buyAmount 是雙向綁定 子物件可以修改amount 進而改變父物件item.buyAmount -->
+            <!-- @update 當數量變更時觸發-->
             <NumberInputComponent
               class="w-50"
               v-model:amount="item.buyAmount"
               :max="item.stock"
+              @update:amount="UpdateCartItemAmount(item.id, $event)"
             />
             <button
               @click="DeleteFromCart(item.id)"
@@ -79,6 +81,7 @@ import NumberInputComponent from "../components/NumberInputComponent.vue";
 import axios from "axios";
 import { mapGetters } from "vuex";
 import { API_BASE_URL } from "../config/api";
+import { debounce } from "lodash";
 
 // TODOError: 現在還不能調整購物車物品的數量
 // TODOWarning: 購物車 同樣的物品應該要疊加
@@ -87,11 +90,17 @@ export default {
   data() {
     return {
       cartItems: [],
-      //TODOWarning: 這邊不知道會不會有問題 每個item都共用
       totalPrice: 0,
       selectItems: [],
       isSelectAll: false,
     };
+  },
+  created() {
+    this.debouncedUpdateDatabase = debounce(
+      this.UpdateItemAmountInDatabase,
+      //1秒後更新 就算跳頁面也會更新 連續按三次按鈕 只會抓最新的
+      1000
+    );
   },
   components: { HeaderComponent, SmallHeaderComponent, NumberInputComponent },
   computed: {
@@ -105,6 +114,28 @@ export default {
     await this.GetCartItems();
   },
   methods: {
+    UpdateCartItemAmount(itemID, newAmount) {
+      const item = this.cartItems.find((item) => item.id === itemID);
+      if (!item) {
+        console.log(`!item`);
+        return;
+      }
+      item.buyAmount = newAmount;
+      this.debouncedUpdateDatabase(itemID, newAmount);
+    },
+    async UpdateItemAmountInDatabase(itemID, amount) {
+      try {
+        await axios.post(`${API_BASE_URL}/api/changecartamount`, {
+          itemID: itemID,
+          userID: this.getUserID,
+          amount: amount,
+        });
+        console.log("購物車數量變更成功");
+      } catch (error) {
+        alert(`購物車數量變更失敗: ${error}`);
+        // 購物車數量變更失敗: AxiosError: Network Error
+      }
+    },
     GetThumbnail(thumbnail, category) {
       if (thumbnail != "") {
         return `img/${thumbnail}`;
@@ -141,12 +172,8 @@ export default {
     async DeleteFromCart(id) {
       console.log(`DeleteFromCart: ${id}`);
       try {
-        const response = await axios.post(
-          `${API_BASE_URL}/api/deletefromcart`,
-          {
-            itemID: id,
-            userID: this.getUserID,
-          }
+        const response = await axios.delete(
+          `${API_BASE_URL}/api/deletefromcart/${id}/${this.getUserID}`
         );
         //更改的資料筆數
         const changes = response.data.info.changes;

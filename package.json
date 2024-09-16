@@ -2,7 +2,7 @@
   "name": "webteamproject",
   "version": "1.0.0",
   "main": "index.js",
-  "comment": "使用 ESModules 需要用import/export 而不是 CommonJs 的 require/exports",
+  "comment": "所有package",
   "type": "module",
   "scripts": {
     "comment": "dev 測試, build 建置, startMac Mac測試 加 開啟node.js, startWin Windows測試 加 開啟node.js",
@@ -17,7 +17,6 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "comment": "所有package",
     "@vitejs/plugin-vue": "^5.1.2",
     "animejs": "^3.2.2",
     "axios": "^1.7.7",
@@ -27,6 +26,7 @@
     "express": "^4.19.2",
     "google-auth-library": "^9.14.1",
     "googleapis": "^144.0.0",
+    "lodash": "^4.17.21",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.15",
     "nodemon": "^3.1.4",
