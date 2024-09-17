@@ -5,8 +5,8 @@
 </template>
 
 <style>
-/* 全域讓預設ScorllBar 瘦一點好看點 */
 html {
+  /* 全域讓預設ScorllBar 瘦一點好看點 */
   scrollbar-width: thin;
   scrollbar-color: #888 #f1f1f1;
 }

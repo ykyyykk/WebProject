@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded my-2 shadow p-3">
+  <div class="rounded mb-3 shadow p-3 bg-white">
     <!-- 這邊是去public/img取照片 不懂為什麼沒辦法在src/assets/img-->
     <router-link
       :to="{

@@ -2,11 +2,22 @@ import { createStore } from "vuex";
 
 // Define the image paths
 const pages = [
-  { id: 1, src: "/banner/banner1.jpg" },
-  { id: 2, src: "/banner/banner2.jpg" },
-  { id: 3, src: "/banner/banner3.jpg" },
-  { id: 4, src: "/banner/banner4.jpg" },
-  // Add more images as needed
+  { id: 1, src: "/banner1200_615/banner1.png" },
+  { id: 2, src: "/banner1200_615/banner2.png" },
+  { id: 3, src: "/banner1200_615/banner3.png" },
+  { id: 4, src: "/banner1200_615/banner4.png" },
+  { id: 5, src: "/banner1200_615/banner5.png" },
+  { id: 6, src: "/banner1200_615/banner6.png" },
+  { id: 7, src: "/banner1200_615/banner7.png" },
+  { id: 8, src: "/banner1200_615/banner8.png" },
+  { id: 9, src: "/banner1200_615/banner9.png" },
+  { id: 10, src: "/banner1200_615/banner10.png" },
+];
+
+const events = [
+  { id: 1, src: "/events500_160/event1.png" },
+  { id: 2, src: "/events500_160/event2.png" },
+  { id: 3, src: "/events500_160/event3.png" },
 ];
 
 // 需要先安裝vuex
@@ -21,6 +32,7 @@ export default createStore({
     user: null,
     searchQuery: "",
     pages,
+    events,
   },
   mutations: {
     // 用於直接修改state中的狀態
@@ -71,5 +83,12 @@ export default createStore({
     //     console.error("Error fetching pages:", error);
     //   }
     // },
+  },
+  getters: {
+    smallThenXXL: (state) => window.innerWidth < 1399,
+    smallThenXL: (state) => window.innerWidth < 1199,
+    smallThenLG: (state) => window.innerWidth < 991,
+    smallThenMD: (state) => window.innerWidth < 767,
+    smallThenSM: (state) => window.innerWidth < 575,
   },
 });

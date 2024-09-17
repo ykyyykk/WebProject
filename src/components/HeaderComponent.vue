@@ -1,6 +1,6 @@
 <template>
   <header
-    class="d-flex justify-content-between align-items-center p-3"
+    class="d-flex justify-content-between align-items-center p-3 bg-white"
     style="height: 4rem"
   >
     <div class="d-flex justify-content-start align-items-center w-100">

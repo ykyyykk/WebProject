@@ -2,7 +2,7 @@
   <HeaderComponent />
   <ElevatorComponent />
 
-  <div id="itmesContainer" class="container mt-5">
+  <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center">
       <div>{{ this.GetFilterItems.length }} 件商品</div>
 

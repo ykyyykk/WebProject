@@ -2,7 +2,7 @@
   <HeaderComponent />
   <SmallHeaderComponent pageTitle="購物車" />
 
-  <div v-if="items" id="itmesContainer" class="container mt-5 mb-5">
+  <div v-if="items" class="container mt-5 mb-5">
     <div
       v-for="item in cartItems"
       :key="item.id"
