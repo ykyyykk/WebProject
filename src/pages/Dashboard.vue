@@ -44,6 +44,8 @@
 
     <div>
       <h4>用戶管理</h4>
+
+      <button class="btn btn-outline-primary" @click="OnLogout()">登出</button>
       <a class="btn btn-outline-primary" href=""> 查看用戶 </a>
       <a class="btn btn-outline-primary" href=""> 編輯用戶 </a>
       <a class="btn btn-outline-primary" href=""> 刪除用戶 </a>
@@ -54,10 +56,26 @@
 <script>
 import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
+import { mapActions } from "vuex/dist/vuex.cjs.js";
 
 export default {
+  mounted() {
+    //...mapState(["isManager"])順序太慢讀不到
+    console.log(this.$store.state.isManager);
+    if (this.$store.state.user == null) {
+      this.$router.push({ name: "Home" });
+    } else if (!this.$store.state.isManager) {
+      this.$router.push({ name: "MemberCenter" });
+    }
+  },
+  data() {
+    return {
+      amount: 0,
+    };
+  },
   components: { HeaderComponent, SmallHeaderComponent },
   methods: {
+    ...mapActions(["SetLogout"]),
     async CleanExpiresVerification() {
       try {
         const response = await axios.delete(
@@ -70,6 +88,13 @@ export default {
       } catch (error) {
         console.log(`error: ${error}`);
       }
+    },
+    OnLogout() {
+      console.log("OnLogout");
+      localStorage.setItem("user", null);
+      this.SetLogout();
+      alert("你已登出");
+      this.$router.push({ name: "Home" });
     },
   },
 };

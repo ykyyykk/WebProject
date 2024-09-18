@@ -59,7 +59,7 @@ router.beforeEach(async (to, from, next) => {
     }
     next();
   } catch (error) {
-    alert("取得所有物品失敗", error);
+    alert(`取得所有物品失敗: ${error}`);
     // next(false); // 阻止導航 暫時註解避免 部署時沒有畫面
     next();
   }

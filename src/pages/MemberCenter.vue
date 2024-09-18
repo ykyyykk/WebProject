@@ -69,11 +69,9 @@
 </template>
 
 <script>
-import axios from "axios";
 import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import { mapActions } from "vuex/dist/vuex.cjs.js";
-import { API_BASE_URL } from "../config/api";
 //在 OptionsAPI 中 通常不使用 useStore useRouter 這些是 CompositionAPI 的一部分
 
 export default {

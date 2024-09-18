@@ -10,6 +10,8 @@ import Register from "../pages/Register.vue";
 import NotFound from "../pages/NotFound.vue";
 import ItemDetail from "../pages/ItemDetail.vue";
 import SearchResult from "../pages/SearchResult.vue";
+import Dashboard from "../pages/Dashboard.vue";
+import ItemManagement from "../pages/ItemManagement.vue";
 import Grid from "../pages/Grid.vue";
 import Test from "../pages/Test.vue";
 
@@ -20,19 +22,9 @@ const routes = [
     component: Home,
   },
   {
-    path: "/addItem",
-    name: "AddItem",
-    component: AddItem,
-  },
-  {
     path: "/cart",
     name: "Cart",
     component: Cart,
-  },
-  {
-    path: "/service",
-    name: "Service",
-    component: Service,
   },
   {
     path: "/membercenter",
@@ -68,6 +60,26 @@ const routes = [
     path: "/searchresult",
     name: "SearchResult",
     component: SearchResult,
+  },
+  {
+    path: "/service",
+    name: "Service",
+    component: Service,
+  },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    component: Dashboard,
+  },
+  {
+    path: "/dashboard/itemmanagement",
+    name: "ItemManagement",
+    component: ItemManagement,
+  },
+  {
+    path: "/dashboard/addItem",
+    name: "AddItem",
+    component: AddItem,
   },
   {
     path: "/test",

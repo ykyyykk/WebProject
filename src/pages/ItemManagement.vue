@@ -10,7 +10,7 @@
       <div class="row">
         <img
           class="img-thumbnail"
-          src="img/slide1.png"
+          src="../../public/banner1200_615/banner1.png"
           style="width: 10rem; height: 10rem"
         />
         <h5 class="mt-2">商品名稱</h5>
@@ -33,7 +33,7 @@
       <div class="row">
         <img
           class="img-thumbnail"
-          src="img/slide1.png"
+          src="../../public/banner1200_615/banner1.png"
           style="width: 10rem; height: 10rem"
         />
         <h5 class="mt-2">商品名稱</h5>
@@ -55,7 +55,7 @@
       <div class="row">
         <img
           class="img-thumbnail"
-          src="img/slide1.png"
+          src="../../public/banner1200_615/banner1.png"
           style="width: 10rem; height: 10rem"
         />
         <h5 class="mt-2">商品名稱</h5>
@@ -77,7 +77,7 @@
       <div class="row">
         <img
           class="img-thumbnail"
-          src="img/slide1.png"
+          src="../../public/banner1200_615/banner1.png"
           style="width: 10rem; height: 10rem"
         />
         <h5 class="mt-2">商品名稱</h5>

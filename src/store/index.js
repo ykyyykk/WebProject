@@ -30,6 +30,7 @@ export default createStore({
     cartItems: [],
     // 直接存User失敗 要不斷轉JSON 轉Object 因為localStorage.setItem()只能存字串
     user: null,
+    isManager: false,
     searchQuery: "",
     pages,
     events,
@@ -40,6 +41,12 @@ export default createStore({
     // 通過commit調用
     SetLoginStatus(state, user) {
       state.user = user;
+      if (user == null) {
+        return;
+      }
+      if (user.email === "e" && user.password === "p") {
+        state.isManager = true;
+      }
     },
     SetAllItems(state, items) {
       state.items = items;
@@ -83,12 +90,5 @@ export default createStore({
     //     console.error("Error fetching pages:", error);
     //   }
     // },
-  },
-  getters: {
-    smallThenXXL: (state) => window.innerWidth < 1399,
-    smallThenXL: (state) => window.innerWidth < 1199,
-    smallThenLG: (state) => window.innerWidth < 991,
-    smallThenMD: (state) => window.innerWidth < 767,
-    smallThenSM: (state) => window.innerWidth < 575,
   },
 });

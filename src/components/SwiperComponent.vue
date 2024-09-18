@@ -22,6 +22,7 @@
       class="d-flex justify-content-center align-items-center text-center"
     >
       <div
+        ref="progressBar"
         class="bg-primary w-0 position-absolute bottom-0 start-0"
         style="height: 4px"
       ></div>
@@ -70,9 +71,15 @@ export default {
     },
     NextImage() {
       this.ResetProgress();
+      if (this.swiperInstance) {
+        this.swiperInstance.slideNext();
+      }
     },
     PreviousImage() {
       this.ResetProgress();
+      if (this.swiperInstance) {
+        this.swiperInstance.slidePrev();
+      }
     },
     ResetProgress() {
       if (this.progressAnimation) {

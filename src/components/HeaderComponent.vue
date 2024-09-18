@@ -83,9 +83,14 @@ export default {
     };
   },
   computed: {
-    ...mapState(["user"]),
+    ...mapState(["user", "isManager"]),
     CheckLoginStatus() {
-      return this.user == null ? { name: "Login" } : { name: "MemberCenter" };
+      if (this.user == null) {
+        return { name: "Login" };
+      } else if (this.isManager) {
+        return { name: "Dashboard" };
+      }
+      return { name: "MemberCenter" };
     },
   },
   methods: {
