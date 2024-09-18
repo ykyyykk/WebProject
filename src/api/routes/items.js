@@ -150,4 +150,33 @@ router.post("/purchaseitem", (request, response, next) => {
   }
 });
 
+router.delete(
+  "/deletefromdatabase/:itemID/:userID",
+  (request, response, next) => {
+    const { itemID, userID } = request.params;
+
+    if (userID != 6) {
+      console.log("不是管理者不能下架");
+      next();
+      return;
+    }
+    const sql = `DELETE FROM Item WHERE id = ?`;
+
+    try {
+      const stmt = db.prepare(sql);
+      const row = stmt.run(itemID);
+      if (row) {
+        console.log(111);
+        response.status(200).json({ success: true });
+      } else {
+        response
+          .status(404)
+          .json({ success: false, message: "User not found" });
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 export default router;

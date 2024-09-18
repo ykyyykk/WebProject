@@ -3,14 +3,17 @@
   <SmallHeaderComponent pageTitle="產品管理" />
 
   <div class="p-3 w-100 h-100 mt-5">
-    <a class="btn btn-outline-primary" href="product_management.html">
+    <router-link
+      class="btn btn-outline-primary"
+      :to="{ name: 'ItemManagement' }"
+    >
       產品管理
-    </a>
+    </router-link>
     <button class="btn btn-outline-primary" @click="CleanExpiresVerification()">
       清理驗證碼
     </button>
 
-    <div class="mb-5">
+    <div class="mb-5 shadow rounded p-3">
       <h4>訂單管理</h4>
       <a class="btn btn-outline-primary" href="">
         <p>{{ amount }}</p>
@@ -42,9 +45,8 @@
       </a>
     </div>
 
-    <div>
+    <div class="shadow rounded p-3">
       <h4>用戶管理</h4>
-
       <button class="btn btn-outline-primary" @click="OnLogout()">登出</button>
       <a class="btn btn-outline-primary" href=""> 查看用戶 </a>
       <a class="btn btn-outline-primary" href=""> 編輯用戶 </a>

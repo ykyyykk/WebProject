@@ -5,10 +5,6 @@
     <button @click="Back()" class="bg-transparent border border-0">
       <i class="fa-solid fa-arrow-left"></i> {{ pageTitle }}
     </button>
-
-    <button class="bg-transparent ms-auto me-2 float-right border border-0">
-      <i class="fa-regular fa-circle-question"></i>
-    </button>
   </div>
 </template>
 
