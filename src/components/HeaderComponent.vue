@@ -4,12 +4,13 @@
     style="height: 4rem"
   >
     <div class="d-flex justify-content-start align-items-center w-100">
-      <button
+      <!-- 暫時取消 不知道要塞什麼 -->
+      <!-- <button
         class="border border-0 bg-transparent"
         @click="isSideBarOpen = true"
       >
         <i class="fa-solid fa-bars fs-2"></i>
-      </button>
+      </button> -->
 
       <router-link
         :to="{ name: 'Home' }"

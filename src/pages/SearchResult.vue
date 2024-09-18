@@ -2,50 +2,109 @@
   <HeaderComponent />
   <ElevatorComponent />
 
-  <div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center">
-      <div>{{ this.GetFilterItems.length }} 件商品</div>
+  <div class="container mt-5 d-flex">
+    <div class="w-50 border border-black p-3">
+      <div class="d-block border border-black">
+        <h4>分類</h4>
+        <div>
+          <input type="checkbox" />
+          <span class="ms-2">分類1</span>
+        </div>
 
-      <div class="btn-group">
-        <button
-          type="button"
-          class="btn dropdown-toggle"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          排序 {{ sortTag }}
-        </button>
-        <ul class="dropdown-menu">
-          <li>
-            <a @click="ChangeSortTag('價格: 低至高')" class="dropdown-item"
-              >價格: 低至高</a
-            >
-          </li>
-          <li>
-            <a @click="ChangeSortTag('價格: 高至低')" class="dropdown-item"
-              >價格: 高至低</a
-            >
-          </li>
-          <li>
-            <a @click="ChangeSortTag('銷量: 低至高')" class="dropdown-item"
-              >銷量: 低至高</a
-            >
-          </li>
-          <li>
-            <a @click="ChangeSortTag('銷量: 高至低')" class="dropdown-item"
-              >銷量: 高至低</a
-            >
-          </li>
-        </ul>
+        <div>
+          <input type="checkbox" />
+          <span class="ms-2">分類2</span>
+        </div>
       </div>
+
+      <div>
+        <h4>價格範圍</h4>
+        <div class="d-flex justify-content-between">
+          <input
+            class="form-control form-control-sm w-25"
+            type="text"
+            placeholder="最小值"
+            value="0"
+          />
+          -----------
+          <input
+            class="form-control form-control-sm w-25"
+            type="text"
+            placeholder="最大值"
+          />
+        </div>
+      </div>
+
+      <div>
+        <h4>評價</h4>
+        <div>ooooo</div>
+        <div>ooooo 或以上</div>
+        <div>ooooo 或以上</div>
+        <div>ooooo 或以上</div>
+        <div>ooooo 或以上</div>
+      </div>
+
+      <div>
+        <h4>保存狀況</h4>
+        <div>
+          <input type="checkbox" />
+          <span class="ms-2">全新</span>
+        </div>
+        <div>
+          <input type="checkbox" />
+          <span class="ms-2">二手</span>
+        </div>
+      </div>
+      <button class="btn btn-outline-primary w-100">清除全部</button>
     </div>
-    <div class="row d-flex justify-content-start align-items-center p-3">
-      <div
-        v-for="item in this.GetFilterItems"
-        :key="item.id"
-        class="col-lg-3 col-sm-4 col-6"
-      >
-        <ItemComponent :item="item" />
+    <div>
+      <!-- 商品數量 排序 -->
+      <div class="d-flex justify-content-between align-items-center">
+        <div>{{ this.GetFilterItems.length }} 件商品</div>
+
+        <div class="btn-group">
+          <button
+            type="button"
+            class="btn dropdown-toggle"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            排序 {{ sortTag }}
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+              <a @click="ChangeSortTag('價格: 低至高')" class="dropdown-item"
+                >價格: 低至高</a
+              >
+            </li>
+            <li>
+              <a @click="ChangeSortTag('價格: 高至低')" class="dropdown-item"
+                >價格: 高至低</a
+              >
+            </li>
+            <li>
+              <a @click="ChangeSortTag('銷量: 低至高')" class="dropdown-item"
+                >銷量: 低至高</a
+              >
+            </li>
+            <li>
+              <a @click="ChangeSortTag('銷量: 高至低')" class="dropdown-item"
+                >銷量: 高至低</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 商品列表 -->
+      <div class="row d-flex justify-content-start align-items-center p-3">
+        <div
+          v-for="item in this.GetFilterItems"
+          :key="item.id"
+          class="col-lg-3 col-sm-4 col-6"
+        >
+          <ItemComponent :item="item" />
+        </div>
       </div>
     </div>
   </div>

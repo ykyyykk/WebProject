@@ -11,7 +11,9 @@
       <div class="d-flex p-3 rounded border border-black mb-3">
         <input
           @click="OnCheck(item.id, item.price, item.buyAmount)"
-          :checked="selectItems.includes(item.id)"
+          :checked="
+            selectItems.some((selectedItem) => selectedItem.id === item.id)
+          "
           class="ms-2 me-3"
           type="checkbox"
         />
@@ -62,7 +64,7 @@
   >
     <div>
       <input @click="OnSelectAll()" type="checkbox" />
-      <span>全選</span>
+      <span class="ms-2">全選</span>
       <span class="ms-5">總金額$ {{ totalPrice }}</span>
     </div>
 
@@ -207,8 +209,8 @@ export default {
       this.isSelectAll = true;
 
       this.cartItems.forEach((item) => {
-        this.selectItems.push({ id: item.id, amount: item.amount });
-        this.totalPrice += item.price * item.amount;
+        this.selectItems.push({ id: item.id, amount: item.buyAmount });
+        this.totalPrice += +item.price * +item.buyAmount;
       });
     },
     async OnCheckOut() {
@@ -219,8 +221,6 @@ export default {
 
       try {
         for (let i = 0; i < this.selectItems.length; i++) {
-          console.log(`this.totalPrice: ${this.totalPrice}`);
-          console.log(`this.selectItems: ${this.selectItems}`);
           const response = await axios.post(
             `${API_BASE_URL}/api/purchaseitem`,
             {

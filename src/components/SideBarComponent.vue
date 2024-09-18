@@ -5,10 +5,12 @@
     :style="{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }"
     v-if="isSideBarOpen"
   >
-    <div class="w-75 h-100 bg-white opacity-100 border border-black">
+    <div
+      class="w-xs-75 w-sm-50 w-md-25 h-100 bg-white opacity-100 border border-black position-relative"
+    >
       <button
-        class="border border-0 position-absolute"
-        style="top: 1rem; right: 10rem"
+        class="btn btn-outline-danger position-absolute"
+        style="top: 1rem; right: 1rem"
         @click="Close()"
       >
         <i class="fa-solid fa-xmark"></i>
@@ -43,3 +45,23 @@ export default {
   },
 };
 </script>
+
+<style>
+@media (min-width: 576px) {
+  .w-sm-50 {
+    width: 50% !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .w-md-25 {
+    width: 25% !important;
+  }
+}
+
+@media (min-width: 575px) {
+  .w-xs-75 {
+    width: 25% !important;
+  }
+}
+</style>
