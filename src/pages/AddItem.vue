@@ -21,6 +21,7 @@
       <label class="form-label fw-bolder">商品描述</label>
       <input
         v-model="detail"
+        style="height: 10rem"
         class="form-control border border-danger border-2"
       />
     </div>
@@ -96,7 +97,7 @@ export default {
       productImages: [],
       name: "",
       detail: "",
-      categories: ["處理器", "主機板", "記憶體", "硬碟", "顯示卡"],
+      categories: ["處理器", "主機板", "記憶體", "硬碟", "顯示卡", "鍵盤"],
       selectCategory: "處理器",
       price: 0,
       stock: 0,
@@ -159,6 +160,14 @@ export default {
 
         this.detail =
           this.detail === "" ? `高效能${this.selectCategory}` : this.detail;
+        console.log(itemID);
+        console.log(this.name);
+        console.log(this.detail);
+        console.log(this.selectCategory);
+        console.log(this.price);
+        console.log(this.stock);
+        console.log(this.status);
+        console.log(uploadedFiles[0].filename);
         await axios.post(`${API_BASE_URL}/api/addnewitem`, {
           id: itemID,
           name: this.name,

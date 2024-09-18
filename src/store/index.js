@@ -41,6 +41,7 @@ export default createStore({
     // 通過commit調用
     SetLoginStatus(state, user) {
       state.user = user;
+      state.isManager = false;
       if (user == null) {
         return;
       }

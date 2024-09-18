@@ -36,14 +36,14 @@ router.post(
 
 //聽說不要在api裡面含有get post put delete會比較好
 router.post("/addnewitem", (request, response, next) => {
-  const { id, name, detail, category, price, stock, status, thumnail } =
+  const { id, name, detail, category, price, stock, status, thumbnail } =
     request.body;
-  const sql = `INSERT INTO Item (id,name, detail, category, price, stock, status, thumnail)
+  const sql = `INSERT INTO Item (id,name, detail, category, price, stock, status, thumbnail)
                VALUES(?,?,?,?,?,?,?,?)`;
 
   try {
     const stmt = db.prepare(sql);
-    stmt.run(id, name, detail, category, price, stock, status, thumnail);
+    stmt.run(id, name, detail, category, price, stock, status, thumbnail);
     response.status(200).json({ success: true });
   } catch (error) {
     next(error);

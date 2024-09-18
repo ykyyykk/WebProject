@@ -26,7 +26,6 @@
 
 <script>
 export default {
-  // 沒用還是不會更改
   props: {
     amount: { type: Number, default: 1 },
     max: Number,

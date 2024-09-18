@@ -52,7 +52,8 @@
         </div>
       </div>
     </div>
-    <footer class="w-100 p-3 fixed-bottom bg-white w-100">
+    <!-- z-0為了讓sidebar蓋住 -->
+    <footer class="w-100 p-3 fixed-bottom bg-white w-100 z-0">
       <router-link class="btn btn-primary w-100" :to="{ name: 'AddItem' }"
         >新增產品</router-link
       >

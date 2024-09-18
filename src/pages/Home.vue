@@ -15,7 +15,7 @@
     </div>
   </div>
 
-  <div class="px-sm-5 px-0">
+  <div class="px-md-5 px-0">
     <!-- https://wixtwservice.wixsite.com/sinya/microsoft?utm_term=%E5%BE%AE%E8%BB%9F+windows11+microsoft&utm_content=%E5%BE%AE%E8%BB%9F%E6%B4%BB%E5%8B%95&utm_campaign=%E5%BE%AE%E8%BB%9F%E6%B4%BB%E5%8B%95 -->
 
     <!-- 沒用 要先裝popover插件 -->
@@ -30,6 +30,54 @@
   </button> -->
 
     <div class="d-flex w-100 m-0">
+      <div class="d-md-block d-none mt-3 col">
+        <img
+          style="max-width: 133px"
+          src="../../public/leftside/goodService.png"
+        />
+        <a
+          href="https://www.coolpc.com.tw/tw/shop/man-power/coolpc-silverstone-new/"
+        >
+          <img src="../../public/leftside/silverstone-202012.png" />
+        </a>
+        <a href="https://www.coolpc.com.tw/tw/shop/man-power/coolpc-nzxt-new/">
+          <img src="../../public/leftside/nzxt-202005.png" />
+        </a>
+        <a
+          href="https://www.coolpc.com.tw/tw/shop/man-power/coolpc-apexgaming-new/"
+        >
+          <img src="../../public/leftside/apexgaming-201903.png" />
+        </a>
+        <a
+          href="https://www.coolpc.com.tw/tw/shop/welcome-to-coolpc/coolpc-ttesport-new/"
+        >
+          <img src="../../public/leftside/tt-repair-1607.png" />
+        </a>
+        <a
+          href="https://www.coolpc.com.tw/tw/shop/man-power/coolpc-thermaltake-new/"
+        >
+          <img src="../../public/leftside/tt-psu-repair-1703.png" />
+        </a>
+        <a
+          href="https://www.coolpc.com.tw/tw/shop/mother-boring/coolpc-asrock-new/"
+        >
+          <img src="../../public/leftside/asrock-repair-1502.png" />
+        </a>
+        <a href="https://www.coolpc.com.tw/tw/shop/router/coolpc-totolink-new/">
+          <img src="../../public/leftside/totolink-repair-1302.png" />
+        </a>
+        <a
+          href="https://www.coolpc.com.tw/tw/shop/man-power/coolpc-fsp-antec-new/"
+        >
+          <img src="../../public/leftside/antec-repair-1305.png" />
+        </a>
+        <a
+          href="https://www.coolpc.com.tw/tw/shop/man-power/coolpc-fsp-antec-new/"
+        >
+          <img src="../../public/leftside/fsp-repair-1305.png" />
+        </a>
+      </div>
+
       <div
         class="row d-flex justify-content-start align-items-center w-100 m-0 mt-3"
       >
@@ -38,7 +86,7 @@
         <div
           v-for="item in items"
           :key="item.id"
-          class="col-lg-3 col-sm-4 col-6"
+          class="col-xl-3 col-lg-4 col-6"
         >
           <ItemComponent :item="item" />
         </div>

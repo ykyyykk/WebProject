@@ -35,8 +35,12 @@
         <i class="fa-solid fa-magnifying-glass fs-5"></i>
       </button>
 
-      <router-link :to="{ name: 'AddItem' }" class="bg-transparent text-black">
-        <i class="fa-solid fa-arrow-up-from-bracket fs-5"></i>
+      <router-link
+        v-if="isManager"
+        :to="{ name: 'Dashboard' }"
+        class="bg-transparent text-black"
+      >
+        <i class="fa-solid fa-store fs-5"></i>
       </router-link>
 
       <router-link :to="{ name: 'Service' }" class="bg-transparent text-black">
@@ -87,8 +91,6 @@ export default {
     CheckLoginStatus() {
       if (this.user == null) {
         return { name: "Login" };
-      } else if (this.isManager) {
-        return { name: "Dashboard" };
       }
       return { name: "MemberCenter" };
     },

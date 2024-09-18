@@ -9,6 +9,14 @@
     >
       產品管理
     </router-link>
+
+    <router-link
+      class="btn btn-outline-primary"
+      :to="{ name: 'ItemManagement' }"
+    >
+      文章管理
+    </router-link>
+
     <button class="btn btn-outline-primary" @click="CleanExpiresVerification()">
       清理驗證碼
     </button>
@@ -63,7 +71,7 @@ import { mapActions } from "vuex/dist/vuex.cjs.js";
 export default {
   mounted() {
     //...mapState(["isManager"])順序太慢讀不到
-    console.log(this.$store.state.isManager);
+    console.log(`isManager: ${this.$store.state.isManager}`);
     if (this.$store.state.user == null) {
       this.$router.push({ name: "Home" });
     } else if (!this.$store.state.isManager) {
@@ -92,7 +100,6 @@ export default {
       }
     },
     OnLogout() {
-      console.log("OnLogout");
       localStorage.setItem("user", null);
       this.SetLogout();
       alert("你已登出");
