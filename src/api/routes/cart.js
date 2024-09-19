@@ -1,22 +1,27 @@
 import express from "express";
 import { db } from "../../config/sqlite3.js";
+import pool from "../../config/mysql.js";
 
 const router = express.Router();
 
-router.delete("/deletefromcart/:itemID/:userID", (request, response, next) => {
-  const { itemID, userID } = request.params;
-  const sql = `DELETE FROM Cart WHERE itemID = ? AND userID = ?;`;
+router.delete(
+  "/deletefromcart/:itemID/:userID",
+  async (request, response, next) => {
+    const { itemID, userID } = request.params;
+    const sql = `DELETE FROM Cart WHERE itemID = ? AND userID = ?;`;
 
-  try {
-    const stmt = db.prepare(sql);
-    const info = stmt.run(itemID, userID);
-    response.status(200).json({ success: true, info: info });
-  } catch (error) {
-    next(error);
+    try {
+      // const stmt = db.prepare(sql);
+      // const info = stmt.run(itemID, userID);
+      const [info] = await pool.execute(sql, [itemID, userID]);
+      response.status(200).json({ success: true, info: info });
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
-router.get("/getcartitems", (request, response, next) => {
+router.get("/getcartitems", async (request, response, next) => {
   // 包起來才能抓到value 不然是body
   const { userID } = request.query;
 
@@ -29,9 +34,10 @@ router.get("/getcartitems", (request, response, next) => {
   `;
 
   try {
-    const stmt = db.prepare(sql);
+    // const stmt = db.prepare(sql);
     // 取得多行用all
-    const rows = stmt.all(userID);
+    // const rows = stmt.all(userID);
+    const [rows] = await pool.execute(sql, [userID]);
     if (rows.length > 0) {
       response.status(200).json({ success: true, items: rows });
     } else {
@@ -43,26 +49,28 @@ router.get("/getcartitems", (request, response, next) => {
   }
 });
 
-router.post("/addtocart", (request, response, next) => {
+router.post("/addtocart", async (request, response, next) => {
   const { itemID, userID, amount } = request.body;
   const sql = `INSERT INTO Cart (itemID, userID, buyAmount) VALUES(?,?,?)`;
 
   try {
-    const stmt = db.prepare(sql);
-    const info = stmt.run(itemID, userID, amount);
+    // const stmt = db.prepare(sql);
+    // const info = stmt.run(itemID, userID, amount);
+    const [info] = await pool.execute(sql, [itemID, userID, amount]);
     response.status(200).json({ success: true, info: info });
   } catch (error) {
     next(error);
   }
 });
 
-router.post("/changecartamount", (request, response, next) => {
+router.post("/changecartamount", async (request, response, next) => {
   const { itemID, userID, amount } = request.body;
   const sql = `UPDATE Cart SET buyAmount = ? WHERE itemID = ? AND userID = ?`;
 
   try {
-    const stmt = db.prepare(sql);
-    const data = stmt.run(amount, itemID, userID);
+    // const stmt = db.prepare(sql);
+    // const data = stmt.run(amount, itemID, userID);
+    const [data] = await pool.execute(sql, [itemID, userID, amount]);
     console.log(`data: ${JSON.stringify(data)}`);
   } catch (error) {
     next(error);
