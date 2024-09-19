@@ -13,10 +13,8 @@
       <!-- object-fit-fill -->
       <!-- 不會模糊 但是圖片變小 整體沒變小 -->
       <!-- object-fit-scale -->
-      <div
-        class="d-flex justify-content-center align-content-center"
-        style="height: 300px"
-      >
+      <div class="d-flex justify-content-center align-content-center">
+        <!-- style="height: 300px" -->
         <!-- TODORWD: -->
         <!-- 統一300px太高 auto不統一但剛好 -->
         <!-- style="height: auto" -->
