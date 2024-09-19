@@ -13,41 +13,62 @@
 
   <!-- v-if不能省略 因為item.name的執行順序會比this.item = response.data.items; 還快 會error -->
   <div v-if="item" class="col-12 mt-5">
-    <SwiperComponent :pages="this.pages" />
-
     <div class="p-3">
-      <p class="fs-5 fw-bolder">
-        {{ item.name }}
-      </p>
-      <p class="fs-5 fw-bolder">${{ item.price }}</p>
+      <div class="shadow p-3 mb-3">
+        <SwiperComponent :pages="this.pages" />
 
-      <div class="mb-3">
+        <!-- <div id="scroll" class="d-flex overflow-x-auto overflow-y-hidden mt-3">
+          <div v-for="page in this.pages" :key="page" class="position-relative">
+            <div
+              v-if="selectImageName === page.src"
+              class="position-absolute bg-primary z-n1 top-50"
+              style="width: 12rem; height: 12rem"
+            ></div>
+            <button
+              @click="SelectImage(page.src)"
+              class="rounded border border-0"
+            >
+              <img :src="page.src" style="width: 10rem; height: 10rem" />
+            </button>
+          </div>
+        </div> -->
+
+        <p class="fs-5 fw-bolder">
+          {{ item.name }}
+        </p>
+        <p class="fs-5 fw-bolder">${{ item.price }}</p>
         <div class="mb-3">
-          <!-- 放棄放在同一行 -->
-          <p class="mb-3">購買數量:</p>
-          <!-- 還沒成功 讀取到變更的amount -->
-          <NumberInputComponent
-            v-model:amount="this.amount"
-            v-model:max="this.item.stock"
-          />
+          <div class="mb-3">
+            <!-- 放棄放在同一行 -->
+            <p class="mb-3">購買數量:</p>
+            <!-- 還沒成功 讀取到變更的amount -->
+            <NumberInputComponent
+              v-model:amount="this.amount"
+              v-model:max="this.item.stock"
+            />
+          </div>
+          <div>剩餘庫存: {{ item.stock }}</div>
         </div>
-
-        <div>剩餘庫存: {{ item.stock }}</div>
+        <div class="w-100 d-flex justify-content-between mb-3">
+          <button @click="AddToCart()" class="btn btn-danger col-5">
+            加入購物車
+          </button>
+          <button @click="Buy()" class="btn btn-outline-danger col-5">
+            立即購買
+          </button>
+        </div>
       </div>
-      <div class="w-100 d-flex justify-content-between mb-3">
-        <button @click="AddToCart()" class="btn btn-danger col-5">
-          加入購物車
-        </button>
-        <button class="btn btn-outline-danger col-5">立即購買</button>
-      </div>
 
-      <div class="fs-5 fw-bolder">商品描述</div>
-      <div>
-        {{ item.detail }}
+      <div class="shadow p-3">
+        <div class="fs-5 fw-bolder mb-3">商品描述</div>
+        <div>
+          {{ item.detail }}
+        </div>
       </div>
     </div>
   </div>
-  <div v-else class="bg-black text-white">載入中...</div>
+  <!-- TODO:這邊改用這個 https://getbootstrap.com/docs/5.3/components/placeholders/ -->
+  <!-- <div class="bg-black text-white">載入中...</div> -->
 </template>
 
 <script>
@@ -66,6 +87,7 @@ export default {
       amount: 1,
       popupShow: false,
       pages: [],
+      selectImageName: "",
     };
   },
   async mounted() {
@@ -152,6 +174,20 @@ export default {
     HidePopup() {
       this.popupShow = false;
     },
+    SelectImage(imageName) {
+      this.selectImageName = imageName;
+    },
+    async Buy() {
+      try {
+        const response = await axios.post(
+          `https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5`
+        );
+
+        console.log(response);
+      } catch (error) {
+        alert(`綠界購買失敗: ${error}`);
+      }
+    },
   },
   components: {
     HeaderComponent,
@@ -161,3 +197,29 @@ export default {
   },
 };
 </script>
+
+<style>
+#scroll {
+  /* 全域讓預設ScorllBar 瘦一點好看點 */
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+#scroll::-webkit-scrollbar {
+  width: 12px;
+}
+
+#scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+#scroll::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  border: 3px solid #f1f1f1;
+}
+
+#scroll::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+</style>
