@@ -112,8 +112,8 @@ export default {
 
         if (response.data.success) {
           alert("登入成功");
-          console.log(`response.data: ${JSON.stringify(response.data.user)}`);
-          console.log(`id: ${response.data.user.id}`);
+          // console.log(`response.data: ${JSON.stringify(response.data.user)}`);
+          // console.log(`id: ${response.data.user.id}`);
           // // JSON.stringify ObjectToJSON
           // // 因為localStorage.setItem()只能存字串 所以要先轉JSON 要用的時候在轉Object
           localStorage.setItem("user", JSON.stringify(response.data.user));

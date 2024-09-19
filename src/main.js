@@ -37,11 +37,13 @@ router.beforeEach(async (to, from, next) => {
     console.log("取得所有物品成功");
     store.dispatch("SetAllItems", { items: allItemsResponse.data.items });
 
+    // console.log(store.state.user);
     if (store.state.user == null) {
       next();
       return;
     }
 
+    console.log(store.state.user.id);
     const cartItemsResponse = await axios.get(
       `${API_BASE_URL}/api/getcartitems`,
       {

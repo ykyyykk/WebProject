@@ -34,6 +34,7 @@ export default createStore({
     searchQuery: "",
     pages,
     events,
+    categories: ["處理器", "主機板", "記憶體", "硬碟", "顯示卡", "鍵盤"],
   },
   mutations: {
     // 用於直接修改state中的狀態

@@ -67,6 +67,8 @@
 import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import { mapActions } from "vuex/dist/vuex.cjs.js";
+import axios from "axios";
+import { API_BASE_URL } from "../config/api";
 
 export default {
   mounted() {

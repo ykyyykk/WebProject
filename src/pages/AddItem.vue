@@ -90,6 +90,7 @@ import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import FileInputComponent from "../components/FileInputComponent.vue";
 import { API_BASE_URL } from "../config/api";
+import { mapState } from "vuex/dist/vuex.cjs.js";
 
 export default {
   data() {
@@ -97,7 +98,6 @@ export default {
       productImages: [],
       name: "",
       detail: "",
-      categories: ["處理器", "主機板", "記憶體", "硬碟", "顯示卡", "鍵盤"],
       selectCategory: "處理器",
       price: 0,
       stock: 0,
@@ -106,6 +106,7 @@ export default {
   },
   components: { HeaderComponent, SmallHeaderComponent, FileInputComponent },
   computed: {
+    ...mapState(["categories"]),
     canUpload() {
       return this.productImages.length > 0;
     },
@@ -160,14 +161,14 @@ export default {
 
         this.detail =
           this.detail === "" ? `高效能${this.selectCategory}` : this.detail;
-        console.log(itemID);
-        console.log(this.name);
-        console.log(this.detail);
-        console.log(this.selectCategory);
-        console.log(this.price);
-        console.log(this.stock);
-        console.log(this.status);
-        console.log(uploadedFiles[0].filename);
+        // console.log(itemID);
+        // console.log(this.name);
+        // console.log(this.detail);
+        // console.log(this.selectCategory);
+        // console.log(this.price);
+        // console.log(this.stock);
+        // console.log(this.status);
+        // console.log(uploadedFiles[0].filename);
         await axios.post(`${API_BASE_URL}/api/addnewitem`, {
           id: itemID,
           name: this.name,

@@ -8,7 +8,7 @@
       :key="item.id"
       class="row d-flex justify-content-start align-items-center g-2"
     >
-      <div class="d-flex p-3 rounded border border-black mb-3">
+      <div class="d-flex p-3 rounded shadow mb-3">
         <input
           @click="OnCheck(item.id, item.price, item.buyAmount)"
           :checked="

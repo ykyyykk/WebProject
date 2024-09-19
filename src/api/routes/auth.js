@@ -27,7 +27,7 @@ router.post("/login", async (request, response, next) => {
   try {
     const [row] = await pool.execute(sql, [email, password]);
     if (row) {
-      response.status(200).json({ success: true, user: row });
+      response.status(200).json({ success: true, user: row[0] });
     } else {
       response.status(404).json({ success: false, message: "User not found" });
     }
@@ -102,6 +102,7 @@ router.delete("/deleteexpiresverification", async (request, response, next) => {
   const sql = `DELETE FROM Verification WHERE expiresAt <= ?`;
 
   try {
+    console.log(111);
     const [row] = await pool.execute(sql, [Date.now()]);
     if (row) {
       response.status(200).json({ success: true, data: row });

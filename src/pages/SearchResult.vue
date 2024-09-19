@@ -9,13 +9,13 @@
       <div class="p-3 col-lg-2 col-sm-3 col-4 shadow me-3">
         <div class="d-block mb-3">
           <h4>分類</h4>
-          <div>
-            <input type="checkbox" />
-            <span class="ms-2">分類1</span>
-          </div>
-          <div>
-            <input type="checkbox" />
-            <span class="ms-2">分類2</span>
+          <div v-for="category in categories" :key="category">
+            <input
+              @click="ToggleCategory(category)"
+              type="checkbox"
+              :checked="this.categoryTags.some((tag) => tag === category)"
+            />
+            <span class="ms-2">{{ category }}</span>
           </div>
         </div>
         <div class="mb-3">
@@ -26,14 +26,17 @@
               style="height: 2rem"
               type="text"
               placeholder="最小值"
-              value="0"
+              v-model.number="this.minPrice"
+              @blur="SetPriceInterval()"
             />
-            <div class="" style="height: 2rem">~</div>
+            <div style="height: 2rem">~</div>
             <input
               class="form-control form-control-sm text-center"
               style="height: 2rem"
               type="text"
               placeholder="最大值"
+              v-model.number="this.maxPrice"
+              @blur="SetPriceInterval()"
             />
           </div>
         </div>
@@ -48,15 +51,25 @@
         <div class="mb-3">
           <h4>保存狀況</h4>
           <div>
-            <input type="checkbox" />
+            <input
+              @click="ToggleStatus('全新')"
+              :checked="status.some((s) => s === '全新')"
+              type="checkbox"
+            />
             <span class="ms-2">全新</span>
           </div>
           <div>
-            <input type="checkbox" />
+            <input
+              @click="ToggleStatus('二手')"
+              :checked="status.some((s) => s === '二手')"
+              type="checkbox"
+            />
             <span class="ms-2">二手</span>
           </div>
         </div>
-        <button class="btn btn-outline-primary w-100">清除全部</button>
+        <button @click="ClearAllFilter()" class="btn btn-outline-primary w-100">
+          清除全部
+        </button>
       </div>
 
       <div class="w-100 shadow p-3">
@@ -123,19 +136,38 @@ import ElevatorComponent from "../components/ElevatorComponent.vue";
 export default {
   data() {
     return {
+      categoryTags: [],
+      status: [],
       sortTag: "",
+      minPrice: 0,
+      maxPrice: 99999999,
     };
   },
   components: { HeaderComponent, ItemComponent, ElevatorComponent },
   computed: {
-    ...mapState(["items,searchQuery"]),
+    ...mapState(["items", "searchQuery", "categories"]),
     // 給v-for用的
     GetFilterItems() {
-      let filterItems = this.$store.state.items.filter((item) =>
-        item.name
-          .toLowerCase()
-          .includes(this.$store.state.searchQuery.toLowerCase())
+      console.log("GetFilterItems");
+      let filterItems = this.items.filter((item) =>
+        item.name.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
+
+      if (this.categoryTags.length > 0) {
+        filterItems = filterItems.filter((item) =>
+          this.categoryTags.includes(item.category)
+        );
+      }
+
+      filterItems = filterItems.filter(
+        (item) => item.price >= this.minPrice && item.price <= this.maxPrice
+      );
+
+      if (this.status.length > 0) {
+        filterItems = filterItems.filter((item) =>
+          this.status.includes(item.status)
+        );
+      }
       switch (this.sortTag) {
         case "價格: 低至高":
           return filterItems.sort(function (a, b) {
@@ -160,6 +192,31 @@ export default {
   methods: {
     ChangeSortTag(sortTag) {
       this.sortTag = sortTag;
+    },
+    ToggleCategory(category) {
+      if (this.categoryTags.includes(category)) {
+        this.categoryTags = this.categoryTags.filter((c) => c != category);
+        return;
+      }
+      this.categoryTags.push(category);
+    },
+    SetPriceInterval() {
+      if (this.maxPrice > this.minPrice) {
+        return;
+      }
+      this.maxPrice = this.minPrice + 1;
+    },
+    ToggleStatus(status) {
+      if (this.status.includes(status)) {
+        this.status = this.status.filter((s) => s != status);
+        return;
+      }
+      this.status.push(status);
+    },
+    ClearAllFilter() {
+      this.categoryTags = [];
+      this.minPrice = 0;
+      this.maxPrice = 99999999;
     },
   },
 };
