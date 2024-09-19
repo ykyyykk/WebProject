@@ -1,5 +1,5 @@
 import express from "express";
-import { db } from "../../config/sqlite3.js";
+import pool from "../../config/mysql.js";
 import path from "path";
 import { __dirname } from "../../utils/path.js";
 import multer from "multer";
@@ -35,29 +35,36 @@ router.post(
 );
 
 //聽說不要在api裡面含有get post put delete會比較好
-router.post("/addnewitem", (request, response, next) => {
+router.post("/addnewitem", async (request, response, next) => {
   const { id, name, detail, category, price, stock, status, thumbnail } =
     request.body;
   const sql = `INSERT INTO Item (id,name, detail, category, price, stock, status, thumbnail)
                VALUES(?,?,?,?,?,?,?,?)`;
 
   try {
-    const stmt = db.prepare(sql);
-    stmt.run(id, name, detail, category, price, stock, status, thumbnail);
+    await pool.execute(sql, [
+      id,
+      name,
+      detail,
+      category,
+      price,
+      stock,
+      status,
+      thumbnail,
+    ]);
     response.status(200).json({ success: true });
   } catch (error) {
     next(error);
   }
 });
 
-router.post("/insertmultipleimages", (request, response, next) => {
+router.post("/insertmultipleimages", async (request, response, next) => {
   const { itemID, imageUrls } = request.body;
   const sql = `INSERT INTO Image (itemID, imageUrl)
                VALUES(?,?)`;
   try {
-    const stmt = db.prepare(sql);
     for (let i = 0; i < imageUrls.length; i++) {
-      stmt.run(itemID.toString(), imageUrls[i]);
+      await pool.execute(sql, [itemID.toString(), imageUrls[i]]);
     }
     response.status(200).json({ success: true });
   } catch (error) {
@@ -65,13 +72,12 @@ router.post("/insertmultipleimages", (request, response, next) => {
   }
 });
 
-router.get("/item/:id", (request, response, next) => {
+router.get("/item/:id", async (request, response, next) => {
   const { id } = request.params;
   const sql = `SELECT * FROM Item WHERE id = ?`;
 
   try {
-    const stmt = db.prepare(sql);
-    const row = stmt.get(id);
+    const [row] = await pool.execute(sql, [id]);
     if (row) {
       response.status(200).json({ success: true, item: row });
     } else {
@@ -82,12 +88,11 @@ router.get("/item/:id", (request, response, next) => {
   }
 });
 
-router.get("/getallitem", (request, response, next) => {
+router.get("/getallitem", async (request, response, next) => {
   const sql = `SELECT * FROM Item`;
 
   try {
-    const stmt = db.prepare(sql);
-    const rows = stmt.all();
+    const [rows] = await pool.execute(sql);
     if (rows.length > 0) {
       console.log("取得所有物品成功");
       response.status(200).json({ success: true, items: rows });
@@ -99,14 +104,12 @@ router.get("/getallitem", (request, response, next) => {
   }
 });
 
-router.post("/getitemimage", (request, response, next) => {
+router.post("/getitemimage", async (request, response, next) => {
   const { itemID } = request.body;
   const sql = `SELECT * FROM Image WHERE itemID = ?`;
 
   try {
-    const stmt = db.prepare(sql);
-    const rows = stmt.all(itemID.toString());
-    console.log(`rows: ${rows}`);
+    const [rows] = await pool.execute(sql, [itemID.toString()]);
     if (rows.length > 0) {
       response.status(200).json({ success: true, items: rows });
     } else {
@@ -117,16 +120,13 @@ router.post("/getitemimage", (request, response, next) => {
   }
 });
 
-router.post("/purchaseitem", (request, response, next) => {
+router.post("/purchaseitem", async (request, response, next) => {
   const { id, amount } = request.body;
   try {
     const checkSql = `SELECT *
                       FROM Item
                       WHERE id = ?`;
-    const checkStmt = db.prepare(checkSql);
-    const item = checkStmt.get(id);
-
-    console.log(item);
+    const [item] = await pool.execute(checkSql, [id]);
     if (!item) {
       return response
         .status(200)
@@ -141,9 +141,8 @@ router.post("/purchaseitem", (request, response, next) => {
     const updateSql = `UPDATE Item
                        SET stock = ?, saleAmount = ? 
                        WHERE id = ?`;
-    const updateStmt = db.prepare(updateSql);
-    updateStmt.run(item.stock, item.saleAmount, id);
 
+    await pool.execute(updateSql, [item.stock, item.saleAmount, id]);
     response.status(200).json({ success: true });
   } catch (error) {
     next(error);
@@ -152,7 +151,7 @@ router.post("/purchaseitem", (request, response, next) => {
 
 router.delete(
   "/deletefromdatabase/:itemID/:userID",
-  (request, response, next) => {
+  async (request, response, next) => {
     const { itemID, userID } = request.params;
 
     if (userID != 6) {
@@ -163,10 +162,8 @@ router.delete(
     const sql = `DELETE FROM Item WHERE id = ?`;
 
     try {
-      const stmt = db.prepare(sql);
-      const row = stmt.run(itemID);
+      const [row] = await sql.execute(sql, [itemID]);
       if (row) {
-        console.log(111);
         response.status(200).json({ success: true });
       } else {
         response

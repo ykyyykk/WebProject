@@ -1,28 +1,31 @@
 import express from "express";
-import { db } from "../../config/sqlite3.js";
+import pool from "../../config/mysql.js";
 import { transporter } from "../../config/email.js";
 
 const router = express.Router();
 
-router.post("/register", (request, response, next) => {
+router.post("/register", async (request, response, next) => {
   const { name, phoneNumber, email, password } = request.body;
   const sql = `INSERT INTO User (name, phoneNumber, email, password) VALUES(?,?,?,?)`;
   try {
-    const stmt = db.prepare(sql);
-    const info = stmt.run(name, phoneNumber, email, password);
+    const [info] = await pool.execute(sql, [
+      name,
+      phoneNumber,
+      email,
+      password,
+    ]);
     response.status(200).json({ success: true, userID: info.lastInsertRowid });
   } catch (error) {
     next(error);
   }
 });
 
-router.post("/login", (request, response, next) => {
+router.post("/login", async (request, response, next) => {
   const { email, password } = request.body;
   const sql = `SELECT * FROM User WHERE email = ? AND password = ?`;
 
   try {
-    const stmt = db.prepare(sql);
-    const row = stmt.get(email, password);
+    const [row] = await pool.execute(sql, [email, password]);
     if (row) {
       response.status(200).json({ success: true, user: row });
     } else {
@@ -38,9 +41,7 @@ router.post("/sendverification", async (request, response, next) => {
   const { email } = request.body;
   const checkSql = `SELECT email FROM User WHERE email = ?`;
   try {
-    const stmt = db.prepare(checkSql);
-    const row = stmt.get(email);
-    console.log(row);
+    const [row] = await pool.execute(checkSql, [email]);
     if (row) {
       response
         .status(200)
@@ -58,9 +59,13 @@ router.post("/sendverification", async (request, response, next) => {
   const expiresAt = Date.now() + 300000; //單位是毫秒
 
   try {
-    const stmt = db.prepare(sql);
     // 不加toString()後面會有.0
-    stmt.run(email, verificationCode.toString(), createdAt, expiresAt);
+    await pool.execute(sql, [
+      email,
+      verificationCode.toString(),
+      createdAt,
+      expiresAt,
+    ]);
 
     const mailOption = {
       from: "louise87276@gmail.com",
@@ -82,8 +87,7 @@ router.post("/checkverification", async (request, response, next) => {
   const sql = `SELECT * FROM Verification WHERE email = ? AND code = ?`;
 
   try {
-    const stmt = db.prepare(sql);
-    const row = stmt.get(email, verificationCode);
+    const [row] = await pool.execute(sql, [email.verificationCode]);
     if (row) {
       response.status(200).json({ success: true, row: row });
     } else {
@@ -94,13 +98,11 @@ router.post("/checkverification", async (request, response, next) => {
   }
 });
 
-router.delete("/deleteexpiresverification", (request, response, next) => {
-  console.log(Date.now());
+router.delete("/deleteexpiresverification", async (request, response, next) => {
   const sql = `DELETE FROM Verification WHERE expiresAt <= ?`;
 
   try {
-    const stmt = db.prepare(sql);
-    const row = stmt.run(Date.now());
+    const [row] = await pool.execute(sql, [Date.now()]);
     if (row) {
       response.status(200).json({ success: true, data: row });
     } else {
