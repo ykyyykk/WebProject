@@ -131,7 +131,6 @@ export default {
       this.GetItemImage(this.item.id, this.item.thumbnail, this.item.category);
     },
     async AddToCart() {
-      console.log("加入購物車");
       if (this.user == null) {
         alert("請先登入再加入購物車");
         return;

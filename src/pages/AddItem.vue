@@ -19,9 +19,8 @@
 
     <div class="mb-3">
       <label class="form-label fw-bolder">商品描述</label>
-      <input
+      <textarea
         v-model="detail"
-        style="height: 10rem"
         class="form-control border border-danger border-2"
       />
     </div>
@@ -48,6 +47,7 @@
     <div class="mb-3">
       <label class="form-label fw-bolder">價格</label>
       <input
+        type="number"
         v-model="price"
         class="form-control border border-danger border-2"
       />
@@ -56,6 +56,7 @@
     <div class="mb-3">
       <label class="form-label fw-bolder">商品數量</label>
       <input
+        type="number"
         v-model="stock"
         class="form-control border border-danger border-2"
       />

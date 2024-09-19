@@ -79,7 +79,8 @@ router.get("/item/:id", async (request, response, next) => {
   try {
     const [row] = await pool.execute(sql, [id]);
     if (row) {
-      response.status(200).json({ success: true, item: row });
+      // 改成mysql後 取得單一物品都要這樣 login也是
+      response.status(200).json({ success: true, item: row[0] });
     } else {
       response.status(404).json({ success: false, message: "item not found" });
     }
@@ -162,7 +163,9 @@ router.delete(
     const sql = `DELETE FROM Item WHERE id = ?`;
 
     try {
-      const [row] = await sql.execute(sql, [itemID]);
+      console.log(sql);
+      console.log(itemID);
+      const [row] = await pool.execute(sql, [itemID]);
       if (row) {
         response.status(200).json({ success: true });
       } else {

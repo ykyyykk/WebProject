@@ -94,8 +94,9 @@ export default {
     ...mapActions(["SetAllItems"]),
     GetThumbnail(thumbnail, category) {
       if (thumbnail != "") {
-        return `img/${thumbnail}`;
+        return `../../public/img/${thumbnail}`;
       }
+
       switch (category) {
         case "處理器":
           return "../../public/img/CPU.jpg";
@@ -111,13 +112,11 @@ export default {
       return;
     },
     async DeleteFromDatabase(itemID) {
-      console.log(`DeleteFromDatabase: ${itemID}`);
       try {
         const response = await axios.delete(
           `${API_BASE_URL}/api/deletefromdatabase/${itemID}/${this.user.id}`
         );
 
-        console.log(response.data.success);
         if (response.data.success) {
           //更改的資料筆數
           this.SetAllItems({
