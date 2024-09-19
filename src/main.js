@@ -26,8 +26,14 @@ router.beforeEach(async (to, from, next) => {
     // localStorage的初始值是 null 不是 undefined
     const userJson = localStorage.getItem("user");
 
+    // 爛js 操
     // 改code的時候會發生
-    if (userJson != null && store.state.user == null) {
+    if (
+      userJson !== null &&
+      userJson !== "undefined" &&
+      userJson !== undefined &&
+      store.state.user === null
+    ) {
       store.dispatch("SetLogin", { user: JSON.parse(userJson) });
     }
 

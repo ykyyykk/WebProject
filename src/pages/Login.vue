@@ -110,6 +110,7 @@ export default {
           password: this.password,
         });
 
+        console.log(response.data);
         if (response.data.success) {
           alert("登入成功");
           // console.log(`response.data: ${JSON.stringify(response.data.user)}`);
@@ -120,16 +121,10 @@ export default {
           this.SetLogin({ user: response.data.user });
           this.router.push({ name: "Home" });
         } else {
-          alert(
-            "帳號或密碼錯誤！ 提醒您，為確保登入安全，連續錯誤5次將暫時鎖定該帳號無法進行登入"
-          );
+          alert("帳號或密碼錯誤！");
         }
       } catch (error) {
-        // TODOWarning: 連續錯誤5次將暫時鎖定該帳號無法進行登入
-        alert(
-          "帳號或密碼錯誤！ 提醒您，為確保登入安全，連續錯誤5次將暫時鎖定該帳號無法進行登入",
-          error
-        );
+        alert("帳號或密碼錯誤！", error);
       }
     },
   },

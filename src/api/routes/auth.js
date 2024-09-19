@@ -26,7 +26,7 @@ router.post("/login", async (request, response, next) => {
 
   try {
     const [row] = await pool.execute(sql, [email, password]);
-    if (row) {
+    if (row[0]) {
       response.status(200).json({ success: true, user: row[0] });
     } else {
       response.status(404).json({ success: false, message: "User not found" });
