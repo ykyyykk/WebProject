@@ -172,7 +172,8 @@ export default {
           `${API_BASE_URL}/api/deletefromcart/${id}/${this.user.id}`
         );
         //更改的資料筆數
-        const changes = response.data.info.changes;
+        // const changes = response.data.info.changes;
+        const changes = response.data.info.changedRows;
         if (changes != 0) {
           this.cartItems = this.cartItems.filter((item) => item.id !== id);
           console.log("刪掉物品");
