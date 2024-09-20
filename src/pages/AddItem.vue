@@ -121,7 +121,8 @@ export default {
     },
     async UploadImage() {
       try {
-        console.log("UploadImage");
+        // console.log("UploadImage");
+        // console.log(`productImages: ${this.productImages.length}`);
         const formData = new FormData();
         this.productImages.forEach((image) => {
           // console.log(image.name);
@@ -156,6 +157,11 @@ export default {
       }
 
       try {
+        // console.log(uploadResponse.data.files);
+        // console.log(uploadResponse.data.files[0]);
+        // console.log(uploadResponse.data.files[0].filename);
+        // console.log(uploadResponse.data.files[0].filename.split("-"));
+        // console.log(uploadResponse.data.files[0].filename.split("-")[0]);
         const itemID = uploadResponse.data.files[0].filename.split("-")[0];
         const uploadedFiles = uploadResponse.data.files;
         const imageUrls = uploadedFiles.map((file) => file.filename);
@@ -186,7 +192,7 @@ export default {
         });
         alert("新增物品成功");
       } catch (error) {
-        alert("新增物品失敗", error);
+        alert(`新增物品失敗: ${error}`);
         return;
       }
     },
