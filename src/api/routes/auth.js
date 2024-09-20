@@ -102,7 +102,6 @@ router.delete("/deleteexpiresverification", async (request, response, next) => {
   const sql = `DELETE FROM Verification WHERE expiresAt <= ?`;
 
   try {
-    console.log(111);
     const [row] = await pool.execute(sql, [Date.now()]);
     if (row) {
       response.status(200).json({ success: true, data: row });

@@ -60,6 +60,8 @@ router.post("/addnewitem", async (request, response, next) => {
 
 router.post("/insertmultipleimages", async (request, response, next) => {
   const { itemID, imageUrls } = request.body;
+  console.log(itemID);
+  console.log(imageUrls);
   const sql = `INSERT INTO Image (itemID, imageUrl)
                VALUES(?,?)`;
   try {
@@ -156,22 +158,22 @@ router.delete(
     const { itemID, userID } = request.params;
 
     if (userID != 6) {
-      console.log("不是管理者不能下架");
-      next();
+      response
+        .status(200)
+        .json({ success: false, message: "不是管理者不能下架" });
       return;
     }
     const sql = `DELETE FROM Item WHERE id = ?`;
 
     try {
-      console.log(sql);
-      console.log(itemID);
       const [row] = await pool.execute(sql, [itemID]);
-      if (row) {
+      // console.log([row][0]);
+      if ([row][0].affectedRows > 0) {
         response.status(200).json({ success: true });
       } else {
         response
           .status(404)
-          .json({ success: false, message: "User not found" });
+          .json({ success: false, message: "Item not found" });
       }
     } catch (error) {
       next(error);
