@@ -7,6 +7,7 @@
   >
     <div class="text-center text-white">已加入購物車</div>
   </div> -->
+  <!-- Qvg&6&)MFu29R+? -->
   <PopupComponent :show="popupShow" :text="popupText" />
   <HeaderComponent />
   <SmallHeaderComponent pageTitle="繼續購物" />
