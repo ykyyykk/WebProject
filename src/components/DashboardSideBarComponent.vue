@@ -33,6 +33,13 @@
       用戶管理
     </router-link>
 
+    <router-link
+      class="btn btn-outline-primary mb-3 mx-2"
+      :to="{ name: 'RevenueChart' }"
+    >
+      營收圖表
+    </router-link>
+
     <button
       class="btn btn-outline-primary mb-3 mx-2"
       @click="CleanExpiresVerification()"

@@ -14,6 +14,7 @@ import SearchResult from "../pages/SearchResult.vue";
 import Dashboard from "../pages/Dashboard.vue";
 import ItemManagement from "../pages/ItemManagement.vue";
 import UserManagement from "../pages/UserManagement.vue";
+import RevenueChart from "../pages/RevenueChart.vue";
 import Grid from "../pages/Grid.vue";
 import Test from "../pages/Test.vue";
 
@@ -82,6 +83,11 @@ const routes = [
         path: "/dashboard/usermanagement",
         name: "UserManagement",
         component: UserManagement,
+      },
+      {
+        path: "/dashboard/revenuechart",
+        name: "RevenueChart",
+        component: RevenueChart,
       },
       {
         path: "/dashboard/userdetail",

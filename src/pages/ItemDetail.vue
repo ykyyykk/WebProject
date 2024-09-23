@@ -8,7 +8,7 @@
 
   <div v-if="item" class="d-flex justify-content-center mt-5">
     <div class="p-3 col-sm-10 col-12">
-      <div class="shadow p-3 mb-3">
+      <div class="shadow p-3 mb-3 placeholder-glow">
         <SwiperComponent :pages="this.pages" />
         <!-- <div id="scroll" class="d-flex overflow-x-auto overflow-y-hidden mt-3">
           <div v-for="page in this.pages" :key="page" class="position-relative">
@@ -25,7 +25,7 @@
             </button>
           </div>
         </div> -->
-        <p class="fs-5 fw-bolder">
+        <p class="fs-5 fw-bolder mt-3">
           {{ item.name }}
         </p>
         <p class="fs-5 fw-bolder">${{ item.price }}</p>
@@ -58,7 +58,7 @@
       </div>
     </div>
   </div>
-  <!-- TODO:這邊改用這個 https://getbootstrap.com/docs/5.3/components/placeholders/ -->
+  <!-- TODO:不懂為什麼 用了沒辦法換行 https://getbootstrap.com/docs/5.3/components/placeholders/ -->
   <!-- <div class="bg-black text-white">載入中...</div> -->
 </template>
 
