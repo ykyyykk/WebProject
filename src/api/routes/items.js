@@ -139,13 +139,13 @@ router.post("/purchaseitem", async (request, response, next) => {
       return response.status(200).json({ success: false, message: "庫存不足" });
     }
 
-    item.stock -= amount;
-    item.saleAmount += amount;
+    item[0].stock -= amount;
+    item[0].saleAmount += amount;
     const updateSql = `UPDATE Item
                        SET stock = ?, saleAmount = ? 
                        WHERE id = ?`;
 
-    await pool.execute(updateSql, [item.stock, item.saleAmount, id]);
+    await pool.execute(updateSql, [item[0].stock, item[0].saleAmount, id]);
     response.status(200).json({ success: true });
   } catch (error) {
     next(error);

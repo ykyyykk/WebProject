@@ -1,22 +1,22 @@
 <template>
-  <div
+  <!-- <div
     v-if="popupShow"
     @click="HidePopup()"
     class="z-3 position-fixed w-100 vh-100 d-flex justify-content-center align-items-center"
     :style="{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }"
   >
-    <!-- TODOError: 醜八怪 太醜了但功能很重要 所以放Error-->
     <div class="text-center text-white">已加入購物車</div>
-  </div>
+  </div> -->
+  <PopupComponent :show="popupShow" :text="popupText" />
   <HeaderComponent />
   <SmallHeaderComponent pageTitle="繼續購物" />
 
   <!-- v-if不能省略 因為item.name的執行順序會比this.item = response.data.items; 還快 會error -->
-  <div v-if="item" class="col-12 mt-5">
-    <div class="p-3">
+
+  <div v-if="item" class="d-flex justify-content-center mt-5">
+    <div class="p-3 col-sm-10 col-12">
       <div class="shadow p-3 mb-3">
         <SwiperComponent :pages="this.pages" />
-
         <!-- <div id="scroll" class="d-flex overflow-x-auto overflow-y-hidden mt-3">
           <div v-for="page in this.pages" :key="page" class="position-relative">
             <div
@@ -32,7 +32,6 @@
             </button>
           </div>
         </div> -->
-
         <p class="fs-5 fw-bolder">
           {{ item.name }}
         </p>
@@ -58,7 +57,6 @@
           </button>
         </div>
       </div>
-
       <div class="shadow p-3">
         <div class="fs-5 fw-bolder mb-3">商品描述</div>
         <div>
@@ -76,6 +74,7 @@ import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import SwiperComponent from "../components/SwiperComponent.vue";
 import NumberInputComponent from "../components/NumberInputComponent.vue";
+import PopupComponent from "../components/PopupComponent.vue";
 import axios from "axios";
 import { API_BASE_URL } from "../config/api";
 import { mapState } from "vuex/dist/vuex.cjs.js";
@@ -146,6 +145,7 @@ export default {
       try {
         // 與post不同 get需要將資料顯示在url上 隱私較差 但速度比post稍快 適用於讀取數據
         const response = await axios.get(`${API_BASE_URL}/api/item/${id}`);
+
         this.item = response.data.item;
       } catch (error) {
         alert("取得物品資訊失敗", error);
@@ -178,14 +178,26 @@ export default {
       this.selectImageName = imageName;
     },
     async Buy() {
+      if (this.user == null) {
+        alert("請先登入再加入購物車");
+        return;
+      }
       try {
-        const response = await axios.post(
-          `https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5`
-        );
+        const response = await axios.post(`${API_BASE_URL}/api/purchaseitem`, {
+          id: this.item.id,
+          amount: this.amount,
+        });
+        console.log(`response: ${response}`);
 
-        console.log(response);
+        if (response.data.success) {
+          console.log(`成功購買`);
+        }
+        this.item.stock -= this.amount;
+        this.ShowPopup();
+        // this.show = true;
+        // TODO: 綠界購買等Google登入解決在做
       } catch (error) {
-        alert(`綠界購買失敗: ${error}`);
+        alert(`Error: ${error}`);
       }
     },
   },
@@ -194,6 +206,7 @@ export default {
     SmallHeaderComponent,
     SwiperComponent,
     NumberInputComponent,
+    PopupComponent,
   },
 };
 </script>

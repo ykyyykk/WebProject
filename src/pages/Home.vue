@@ -30,6 +30,7 @@
   </button> -->
 
     <div class="d-flex w-100 m-0">
+      <!-- 左側廣告欄 -->
       <div class="d-md-block d-none mt-3 col">
         <img
           style="max-width: 133px"
@@ -78,6 +79,7 @@
         </a>
       </div>
 
+      <!-- 中間物品欄 -->
       <div
         class="row d-flex justify-content-start align-items-center w-100 m-0 mt-3"
       >

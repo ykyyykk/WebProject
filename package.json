@@ -10,8 +10,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "startMac": "sh start.sh",
-    "startWin": "start.bat"
+    "startMac": "sh startNodeJS.sh.sh",
+    "startWin": "startNodeJS.bat"
   },
   "author": "",
   "license": "ISC",
