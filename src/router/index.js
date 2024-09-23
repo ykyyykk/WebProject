@@ -9,9 +9,11 @@ import Login from "../pages/Login.vue";
 import Register from "../pages/Register.vue";
 import NotFound from "../pages/NotFound.vue";
 import ItemDetail from "../pages/ItemDetail.vue";
+import UserDetail from "../pages/UserDetail.vue";
 import SearchResult from "../pages/SearchResult.vue";
 import Dashboard from "../pages/Dashboard.vue";
 import ItemManagement from "../pages/ItemManagement.vue";
+import UserManagement from "../pages/UserManagement.vue";
 import Grid from "../pages/Grid.vue";
 import Test from "../pages/Test.vue";
 
@@ -70,11 +72,23 @@ const routes = [
     path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
-  },
-  {
-    path: "/dashboard/itemmanagement",
-    name: "ItemManagement",
-    component: ItemManagement,
+    children: [
+      {
+        path: "", // 空路徑表示default
+        name: "ItemManagement",
+        component: ItemManagement,
+      },
+      {
+        path: "/dashboard/usermanagement",
+        name: "UserManagement",
+        component: UserManagement,
+      },
+      {
+        path: "/dashboard/userdetail",
+        name: "UserDetail",
+        component: UserDetail,
+      },
+    ],
   },
   {
     path: "/dashboard/addItem",

@@ -2,73 +2,16 @@
   <HeaderComponent />
   <SmallHeaderComponent pageTitle="產品管理" />
 
-  <div class="p-3 w-100 h-100 mt-5">
-    <router-link
-      class="btn btn-outline-primary"
-      :to="{ name: 'ItemManagement' }"
-    >
-      產品管理
-    </router-link>
-
-    <router-link
-      class="btn btn-outline-primary"
-      :to="{ name: 'ItemManagement' }"
-    >
-      文章管理
-    </router-link>
-
-    <button class="btn btn-outline-primary" @click="CleanExpiresVerification()">
-      清理驗證碼
-    </button>
-
-    <div class="mb-5 shadow rounded p-3">
-      <h4>訂單管理</h4>
-      <a class="btn btn-outline-primary" href="">
-        <p>{{ amount }}</p>
-        待出貨
-      </a>
-      <a class="btn btn-outline-primary" href="">
-        <p>{{ amount }}</p>
-        不成立
-      </a>
-      <a class="btn btn-outline-primary" href="">
-        <p>{{ amount }}</p>
-        退貨/退款
-      </a>
-      <a class="btn btn-outline-primary" href="">
-        <p>{{ amount }}</p>
-        評價
-      </a>
-      <a class="btn btn-outline-primary" href="">
-        <p>{{ amount }}</p>
-        已賣出
-      </a>
-      <a class="btn btn-outline-primary" href="">
-        <p>{{ amount }}</p>
-        低庫存
-      </a>
-      <a class="btn btn-outline-primary" href="">
-        <p>{{ amount }}</p>
-        未處理
-      </a>
-    </div>
-
-    <div class="shadow rounded p-3">
-      <h4>用戶管理</h4>
-      <button class="btn btn-outline-primary" @click="OnLogout()">登出</button>
-      <a class="btn btn-outline-primary" href=""> 查看用戶 </a>
-      <a class="btn btn-outline-primary" href=""> 編輯用戶 </a>
-      <a class="btn btn-outline-primary" href=""> 刪除用戶 </a>
-    </div>
+  <div class="d-flex">
+    <DashboardSideBarComponent />
+    <router-view />
   </div>
 </template>
 
 <script>
+import DashboardSideBarComponent from "../components/DashboardSideBarComponent.vue";
 import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
-import { mapActions } from "vuex/dist/vuex.cjs.js";
-import axios from "axios";
-import { API_BASE_URL } from "../config/api";
 
 export default {
   mounted() {
@@ -80,33 +23,10 @@ export default {
       this.$router.push({ name: "MemberCenter" });
     }
   },
-  data() {
-    return {
-      amount: 0,
-    };
-  },
-  components: { HeaderComponent, SmallHeaderComponent },
-  methods: {
-    ...mapActions(["SetLogout"]),
-    async CleanExpiresVerification() {
-      try {
-        const response = await axios.delete(
-          `${API_BASE_URL}/api/deleteexpiresverification`
-        );
-
-        if (response.data.success) {
-          console.log(`response.data: ${JSON.stringify(response.data)}`);
-        }
-      } catch (error) {
-        console.log(`error: ${error}`);
-      }
-    },
-    OnLogout() {
-      localStorage.setItem("user", null);
-      this.SetLogout();
-      alert("你已登出");
-      this.$router.push({ name: "Home" });
-    },
+  components: {
+    HeaderComponent,
+    SmallHeaderComponent,
+    DashboardSideBarComponent,
   },
 };
 </script>

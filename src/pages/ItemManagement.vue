@@ -1,8 +1,16 @@
 <template>
-  <HeaderComponent />
-  <SmallHeaderComponent pageTitle="產品管理" />
-
   <div v-if="items" class="container mt-5 mb-5">
+    <!-- z-0為了讓sidebar蓋住 -->
+    <footer class="d-flex w-100 p-3 bg-white w-100 z-0">
+      <div class="d-flex align-items-center" style="width: 10rem">
+        <input @click="OnSelectAll()" type="checkbox" />
+        <span class="ms-2">全選</span>
+      </div>
+
+      <router-link class="btn btn-primary w-100" :to="{ name: 'AddItem' }">
+        新增產品
+      </router-link>
+    </footer>
     <div
       v-for="item in items"
       :key="item.id"
@@ -52,17 +60,6 @@
         </div>
       </div>
     </div>
-    <!-- z-0為了讓sidebar蓋住 -->
-    <footer class="d-flex w-100 p-3 fixed-bottom bg-white w-100 z-0">
-      <div class="d-flex align-items-center" style="width: 10rem">
-        <input @click="OnSelectAll()" type="checkbox" />
-        <span class="ms-2">全選</span>
-      </div>
-
-      <router-link class="btn btn-primary w-100" :to="{ name: 'AddItem' }"
-        >新增產品</router-link
-      >
-    </footer>
   </div>
 
   <!-- 不能省略 為了XS不遮住Item -->
