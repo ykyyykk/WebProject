@@ -172,14 +172,14 @@ export default {
 
         this.detail =
           this.detail === "" ? `高效能${this.selectCategory}` : this.detail;
-        console.log(itemID);
-        console.log(this.name);
-        console.log(this.detail);
-        console.log(this.selectCategory);
-        console.log(this.price);
-        console.log(this.stock);
-        console.log(this.status);
-        console.log(uploadedFiles[0].filename);
+        // console.log(itemID);
+        // console.log(this.name);
+        // console.log(this.detail);
+        // console.log(this.selectCategory);
+        // console.log(this.price);
+        // console.log(this.stock);
+        // console.log(this.status);
+        // console.log(uploadedFiles[0].filename);
         await axios.post(`${API_BASE_URL}/api/addnewitem`, {
           id: itemID,
           name: this.name,

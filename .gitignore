@@ -7,6 +7,8 @@ node_modules
 
 src/data/export_key
 
+public/
+
 # 忽略編譯後的檔案
 dist/
 build/

@@ -38,7 +38,7 @@
 
       <router-link
         v-if="isManager"
-        :to="{ name: 'Dashboard' }"
+        :to="{ path: '/dashboard' }"
         class="bg-transparent text-black"
       >
         <i class="fa-solid fa-store fs-5"></i>
