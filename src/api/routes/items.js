@@ -3,7 +3,6 @@ import pool from "../../config/mysql.js";
 import path from "path";
 import { __dirname } from "../../utils/path.js";
 import multer from "multer";
-import moment from "moment-timezone";
 
 const router = express.Router();
 
@@ -133,9 +132,6 @@ router.post("/purchaseitem", async (request, response, next) => {
   const updateSql = `UPDATE Item
                      SET stock = ?, saleAmount = ? 
                      WHERE id = ?`;
-  const revenueSql = `INSERT INTO Revenue (date,value,itemID)
-                      VALUES(?,?,?)`;
-
   try {
     const [item] = await pool.execute(checkSql, [id]);
     if (!item) {
@@ -150,12 +146,6 @@ router.post("/purchaseitem", async (request, response, next) => {
     item[0].stock -= amount;
     item[0].saleAmount += amount;
     await pool.execute(updateSql, [item[0].stock, item[0].saleAmount, id]);
-
-    const date = moment().tz("Asia/Taipei").format("YYYY-MM-DD HH:mm:ss");
-    const value = +item[0].price * +amount;
-
-    await pool.execute(revenueSql, [date, value, id]);
-
     response.status(200).json({ success: true });
   } catch (error) {
     next(error);

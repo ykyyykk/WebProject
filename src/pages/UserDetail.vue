@@ -164,29 +164,6 @@ export default {
     SelectImage(imageName) {
       this.selectImageName = imageName;
     },
-    async Buy() {
-      if (this.user == null) {
-        alert("請先登入再加入購物車");
-        return;
-      }
-      try {
-        const response = await axios.post(`${API_BASE_URL}/api/purchaseitem`, {
-          id: this.item.id,
-          amount: this.amount,
-        });
-        console.log(`response: ${response}`);
-
-        if (response.data.success) {
-          console.log(`成功購買`);
-        }
-        this.item.stock -= this.amount;
-        EventBus.emit("showPopup", "已購買");
-        // this.show = true;
-        // TODO: 綠界購買等Google登入解決在做
-      } catch (error) {
-        alert(`Error: ${error}`);
-      }
-    },
   },
   components: {
     HeaderComponent,

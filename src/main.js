@@ -49,7 +49,7 @@ router.beforeEach(async (to, from, next) => {
       return;
     }
 
-    console.log(store.state.user.id);
+    // console.log(store.state.user.id);
     const cartItemsResponse = await axios.get(
       `${API_BASE_URL}/api/getcartitems`,
       {

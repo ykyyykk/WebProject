@@ -84,6 +84,7 @@ import axios from "axios";
 import { API_BASE_URL } from "../config/api";
 import { debounce } from "lodash";
 import { mapState } from "vuex/dist/vuex.cjs.js";
+import moment from "moment-timezone";
 
 // TODOWarning: 購物車 同樣的物品應該要疊加
 // TODOWarning: 還不確定要不要開放訪客購買 如果不開放 要檢查userID不為0
@@ -194,7 +195,7 @@ export default {
         return;
       }
 
-      this.selectItems.push({ id: id, amount: amount });
+      this.selectItems.push({ id: id, amount: amount, price: price });
       this.totalPrice += Number(price * amount);
     },
     OnSelectAll() {
@@ -210,7 +211,11 @@ export default {
       this.isSelectAll = true;
 
       this.cartItems.forEach((item) => {
-        this.selectItems.push({ id: item.id, amount: item.buyAmount });
+        this.selectItems.push({
+          id: item.id,
+          amount: item.buyAmount,
+          price: item.price,
+        });
         this.totalPrice += +item.price * +item.buyAmount;
       });
     },
@@ -232,6 +237,11 @@ export default {
           console.log(`response: ${response}`);
           if (response.data.success) {
             await this.DeleteFromCart(this.selectItems[i].id);
+            await axios.post(`${API_BASE_URL}/api/purchaseitem`, {
+              date: moment().tz("Asia/Taipei").format("YYYY-MM-DD HH:mm:ss"),
+              value: this.selectItems[i].price,
+              id: this.selectItems[i].id,
+            });
           }
         }
       } catch (error) {

@@ -67,10 +67,10 @@ import { Offcanvas } from "bootstrap";
 
 export default {
   mounted() {
-    // 通过 Bootstrap JavaScript 打开 Sidebar
-    const offcanvasElement = document.getElementById("offcanvasScrolling");
-    const bsOffcanvas = new Offcanvas(offcanvasElement);
-    bsOffcanvas.show(); // 通过 JavaScript 打开 Sidebar
+    // TODO 為了讓SideBar一開始就是打開的狀態 暫時關閉 等到不被擋住時再打開
+    // const offcanvasElement = document.getElementById("offcanvasScrolling");
+    // const bsOffcanvas = new Offcanvas(offcanvasElement);
+    // bsOffcanvas.show(); // 通過JavaScript 打開Sidebar
   },
   methods: {
     async CleanExpiresVerification() {

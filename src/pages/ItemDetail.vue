@@ -72,6 +72,7 @@ import axios from "axios";
 import { API_BASE_URL } from "../config/api";
 import { mapState } from "vuex/dist/vuex.cjs.js";
 import { EventBus } from "../utils/eventBus.js";
+import moment from "moment-timezone";
 
 export default {
   data() {
@@ -176,12 +177,16 @@ export default {
         });
         console.log(`response: ${response}`);
 
-        if (response.data.success) {
-          console.log(`成功購買`);
+        if (!response.data.success) {
+          return;
         }
         this.item.stock -= this.amount;
         EventBus.emit("showPopup", "已購買");
-        // this.show = true;
+        await axios.post(`${API_BASE_URL}/api/purchaseitem`, {
+          date: moment().tz("Asia/Taipei").format("YYYY-MM-DD HH:mm:ss"),
+          value: +this.item.price * +this.item.amount,
+          id: +this.item.id,
+        });
         // TODO: 綠界購買等Google登入解決在做
       } catch (error) {
         alert(`Error: ${error}`);
