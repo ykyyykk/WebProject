@@ -53,10 +53,10 @@
         </div>
       </div>
 
-      <!-- TODO: 捲動時會跟著移動 -->
+      <!-- TODORWD: 捲動時會跟著移動 -->
       <div class="d-sm-block d-none mt-3 col">
-        <!-- TODO: 這邊改swiper 左右滑 只有兩張圖片 -->
-        <!-- TODO: 不管max-width放在哪 都沒辦法第一張的限制寬度 -->
+        <!-- TODOWarning: 這邊改swiper 左右滑 只有兩張圖片 -->
+        <!-- TODOWarning: 不管max-width放在哪 都沒辦法第一張的限制寬度 -->
         <a
           href="https://wixtwservice.wixsite.com/sinya/microsoft?utm_term=%E5%BE%AE%E8%BB%9F+windows11+microsoft&utm_content=%E5%BE%AE%E8%BB%9F%E6%B4%BB%E5%8B%95&utm_campaign=%E5%BE%AE%E8%BB%9F%E6%B4%BB%E5%8B%95"
         >

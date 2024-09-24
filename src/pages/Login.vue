@@ -24,7 +24,6 @@
       class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
     >
       <i class="fa-solid fa-lock mx-2"></i>
-
       <input
         :type="this.passwordVisibility ? 'text' : 'password'"
         v-model="password"

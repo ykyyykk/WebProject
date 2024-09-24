@@ -5,7 +5,7 @@
     class="z-3 position-fixed w-100 vh-100 d-flex justify-content-center align-items-center"
     :style="{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }"
   >
-    <!-- TODOError: 醜八怪 太醜了但功能很重要 所以放Error-->
+    <!-- TODOAdd: 醜八怪 太醜了但功能很重要 所以放Error-->
     <div class="text-center text-white">{{ text }}</div>
   </div>
 </template>

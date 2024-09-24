@@ -58,7 +58,7 @@
       </div>
     </div>
   </div>
-  <!-- TODO:不懂為什麼 用了沒辦法換行 https://getbootstrap.com/docs/5.3/components/placeholders/ -->
+  <!-- TODOWarning:不懂為什麼 用了沒辦法換行 https://getbootstrap.com/docs/5.3/components/placeholders/ -->
   <!-- <div class="bg-black text-white">載入中...</div> -->
 </template>
 
@@ -187,7 +187,7 @@ export default {
           value: +this.item.price * +this.item.amount,
           id: +this.item.id,
         });
-        // TODO: 綠界購買等Google登入解決在做
+        // TODOWarning: 綠界購買等Google登入解決在做
       } catch (error) {
         alert(`Error: ${error}`);
       }

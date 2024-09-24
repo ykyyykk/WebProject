@@ -61,13 +61,19 @@
     >
       <i class="fa-solid fa-lock mx-2"></i>
       <input
-        type="text"
+        :type="this.passwordVisibility ? 'text' : 'password'"
         class="form-control border border-0"
         placeholder="密碼"
         v-model="password"
         aria-label="password"
         aria-describedby="basic-addon1"
       />
+      <button
+        @click="this.passwordVisibility = !this.passwordVisibility"
+        class="border border-0 bg-transparent"
+      >
+        <i class="fa-solid fa-eye-slash me-3"></i>
+      </button>
     </div>
 
     <div
@@ -131,6 +137,7 @@ export default {
       verificationCode: "",
       sendDuration: 0,
       intervalID: "",
+      passwordVisibility: false,
     };
   },
   computed: {

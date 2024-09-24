@@ -58,8 +58,7 @@
       </div>
     </div>
   </div>
-  <!-- TODO:這邊改用這個 https://getbootstrap.com/docs/5.3/components/placeholders/ -->
-  <!-- <div class="bg-black text-white">載入中...</div> -->
+  <!-- TODOAdd: 這邊完全照抄ItemDetail 還沒改 -->
 </template>
 
 <script>

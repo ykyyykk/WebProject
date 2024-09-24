@@ -51,10 +51,7 @@ router.post("/addtocart", async (request, response, next) => {
 
   try {
     const [row] = await pool.execute(selectSql, [itemID, userID]);
-    console.log(row);
-    console.log(row[0]);
     if (row.length > 0) {
-      console.log(row[0].buyAmount);
       const buyAmount = +row[0].buyAmount + +amount;
       await pool.execute(updateSql, [buyAmount, itemID, userID]);
     } else {

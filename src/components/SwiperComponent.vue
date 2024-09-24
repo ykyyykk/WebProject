@@ -123,7 +123,7 @@ export default {
 <!-- 上下左右都被裁切 -->
 <!-- <img class="object-fit-none" src="../assets/img/slide1.jpg" /> -->
 
-<!-- TODOWarning: 會隨著寬度等比例縮放 -->
+<!-- TODORWD: 會隨著寬度等比例縮放 -->
 <!-- TODOWarning: Mac有正常滑動 但是沒有滑鼠拖曳 -->
 <!-- TODOWarning: 在每個tag 都加v-touch:pan 會warning暫時刪掉 -->
 <!-- TODOWarning: 在swiper加入v-touch:pinch 會Warning暫時刪掉 -->
