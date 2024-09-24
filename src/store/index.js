@@ -1,6 +1,5 @@
 import { createStore } from "vuex";
 
-// Define the image paths
 const pages = [
   { id: 1, src: "/banner1200_615/banner1.png" },
   { id: 2, src: "/banner1200_615/banner2.png" },
@@ -15,26 +14,93 @@ const pages = [
 ];
 
 const events = [
-  { id: 1, src: "/events500_160/event1.png" },
-  { id: 2, src: "/events500_160/event2.png" },
-  { id: 3, src: "/events500_160/event3.png" },
+  {
+    href: "https://www.sinya.com.tw/events/detail/",
+    src: "/events500_160/event1.png",
+  },
+  {
+    href: "https://www.sinya.com.tw/events/detail/",
+    src: "/events500_160/event2.png",
+  },
+];
+
+const leftSideAd = [
+  {
+    href: "https://www.coolpc.com.tw/tw/shop/man-power/coolpc-silverstone-new/",
+    src: "/leftside/silverstone-202012.png",
+  },
+  {
+    href: "https://www.coolpc.com.tw/tw/shop/man-power/coolpc-nzxt-new/",
+    src: "/leftside/nzxt-202005.png",
+  },
+  {
+    href: "https://www.coolpc.com.tw/tw/shop/man-power/coolpc-apexgaming-new/",
+    src: "/leftside/apexgaming-201903.png",
+  },
+  {
+    href: "https://www.coolpc.com.tw/tw/shop/welcome-to-coolpc/coolpc-ttesport-new/",
+    src: "/leftside/tt-repair-1607.png",
+  },
+  {
+    href: "https://www.coolpc.com.tw/tw/shop/man-power/coolpc-thermaltake-new/",
+    src: "/leftside/tt-psu-repair-1703.png",
+  },
+  {
+    href: "https://www.coolpc.com.tw/tw/shop/mother-boring/coolpc-asrock-new/",
+    src: "/leftside/asrock-repair-1502.png",
+  },
+  {
+    href: "https://www.coolpc.com.tw/tw/shop/router/coolpc-totolink-new/",
+    src: "/leftside/totolink-repair-1302.png",
+  },
+  {
+    href: "https://www.coolpc.com.tw/tw/shop/man-power/coolpc-fsp-antec-new/",
+    src: "/leftside/antec-repair-1305.png",
+  },
+  {
+    href: "https://www.coolpc.com.tw/tw/shop/man-power/coolpc-fsp-antec-new/",
+    src: "/leftside/fsp-repair-1305.png",
+  },
+];
+
+const rightSideAd = [
+  {
+    href: "https://www.ctbcbank.com/content/dam/cdn/long/creditcard/new3Cplatform/index.html",
+    src: "../../public/ads133_133/ad1.png",
+  },
+  {
+    href: "https://line.me/R/ti/p/@629gtlzk?oat_content=url&ts=07191747",
+    src: "../../public/ads133_133/ad2.png",
+  },
+  {
+    href: "https://www.easycard.com.tw/offer?cls=1506473490,1506473503,1508721809,1508721884,&id=1718354939",
+    src: "../../public/ads133_133/ad3.png",
+  },
+  {
+    href: "https://gnn.gamer.com.tw/detail.php?sn=265638",
+    src: "../../public/ads133_133/ad4.png",
+  },
+  {
+    href: "https://www.facebook.com/sinyafan/posts/758541392965582",
+    src: "../../public/ads133_133/ad5.png",
+  },
 ];
 
 // 需要先安裝vuex
-// 這邊再把items變全域
 // 透過...mapActions([]) 或 ...mapMutations([]) 改變state裡面的數值
 // 用哪一個取決於你是 異步 還是 同步
 export default createStore({
   state: {
     items: [],
+    categories: ["處理器", "主機板", "記憶體", "硬碟", "顯示卡", "鍵盤"],
     cartItems: [],
-    // 直接存User失敗 要不斷轉JSON 轉Object 因為localStorage.setItem()只能存字串
     user: null,
     isManager: false,
     searchQuery: "",
     pages,
     events,
-    categories: ["處理器", "主機板", "記憶體", "硬碟", "顯示卡", "鍵盤"],
+    leftSideAd,
+    rightSideAd,
   },
   mutations: {
     // 用於直接修改state中的狀態

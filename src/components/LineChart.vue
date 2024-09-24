@@ -1,5 +1,5 @@
 <template>
-  <div ref="lineChart" class="w-100" style="height: 400px"></div>
+  <div ref="lineChart"></div>
 </template>
 
 <script>
@@ -15,9 +15,6 @@ export default {
       lineChart: undefined,
     };
   },
-  mounted() {
-    this.initEcharts();
-  },
   watch: {
     // 因為LineChart比RevenueChart還快 所以這樣做
     xData(newVal) {
@@ -31,9 +28,15 @@ export default {
       }
     },
   },
+  mounted() {
+    this.initEcharts();
+  },
   methods: {
     initEcharts() {
       const option = {
+        tooltip: {
+          trigger: "item",
+        },
         xAxis: {
           data: this.xData,
         },
@@ -48,7 +51,7 @@ export default {
 
       if (!this.lineChart) {
         // Vue推薦用$refs取代document.getElementById
-        this.lineChart = echarts.init(this.$refs.lineChart); // 使用 $refs 获取元素
+        this.lineChart = echarts.init(this.$refs.lineChart);
       }
       this.lineChart.setOption(option);
       window.addEventListener("resize", () => {
