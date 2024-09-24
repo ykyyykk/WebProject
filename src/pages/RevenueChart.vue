@@ -1,20 +1,13 @@
 <template>
-  <div class="container d-block mt-5 p-3 border border-black">
-    <!-- <div class="border border-black">
-      <h1>本日營收</h1>
-    </div> -->
-    <div class="border border-black">
+  <div class="container d-block my-5 p-3 shadow">
+    <div class="shadow p-3">
       <h1>本周營收</h1>
-      <!-- <div id="weekChart" class="w-100" style="height: 400px"></div> -->
-      <LineChart ref="weekChart" :xData="this.weekX" :yData="this.weekY" />
+      <LineChart :xData="this.weekX" :yData="this.weekY" />
     </div>
-    <div class="border border-black mt-5">
+    <div class="shadow mt-5">
       <h1>本月營收</h1>
-      <LineChart ref="monthChart" :xData="this.monthX" :yData="this.monthY" />
+      <LineChart :xData="this.monthX" :yData="this.monthY" />
     </div>
-    <!-- <div class="border border-black">
-      <h1>本年營收</h1>
-    </div> -->
   </div>
 </template>
 
@@ -28,9 +21,8 @@ export default {
   data() {
     return {
       revenues: null,
-      weekChart: {},
-      weekX: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-      weekY: [1, 2, 3, 4, 5, 6, 7],
+      weekX: [],
+      weekY: [],
       monthX: [],
       monthY: [],
     };
@@ -50,27 +42,63 @@ export default {
     },
     Order() {
       // console.log(this.revenues);
+      // console.log(this.revenues[0].date); // 2024-08-31T16:00:00.000Z
+      // const date = new Date("2024/9/8"); //成功轉換
+      // const date = new Date(this.revenues[0].date); //成功轉換
+      // console.log(date); // Sun Sep 08 2024 00:00:00 GMT+0800 (台北標準時間)
+      // console.log(date.getDay()); // 0 ~ 6 0是星期日
+      // console.log(date.getDate()); // 1 ~ 31 日期
+      this.MonthOrder();
+      this.WeekOrder();
+    },
+    MonthOrder() {
       // 使用Map暫存日期 累加value
-      const revenueMap = new Map();
+      const monthRevenue = new Map();
 
       this.revenues.forEach((item) => {
-        const dateSplit = item.date.split("-");
-        const day = dateSplit[2].slice(0, 2); // 取得日期天數
+        const date = new Date(item.date);
+        const day = date.getDate();
         const value = item.value;
 
         // 如果已經有這個日期 累加value 否則設定為初始值
-        if (revenueMap.has(day)) {
-          revenueMap.set(day, revenueMap.get(day) + value);
+        if (monthRevenue.has(day)) {
+          monthRevenue.set(day, monthRevenue.get(day) + value);
         } else {
-          revenueMap.set(day, value);
+          monthRevenue.set(day, value);
         }
       });
 
       // 將結果轉成Array
-      this.monthX = Array.from(revenueMap.keys()); // 日期
-      this.monthY = Array.from(revenueMap.values()); // 累加後的value
-      // console.log(this.monthX);
-      // console.log(this.monthY);
+      this.monthX = Array.from(monthRevenue.keys()); // 日期
+      this.monthY = Array.from(monthRevenue.values()); // 累加後的value
+    },
+    WeekOrder() {
+      const weekRevenue = new Map();
+      const currentDate = new Date(); // 今天日期 Tue Sep 24 2024 13:01:20 GMT+0800 (台北標準時間)
+
+      // console.log(currentDate.getDate() - 7); // 17 = 24 - 7
+      this.revenues.forEach((item) => {
+        const date = new Date(item.date).getDate();
+
+        //取得七天前資料 因為現在有未來的資料 所以不讀取未來資料
+        if (date < currentDate.getDate() - 7 || date > currentDate.getDate()) {
+          // 白癡Js 在foreach return == continue;
+          return;
+        }
+
+        const value = item.value;
+
+        if (weekRevenue.has(date)) {
+          weekRevenue.set(date, weekRevenue.get(date) + value);
+        } else {
+          weekRevenue.set(date, value);
+        }
+      });
+
+      this.weekX = Array.from(weekRevenue.keys());
+      this.weekY = Array.from(weekRevenue.values());
+      // console.log(this.weekX);
+      // console.log(this.weekY);
     },
   },
 };
