@@ -3,6 +3,7 @@
   <SmallHeaderComponent pageTitle="登入" />
 
   <div
+    style="height: 500px"
     class="d-block justify-content-center align-items-center mt-5 p-3 w-100 overflow-x-hidden container"
   >
     <div
@@ -23,15 +24,22 @@
       class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
     >
       <i class="fa-solid fa-lock mx-2"></i>
+
       <input
-        type="text"
+        :type="this.passwordVisibility ? 'text' : 'password'"
         v-model="password"
         class="form-control border border-0"
         placeholder="密碼"
         aria-label="password"
         aria-describedby="basic-addon1"
       />
-      <i class="fa-solid fa-eye-slash me-3"></i>
+      <button
+        @click="this.passwordVisibility = !this.passwordVisibility"
+        class="border border-0 bg-transparent"
+      >
+        <i class="fa-solid fa-eye-slash me-3"></i>
+      </button>
+
       <router-link
         :to="{ name: 'ForgotPassword' }"
         class="me-2 text-decoration-none"
@@ -42,27 +50,7 @@
 
     <button @click="Login()" class="btn btn-primary w-100 mb-3">登入</button>
 
-    <div class="d-flex justify-content-end">
-      <a class="text-decoration-none" href="#">使用SMS簡訊登入</a>
-    </div>
-
-    <div class="text-center mb-3">或</div>
-
     <GoogleLoginComponent />
-
-    <button
-      class="btn btn-outline-dark w-100 mb-3 d-flex justify-content-center align-items-center"
-    >
-      <i class="fa-brands fa-facebook me-auto ms-2"></i>
-      <span class="flex-grow-1 text-center"
-        >使用 Facebook 帳號登入</span
-      ></button
-    ><button
-      class="btn btn-outline-dark w-100 mb-3 d-flex justify-content-center align-items-center"
-    >
-      <i class="fa-brands fa-line me-auto ms-2"></i>
-      <span class="flex-grow-1 text-center">使用 LINE 帳號登入</span>
-    </button>
   </div>
   <div class="mb-0 mt-auto">
     <p class="text-center">登入後，表示你同意蝦皮的服務條款以及隱私權政策</p>
@@ -80,19 +68,15 @@ import axios from "axios";
 import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import { mapActions } from "vuex/dist/vuex.cjs.js";
-import { useRouter } from "vue-router";
 import GoogleLoginComponent from "../components/GoogleLoginComponent.vue";
 import { API_BASE_URL } from "../config/api";
 
 export default {
-  setup() {
-    const router = useRouter();
-    return { router };
-  },
   data() {
     return {
       email: "",
       password: "",
+      passwordVisibility: false,
     };
   },
   components: {
@@ -112,19 +96,19 @@ export default {
 
         console.log(response.data);
         if (response.data.success) {
-          alert("登入成功");
           // console.log(`response.data: ${JSON.stringify(response.data.user)}`);
           // console.log(`id: ${response.data.user.id}`);
           // // JSON.stringify ObjectToJSON
           // // 因為localStorage.setItem()只能存字串 所以要先轉JSON 要用的時候在轉Object
           localStorage.setItem("user", JSON.stringify(response.data.user));
           this.SetLogin({ user: response.data.user });
-          this.router.push({ name: "Home" });
+          alert("登入成功");
+          this.$router.push({ name: "Home" });
         } else {
           alert("帳號或密碼錯誤！");
         }
       } catch (error) {
-        alert("帳號或密碼錯誤！", error);
+        alert(`帳號或密碼錯誤！ ${error}`);
       }
     },
   },

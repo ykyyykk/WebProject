@@ -77,7 +77,6 @@ router.post("/sendverification", async (request, response, next) => {
 
     response.status(200).json({ success: true, message: "驗證碼已發送" });
   } catch (error) {
-    console.error(`發送驗證碼錯誤: ${error}`);
     next(error);
   }
 });
@@ -85,15 +84,67 @@ router.post("/sendverification", async (request, response, next) => {
 router.post("/checkverification", async (request, response, next) => {
   const { email, verificationCode } = request.body;
   const sql = `SELECT * FROM Verification WHERE email = ? AND code = ?`;
+  const selectSql = `SELECT password FROM User WHERE email = ?`;
 
   try {
-    const [row] = await pool.execute(sql, [email.verificationCode]);
-    if (row) {
-      response.status(200).json({ success: true, row: row });
-    } else {
+    const [row] = await pool.execute(sql, [email, verificationCode]);
+    if (row.length <= 0) {
       response.status(200).json({ success: false, message: "驗證碼錯誤" });
     }
+
+    const [selectRow] = await pool.execute(selectSql, [email]);
+    if (selectRow.length <= 0) {
+      response.status(200).json({ success: false, message: "找不到信箱" });
+    }
+
+    response.status(200).json({ success: true, row: selectRow[0] });
   } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/sendforgotpasswordcode", async (request, response, next) => {
+  //檢查是否重複註冊
+  const { email } = request.body;
+  const checkSql = `SELECT email FROM User WHERE email = ?`;
+  try {
+    const [row] = await pool.execute(checkSql, [email]);
+
+    if (row.length <= 0) {
+      response
+        .status(200)
+        .json({ success: false, message: "該信箱從未被註冊過！" });
+      return;
+    }
+  } catch (error) {
+    next(error);
+    return;
+  }
+
+  const sql = `INSERT INTO Verification (email, code, createdAt, expiresAt) VALUES(?,?,?,?)`;
+  const verificationCode = Math.floor(100000 + Math.random() * 900000);
+  const createdAt = Date.now();
+  const expiresAt = Date.now() + 300000; //單位是毫秒
+
+  try {
+    const mailOption = {
+      from: "louise87276@gmail.com",
+      to: email,
+      subject: "你的驗證碼",
+      text: `你的驗證碼是: ${verificationCode}`,
+    };
+    await transporter.sendMail(mailOption);
+
+    // 不加toString()後面會有.0
+    await pool.execute(sql, [
+      email,
+      verificationCode.toString(),
+      createdAt,
+      expiresAt,
+    ]);
+    response.status(200).json({ success: true, message: "驗證碼已發送" });
+  } catch (error) {
+    console.error(`發送驗證碼錯誤: ${error}`);
     next(error);
   }
 });

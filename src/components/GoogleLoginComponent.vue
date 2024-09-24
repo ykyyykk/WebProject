@@ -12,14 +12,9 @@
 <script>
 import axios from "axios";
 import { googleTokenLogin } from "vue3-google-login";
-import { useRouter } from "vue-router";
 import { API_BASE_URL } from "../config/api";
 
 export default {
-  setup() {
-    const router = useRouter();
-    return { router };
-  },
   methods: {
     async googleSignin() {
       try {
@@ -43,7 +38,7 @@ export default {
         });
 
         alert("登入成功");
-        this.router.push({ name: "Home" });
+        this.$router.push({ name: "Home" });
       } catch (error) {
         alert(`登入失敗: ${error}`);
       }

@@ -3,6 +3,7 @@
   <SmallHeaderComponent pageTitle="註冊" />
 
   <div
+    style="height: 500px"
     class="d-block justify-content-center align-items-center mt-5 p-3 w-100 overflow-x-hidden container"
   >
     <div
@@ -91,22 +92,6 @@
     <div class="text-center mb-3">或</div>
 
     <GoogleRegisterComponent />
-
-    <button
-      class="btn btn-outline-dark w-100 mb-3 d-flex justify-content-center align-items-center"
-    >
-      <!-- TODOAdd:Facebook註冊 -->
-      <i class="fa-brands fa-facebook me-auto ms-2"></i>
-      <span class="flex-grow-1 text-center"
-        >使用 Facebook 帳號註冊</span
-      ></button
-    ><button
-      class="btn btn-outline-dark w-100 mb-3 d-flex justify-content-center align-items-center"
-    >
-      <!-- TODOAdd:Line註冊 -->
-      <i class="fa-brands fa-line me-auto ms-2"></i>
-      <span class="flex-grow-1 text-center">使用 LINE 帳號註冊</span>
-    </button>
   </div>
 
   <div class="mb-0 mt-auto">
@@ -127,14 +112,9 @@ import axios from "axios";
 import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import GoogleRegisterComponent from "../components/GoogleRegisterComponent.vue";
-import { useRouter } from "vue-router";
 import { API_BASE_URL } from "../config/api";
 
 export default {
-  setup() {
-    const router = useRouter();
-    return { router };
-  },
   // 不加這一行 input輸入時會有Warning
   props: {
     items: {
@@ -149,8 +129,6 @@ export default {
       email: "",
       password: "",
       verificationCode: "",
-      verified: false,
-      checking: false,
       sendDuration: 0,
       intervalID: "",
     };
@@ -204,8 +182,8 @@ export default {
       try {
         // await 等太久 先關 等錯誤再開
         // 60000 毫秒等於 1 分鐘
-        this.sendDuration = 60000;
         this.ClearTimer();
+        this.sendDuration = 60000;
         this.intervalID = setInterval(() => {
           this.TimerCheck();
         }, 1000);
@@ -228,7 +206,6 @@ export default {
       }
     },
     async CheckVerification() {
-      this.checking = true;
       console.log(`this.verificationCode: ${this.verificationCode}`);
       try {
         const response = await axios.post(
@@ -241,7 +218,7 @@ export default {
         console.log(response.data);
         if (response.data.success) {
           await this.Register();
-          this.router.push({ name: "Login" });
+          this.$router.push({ name: "Login" });
         }
       } catch (error) {
         alert(`驗證碼錯誤: ${error}`);

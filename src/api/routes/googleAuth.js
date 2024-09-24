@@ -37,7 +37,7 @@ router.post("/googlesignin", async (request, response) => {
 
     response.send({ message: "Google sign-in success", user: request.User });
   } catch (error) {
-    console.error("Error during Google API request:", error);
+    console.error(`Error during Google API request: ${error}`);
     response.status(401).send({ error: "Invalid token" });
   }
 });
