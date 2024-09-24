@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../pages/Home.vue";
 import AddItem from "../pages/AddItem.vue";
 import Cart from "../pages/Cart.vue";
-import Service from "../pages/Service.vue";
 import MemberCenter from "../pages/MemberCenter.vue";
 import ForgotPassword from "../pages/ForgotPassword.vue";
 import Login from "../pages/Login.vue";
@@ -63,11 +62,6 @@ const routes = [
     path: "/searchresult",
     name: "SearchResult",
     component: SearchResult,
-  },
-  {
-    path: "/service",
-    name: "Service",
-    component: Service,
   },
   {
     path: "/dashboard",

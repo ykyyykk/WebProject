@@ -45,11 +45,23 @@ router.get("/getcartitems", async (request, response, next) => {
 
 router.post("/addtocart", async (request, response, next) => {
   const { itemID, userID, amount } = request.body;
-  const sql = `INSERT INTO Cart (itemID, userID, buyAmount) VALUES(?,?,?)`;
+  const selectSql = `SELECT * FROM Cart WHERE itemID = ? AND userID = ?`;
+  const insertSql = `INSERT INTO Cart (itemID, userID, buyAmount) VALUES(?,?,?)`;
+  const updateSql = `UPDATE Cart SET buyAmount = ? WHERE itemID = ? AND userID = ?`;
 
   try {
-    const [info] = await pool.execute(sql, [itemID, userID, amount]);
-    response.status(200).json({ success: true, info: info });
+    const [row] = await pool.execute(selectSql, [itemID, userID]);
+    console.log(row);
+    console.log(row[0]);
+    if (row.length > 0) {
+      console.log(row[0].buyAmount);
+      const buyAmount = +row[0].buyAmount + +amount;
+      await pool.execute(updateSql, [buyAmount, itemID, userID]);
+    } else {
+      await pool.execute(insertSql, [itemID, userID, amount]);
+    }
+    response.status(200).json({ success: true });
+    next();
   } catch (error) {
     next(error);
   }

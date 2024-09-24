@@ -74,8 +74,6 @@ import axios from "axios";
 import { API_BASE_URL } from "../config/api";
 import { mapActions, mapState } from "vuex/dist/vuex.cjs.js";
 
-// TODOWarning: 購物車 同樣的物品應該要疊加
-// TODOWarning: 還不確定要不要開放訪客購買 如果不開放 要檢查userID不為0
 export default {
   data() {
     return {
@@ -125,7 +123,6 @@ export default {
         alert(`錯誤: ${error}`);
       }
     },
-    // TODOWarning: 因為現在物品沒有疊加 如果check一個物品 另外一個相同的物品也會跟著check
     OnCheck(id) {
       // include比較適合簡單的東西 例如 值 但Object不適用
       const itemExists = this.selectItems.some((item) => item.id === id);

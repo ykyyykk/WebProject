@@ -7,22 +7,22 @@
       <!-- TODO: 當沒有CheckAll時 顯示半check -->
       <input @click="OnCheckAll()" class="ms-2 me-3" type="checkbox" />
       <button
-        @click="Sort('ID')"
+        @click="ChagneSortTag('ID')"
         class="p-0 me-3 border border-black"
         style="width: 5rem"
       >
         <i
-          v-if="this.sortTag === 'ID' && this.isDescending"
+          v-if="this.sortTag === 'ID' && !this.isDescending"
           class="fa-solid fa-angle-up"
         ></i>
         <i
-          v-else-if="this.sortTag === 'ID' && !this.isDescending"
+          v-else-if="this.sortTag === 'ID' && this.isDescending"
           class="fa-solid fa-angle-down"
         ></i>
         ID
       </button>
       <button
-        @click="Sort('Name')"
+        @click="ChagneSortTag('Name')"
         class="p-0 me-3 border border-black"
         style="width: 5rem"
       >
@@ -37,7 +37,7 @@
         姓名
       </button>
       <button
-        @click="Sort('PhoneNumber')"
+        @click="ChagneSortTag('PhoneNumber')"
         class="p-0 me-3 border border-black"
         style="width: 7rem"
       >
@@ -52,7 +52,7 @@
         電話
       </button>
       <button
-        @click="Sort('Email')"
+        @click="ChagneSortTag('Email')"
         class="p-0 me-3 border border-black"
         style="width: 15rem"
       >
@@ -67,7 +67,7 @@
         Email
       </button>
       <button
-        @click="Sort('Password')"
+        @click="ChagneSortTag('Password')"
         class="p-0 me-3 border border-black"
         style="width: 15rem"
       >
@@ -82,7 +82,7 @@
         密碼
       </button>
       <button
-        @click="Sort('TotalPurchaseAmount')"
+        @click="ChagneSortTag('TotalPurchaseAmount')"
         class="p-0 me-3 border border-black"
         style="width: 10rem"
       >
@@ -99,7 +99,7 @@
         已購買商品數量
       </button>
       <button
-        @click="Sort('TotalPurchasePrice')"
+        @click="ChagneSortTag('TotalPurchasePrice')"
         class="p-0 me-3 border border-black"
         style="width: 7.5rem"
       >
@@ -207,8 +207,6 @@ import axios from "axios";
 import { API_BASE_URL } from "../config/api";
 import { mapState } from "vuex/dist/vuex.cjs.js";
 
-// TODOWarning: 購物車 同樣的物品應該要疊加
-// TODOWarning: 還不確定要不要開放訪客購買 如果不開放 要檢查userID不為0
 export default {
   data() {
     return {
@@ -216,7 +214,7 @@ export default {
       selectUsers: [],
       isSelectAll: false,
       sortTag: "ID",
-      isDescending: true,
+      isDescending: false,
     };
   },
   components: { HeaderComponent, SmallHeaderComponent, NumberInputComponent },
@@ -247,22 +245,23 @@ export default {
         alert(`錯誤: ${error}`);
       }
     },
-    Sort(sortTag) {
+    ChagneSortTag(sortTag) {
+      // console.log(this.sortTag);
       if (this.sortTag === sortTag) {
-        if (this.isDescending) {
-          this.isDescending = false;
-          this.AAA();
+        if (!this.isDescending) {
+          this.isDescending = true;
+          this.Sort();
           return;
         }
         this.sortTag = "";
-        this.isDescending = true;
-        this.AAA();
+        this.isDescending = false;
+        this.Sort();
         return;
       }
       this.sortTag = sortTag;
-      this.AAA();
+      this.Sort();
     },
-    AAA() {
+    Sort() {
       switch (this.sortTag) {
         case "ID":
           return this.allUser.sort((a, b) => {
@@ -315,7 +314,6 @@ export default {
           });
       }
     },
-    // TODOWarning: 因為現在物品沒有疊加 如果check一個物品 另外一個相同的物品也會跟著check
     OnCheck(id) {
       // include比較適合簡單的東西 例如 值 但Object不適用
       const itemExists = this.selectUsers.some((user) => user.id === id);

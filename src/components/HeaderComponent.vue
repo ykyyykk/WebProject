@@ -44,10 +44,6 @@
         <i class="fa-solid fa-store fs-5"></i>
       </router-link>
 
-      <router-link :to="{ name: 'Service' }" class="bg-transparent text-black">
-        <i class="fa-regular fa-circle-question fs-5"></i>
-      </router-link>
-
       <!-- TODOAdd: 新增通知 -->
       <!-- TODOAdd: 通知同步發送email-->
       <!-- TODOAdd: 取消訂閱通知email-->
