@@ -63,6 +63,17 @@ const leftSideAd = [
   },
 ];
 
+const rightSwiper = [
+  {
+    href: "https://wixtwservice.wixsite.com/sinya/microsoft?utm_term=%E5%BE%AE%E8%BB%9F+windows11+microsoft&utm_content=%E5%BE%AE%E8%BB%9F%E6%B4%BB%E5%8B%95&utm_campaign=%E5%BE%AE%E8%BB%9F%E6%B4%BB%E5%8B%95",
+    src: "/ads300_600/ad1.png",
+  },
+  {
+    href: "https://wixtwservice.wixsite.com/sinya/microsoft?utm_term=%E5%BE%AE%E8%BB%9F+windows11+microsoft&utm_content=%E5%BE%AE%E8%BB%9F%E6%B4%BB%E5%8B%95&utm_campaign=%E5%BE%AE%E8%BB%9F%E6%B4%BB%E5%8B%95",
+    src: "/ads300_600/ad2.png",
+  },
+];
+
 const rightSideAd = [
   {
     href: "https://www.ctbcbank.com/content/dam/cdn/long/creditcard/new3Cplatform/index.html",
@@ -101,6 +112,7 @@ export default createStore({
     events,
     leftSideAd,
     rightSideAd,
+    rightSwiper,
   },
   mutations: {
     // 用於直接修改state中的狀態

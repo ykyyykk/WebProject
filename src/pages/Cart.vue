@@ -63,7 +63,11 @@
     class="d-flex justify-content-between align-items-center fixed-bottom py-1 px-3 bg-warning rounded rounded-2 m-1"
   >
     <div>
-      <input @click="OnSelectAll()" type="checkbox" />
+      <input
+        @click="OnSelectAll()"
+        type="checkbox"
+        :checked="cartItems.length == selectItems.length"
+      />
       <span class="ms-2">全選</span>
       <span class="ms-5">總金額$ {{ totalPrice }}</span>
     </div>
@@ -86,7 +90,6 @@ import { debounce } from "lodash";
 import { mapState } from "vuex/dist/vuex.cjs.js";
 import moment from "moment-timezone";
 
-// TODOWarning: 還不確定要不要開放訪客購買 如果不開放 要檢查userID不為0
 export default {
   data() {
     return {

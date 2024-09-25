@@ -100,6 +100,7 @@ export default {
           // // JSON.stringify ObjectToJSON
           // // 因為localStorage.setItem()只能存字串 所以要先轉JSON 要用的時候在轉Object
           localStorage.setItem("user", JSON.stringify(response.data.user));
+          // sessionStorage 瀏覽器關掉就沒了
           this.SetLogin({ user: response.data.user });
           alert("登入成功");
           this.$router.push({ name: "Home" });

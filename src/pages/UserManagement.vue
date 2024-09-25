@@ -4,7 +4,6 @@
     class="container mt-5 mb-5 p-3 shadow overflow-x-scroll"
   >
     <div class="d-flex mb-3 shadow-sm m-0 p-3 w-100">
-      <!-- TODOWarning: 當沒有CheckAll時 顯示半check -->
       <input @click="OnCheckAll()" class="ms-2 me-3" type="checkbox" />
       <button
         @click="ChagneSortTag('ID')"

@@ -48,16 +48,20 @@
       <!-- TODOAdd: 新增通知 -->
       <!-- TODOAdd: 通知同步發送email-->
       <!-- TODOAdd: 取消訂閱通知email-->
-      <router-link :to="CheckLoginStatus" class="bg-transparent text-black">
+      <!-- 不要用router-link 不知道為什麼 會呼叫到Cart 明明名稱不一樣 -->
+      <button
+        @click="this.LoginOnClick()"
+        class="bg-transparent text-black border border-0"
+      >
         <i class="fa-solid fa-user fs-5"></i>
-      </router-link>
+      </button>
 
-      <router-link
-        :to="CheckCartStatus"
-        class="bg-transparent text-black ms-auto me-2"
+      <button
+        @click="this.CartOnClick()"
+        class="bg-transparent text-black ms-auto me-2 border border-0"
       >
         <i class="fa-solid fa-cart-shopping fs-5"></i>
-      </router-link>
+      </button>
     </div>
   </header>
 
@@ -88,20 +92,25 @@ export default {
   },
   computed: {
     ...mapState(["user", "isManager"]),
-    CheckLoginStatus() {
-      if (this.user == null) {
-        return { name: "Login" };
-      }
-      return { name: "MemberCenter" };
-    },
-    CheckCartStatus() {
-      if (this.user == null) {
-        return { name: "Login" };
-      }
-      return { name: "Cart" };
-    },
   },
   methods: {
+    LoginOnClick() {
+      if (this.user == null) {
+        this.$router.push({ name: "Login" });
+        return;
+      }
+      this.$router.push({ name: "MemberCenter" });
+      return;
+    },
+    CartOnClick() {
+      if (this.user == null) {
+        alert("請先登入");
+        this.$router.push({ name: "Login" });
+        return;
+      }
+      this.$router.push({ name: "Cart" });
+      return;
+    },
     ToggleSearchWindow() {
       this.isSearchWindowOpen = !this.isSearchWindowOpen;
 

@@ -3,6 +3,7 @@
   <SmallHeaderComponent pageTitle="會員中心" />
 
   <div
+    style="height: 600px"
     class="d-block justify-content-center align-items-center mt-5 p-3 w-100 overflow-x-hidden container"
   >
     <div
@@ -61,10 +62,14 @@
       />
     </div>
 
-    <button class="btn btn-outline-primary" @click="OnLogout()">登出</button>
-    <button class="btn btn-outline-primary" @click="SaveUserInfo()">
-      儲存
-    </button>
+    <div class="d-flex justify-content-evenly">
+      <button class="btn btn-outline-danger w-25" @click="OnLogout()">
+        登出
+      </button>
+      <button class="btn btn-outline-primary w-25" @click="SaveUserInfo()">
+        儲存
+      </button>
+    </div>
   </div>
 </template>
 
@@ -106,8 +111,8 @@ export default {
     OnLogout() {
       localStorage.setItem("user", null);
       this.SetLogout();
-      alert("你已登出");
       this.$router.push({ name: "Home" });
+      alert("你已登出");
     },
   },
 };

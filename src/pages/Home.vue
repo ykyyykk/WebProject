@@ -57,11 +57,13 @@
       <div class="d-sm-block d-none mt-3 col">
         <!-- TODOWarning: 這邊改swiper 左右滑 只有兩張圖片 -->
         <!-- TODOWarning: 不管max-width放在哪 都沒辦法第一張的限制寬度 -->
-        <a
+        <!-- <a
           href="https://wixtwservice.wixsite.com/sinya/microsoft?utm_term=%E5%BE%AE%E8%BB%9F+windows11+microsoft&utm_content=%E5%BE%AE%E8%BB%9F%E6%B4%BB%E5%8B%95&utm_campaign=%E5%BE%AE%E8%BB%9F%E6%B4%BB%E5%8B%95"
         >
           <img style="max-width: 133px" src="../../public/ads300_600/ad1.png" />
-        </a>
+        </a> -->
+        <!-- TODO: 把左右按鈕變可選 -->
+        <SwiperComponent style="max-width: 133px" :pages="rightSwiper" />
         <div v-for="ad in this.rightSideAd" :key="ad">
           <ImageLinkComponent :obj="ad" />
         </div>
@@ -77,14 +79,8 @@ import ItemComponent from "../components/ItemComponent.vue";
 import ElevatorComponent from "../components/ElevatorComponent.vue";
 import ImageLinkComponent from "../components/ImageLinkComponent.vue";
 import { mapState } from "vuex/dist/vuex.cjs.js";
-// import { API_BASE_URL } from "../config/api";
 
 export default {
-  // data() {
-  //   return {
-  //     url: `${API_BASE_URL}`,
-  //   };
-  // },
   components: {
     HeaderComponent,
     SwiperComponent,
@@ -93,7 +89,14 @@ export default {
     ImageLinkComponent,
   },
   computed: {
-    ...mapState(["items", "pages", "events", "leftSideAd", "rightSideAd"]),
+    ...mapState([
+      "items",
+      "pages",
+      "events",
+      "leftSideAd",
+      "rightSideAd",
+      "rightSwiper",
+    ]),
   },
 };
 </script>

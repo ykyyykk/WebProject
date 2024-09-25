@@ -8,6 +8,7 @@ router.post("/googlesignin", async (request, response) => {
   try {
     const token = request.body.token;
 
+    // console.log(token);
     const client = new OAuth2Client(
       "80477468988-2fldqciks5d038o7i2qrbvssoa7entnt.apps.googleusercontent.com"
     );
@@ -31,9 +32,10 @@ router.post("/googlesignin", async (request, response) => {
       personFields: "names,emailAddresses,phoneNumbers",
     });
 
-    // console.log("People API Response:", peopleInfo.data);
+    // TODO: 聽說google登入的token 好像是 response 還是 request 的 credential
+    console.log("People API Response:", peopleInfo.data);
     request.User.phoneNumbers = peopleInfo.data.phoneNumbers;
-    // console.log(`request.User: ${JSON.stringify(request.User)}`);
+    console.log(`request.User: ${JSON.stringify(request.User)}`);
 
     response.send({ message: "Google sign-in success", user: request.User });
   } catch (error) {
