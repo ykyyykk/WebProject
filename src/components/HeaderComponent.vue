@@ -23,12 +23,13 @@
         />
       </router-link>
 
-      <div class="form-control ms-2 d-none d-md-block w-50 p-0">
+      <div class="ms-2 d-none d-md-block w-50 p-0">
         <SearchInputComponent />
       </div>
     </div>
 
     <div class="d-flex justify-content-end align-items-center gap-3">
+      <span>{{ this.API_BASE_URL }}</span>
       <button
         @click="ToggleSearchWindow()"
         class="border border-0 bg-transparent d-md-none"
@@ -74,6 +75,7 @@
 import { mapState } from "vuex/dist/vuex.cjs.js";
 import SideBarComponent from "../components/SideBarComponent.vue";
 import SearchInputComponent from "./SearchInputComponent.vue";
+import { API_BASE_URL } from "../config/api";
 
 export default {
   components: { SideBarComponent, SearchInputComponent },
@@ -81,6 +83,7 @@ export default {
     return {
       isSideBarOpen: false,
       isSearchWindowOpen: false,
+      API_BASE_URL: API_BASE_URL,
     };
   },
   computed: {

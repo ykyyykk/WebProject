@@ -6,19 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3C購物網站</title>
     <script type="module" src="js/libs.js"></script>
+
+    <!-- 不去阻擋https//34.82.250.51:3500 和 FontAwesome -->
+    <!-- 沒用 會有更多錯誤 -->
+    <!-- <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; connect-src 'self' http://34.82.250.51:3500; font-src 'self' https://cdnjs.cloudflare.com https://fonts.googleapis.com https://use.fontawesome.com; img-src 'self' data: https://ykyyykk231224.neocities.org https://*.google.com https://*.gstatic.com; script-src 'self' https://accounts.google.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;"
+    /> -->
   </head>
 
   <body
     class="d-block justify-content-start align-items-center vh-100 overflow-x-hidden"
   >
-    <!-- npm init -->
-    <!-- npm create vite@lates 他會創一個很多東西的資料夾 把它移位子-->
-    <!-- 輸入 npm run dev 執行 -->
-    <!-- dev 可以更改 在 package.json 中 scripts 的 dev 改成xxx 就變成npm run xxx  -->
     <div id="app"></div>
     <script type="module" src="src/main.js"></script>
   </body>
-
-  <!-- 主要目標 -->
-  <!-- 購買 減少商品庫存數量 -->
 </html>

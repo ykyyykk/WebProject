@@ -66,23 +66,23 @@ const leftSideAd = [
 const rightSideAd = [
   {
     href: "https://www.ctbcbank.com/content/dam/cdn/long/creditcard/new3Cplatform/index.html",
-    src: "../../public/ads133_133/ad1.png",
+    src: "/ads133_133/ad1.png",
   },
   {
     href: "https://line.me/R/ti/p/@629gtlzk?oat_content=url&ts=07191747",
-    src: "../../public/ads133_133/ad2.png",
+    src: "/ads133_133/ad2.png",
   },
   {
     href: "https://www.easycard.com.tw/offer?cls=1506473490,1506473503,1508721809,1508721884,&id=1718354939",
-    src: "../../public/ads133_133/ad3.png",
+    src: "/ads133_133/ad3.png",
   },
   {
     href: "https://gnn.gamer.com.tw/detail.php?sn=265638",
-    src: "../../public/ads133_133/ad4.png",
+    src: "/ads133_133/ad4.png",
   },
   {
     href: "https://www.facebook.com/sinyafan/posts/758541392965582",
-    src: "../../public/ads133_133/ad5.png",
+    src: "/ads133_133/ad5.png",
   },
 ];
 
