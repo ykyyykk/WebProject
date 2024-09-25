@@ -62,7 +62,7 @@
         >
           <img style="max-width: 133px" src="../../public/ads300_600/ad1.png" />
         </a> -->
-        <!-- TODO: 把左右按鈕變可選 -->
+        <!-- TODO: 把左右按鈕變可選 zindex要調整 會覆蓋電梯 -->
         <SwiperComponent style="max-width: 133px" :pages="rightSwiper" />
         <div v-for="ad in this.rightSideAd" :key="ad">
           <ImageLinkComponent :obj="ad" />

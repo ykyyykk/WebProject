@@ -17,15 +17,19 @@ import { API_BASE_URL } from "../config/api";
 export default {
   methods: {
     async googleSignin() {
+      console.log(-1);
       try {
+        console.log(0);
         const response = await googleTokenLogin();
 
+        console.log(1);
         const loginResponse = await axios.post(
           `${API_BASE_URL}/api/googlesignin`,
           {
             token: response.access_token,
           }
         );
+        console.log(2);
 
         const email = loginResponse.data.user.email;
         const password = loginResponse.data.user.sub;
