@@ -8,7 +8,6 @@ import Login from "../pages/Login.vue";
 import Register from "../pages/Register.vue";
 import NotFound from "../pages/NotFound.vue";
 import ItemDetail from "../pages/ItemDetail.vue";
-import UserDetail from "../pages/UserDetail.vue";
 import SearchResult from "../pages/SearchResult.vue";
 import Dashboard from "../pages/Dashboard.vue";
 import ItemManagement from "../pages/ItemManagement.vue";
@@ -82,11 +81,6 @@ const routes = [
         path: "/dashboard/revenuechart",
         name: "RevenueChart",
         component: RevenueChart,
-      },
-      {
-        path: "/dashboard/userdetail",
-        name: "UserDetail",
-        component: UserDetail,
       },
     ],
   },
