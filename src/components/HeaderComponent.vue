@@ -53,7 +53,7 @@
       </router-link>
 
       <router-link
-        :to="{ name: 'Cart' }"
+        :to="CheckCartStatus"
         class="bg-transparent text-black ms-auto me-2"
       >
         <i class="fa-solid fa-cart-shopping fs-5"></i>
@@ -93,6 +93,12 @@ export default {
         return { name: "Login" };
       }
       return { name: "MemberCenter" };
+    },
+    CheckCartStatus() {
+      if (this.user == null) {
+        return { name: "Login" };
+      }
+      return { name: "Cart" };
     },
   },
   methods: {
