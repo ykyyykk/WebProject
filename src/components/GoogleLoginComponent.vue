@@ -21,21 +21,24 @@ export default {
         const response = await googleTokenLogin();
 
         const accessToken = response.access_token; // 這裡是 access_token
+
         if (!accessToken) {
           throw new Error("Access token is missing.");
         }
+
+        // console.log(accessToken);
+
         const loginResponse = await axios.post(
           `${API_BASE_URL}/api/googlesignin`,
           {
             token: accessToken,
           }
         );
-        console.log(2);
+
+        console.log(`loginResponse: ${JSON.stringify(loginResponse)}`);
 
         const email = loginResponse.data.user.email;
         const password = loginResponse.data.user.sub;
-        console.log(email);
-        console.log(password);
 
         await axios.post(`${API_BASE_URL}/api/login`, {
           email: email,
