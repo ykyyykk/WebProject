@@ -1,1 +1,0 @@
-npm run build -- --mode production.neocities
