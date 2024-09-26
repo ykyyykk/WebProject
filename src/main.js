@@ -41,7 +41,7 @@ router.beforeEach(async (to, from, next) => {
 
     const allItemsResponse = await axios.get(`${API_BASE_URL}/api/getallitem`);
 
-    console.log("取得所有物品成功");
+    console.log(`取得所有物品成功`);
     store.dispatch("SetAllItems", { items: allItemsResponse.data.items });
 
     // console.log(store.state.user);

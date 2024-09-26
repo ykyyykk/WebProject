@@ -10,7 +10,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "startMac": "sh startNodeJS.sh.sh",
+    "startMac": "sh startNodeJS.sh",
     "startWin": "startNodeJS.bat"
   },
   "author": "",
@@ -22,6 +22,7 @@
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "echarts": "^4.9.0",
     "ecpay_aio_nodejs": "^1.2.2",
     "express": "^4.19.2",

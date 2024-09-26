@@ -1,12 +1,16 @@
 import express from "express";
 import crypto from "crypto";
-import dotenv from "dotenv";
 // 綠界提供的 SDK
 import ecpay_payment from "ecpay_aio_nodejs";
 
-dotenv.config();
 const router = express.Router();
-const { MERCHANTID, HASHKEY, HASHIV, HOST } = process.env;
+
+// const { MERCHANTID, HASHKEY, HASHIV, HOST } = process.env;
+
+const MERCHANTID = 2000132;
+const HASHKEY = "pwFHCqoQZGmho4w6";
+const HASHIV = "EkRm7iFT261dpevs";
+const HOST = "https://www.louise.tw:3000/api";
 
 // SDK 提供的範例，初始化
 // https://github.com/ECPay/ECPayAIO_Node.js/blob/master/ECPAY_Payment_node_js/conf/config-example.js
@@ -29,7 +33,8 @@ const options = {
 };
 let TradeNo;
 
-router.get("/", (req, res) => {
+router.get("/ecpay", (req, res) => {
+  console.log("/ecpay");
   // SDK 提供的範例，參數設定
   // https://github.com/ECPay/ECPayAIO_Node.js/blob/master/ECPAY_Payment_node_js/conf/config-example.js
   const MerchantTradeDate = new Date().toLocaleString("zh-TW", {
