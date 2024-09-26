@@ -17,16 +17,17 @@ import { API_BASE_URL } from "../config/api";
 export default {
   methods: {
     async googleSignin() {
-      console.log(-1);
       try {
-        console.log(0);
         const response = await googleTokenLogin();
 
-        console.log(1);
+        const accessToken = response.access_token; // 這裡是 access_token
+        if (!accessToken) {
+          throw new Error("Access token is missing.");
+        }
         const loginResponse = await axios.post(
           `${API_BASE_URL}/api/googlesignin`,
           {
-            token: response.access_token,
+            token: accessToken,
           }
         );
         console.log(2);

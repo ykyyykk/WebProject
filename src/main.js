@@ -17,7 +17,7 @@ const GoogleLoginOptions = {
   //取得個人資料 email 電話沒辦法拿到 除非使用者主動自己設定
   //google頭像>管理你的google帳戶>個人資訊>前往關於我的頁面>新增聯絡資訊>新增電話號碼
   scope:
-    "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
+    "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email openid",
 };
 
 // 全域路由守衛
@@ -34,13 +34,13 @@ router.beforeEach(async (to, from, next) => {
       userJson !== undefined &&
       store.state.user === null
     ) {
+      // 在.vue以外的地方只能使用store.dispatch
+      // 他的功能等同於...mapActions 但 ...mapActions只能在.vue以內使用
       store.dispatch("SetLogin", { user: JSON.parse(userJson) });
     }
 
-    // 在.vue以外的地方只能使用store.dispatch
-    // 他的功能等同於...mapActions 但 ...mapActions只能在.vue以內使用
     const allItemsResponse = await axios.get(`${API_BASE_URL}/api/getallitem`);
-    console.log(allItemsResponse);
+
     console.log("取得所有物品成功");
     store.dispatch("SetAllItems", { items: allItemsResponse.data.items });
 
