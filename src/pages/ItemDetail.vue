@@ -172,7 +172,13 @@ export default {
       }
       try {
         console.log("OnClickBuy");
+        // const response = await axios.get(`${API_BASE_URL}/api/clientReturn`);
+        // // 直接回傳我整個index.html不知道在衝三小
+        // console.log(response);
+
         const response = await axios.get(`${API_BASE_URL}/api/ecpay`);
+        console.log(response);
+
         // const response = await axios.post(`${API_BASE_URL}/api/purchaseitem`, {
         //   id: this.item.id,
         //   amount: this.amount,

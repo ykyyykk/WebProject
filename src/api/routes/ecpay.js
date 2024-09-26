@@ -10,7 +10,7 @@ const router = express.Router();
 const MERCHANTID = 2000132;
 const HASHKEY = "pwFHCqoQZGmho4w6";
 const HASHIV = "EkRm7iFT261dpevs";
-const HOST = "https://www.louise.tw:3000/api";
+const HOST = "https://www.louise.tw:5173/api";
 
 // SDK 提供的範例，初始化
 // https://github.com/ECPay/ECPayAIO_Node.js/blob/master/ECPAY_Payment_node_js/conf/config-example.js
@@ -50,18 +50,26 @@ router.get("/ecpay", (req, res) => {
 
   TradeNo = "test" + new Date().getTime();
 
+  console.log(`original ReturnURL: ${HOST}/return`);
   let base_param = {
-    MerchantTradeNo: TradeNo, //請帶20碼uid, ex: f0a0d7e9fae1bb72bc93
-    MerchantTradeDate,
+    MerchantTradeNo: "f0a0d7e9fae1bb72bc93", //請帶20碼uid, ex: f0a0d7e9fae1bb72bc93
+    MerchantTradeDate: new Date().getTime(),
     TotalAmount: "100", //訂單金額
     TradeDesc: "測試交易描述", //訂單描述
     ItemName: "測試商品等", //訂單名稱
-    ReturnURL: `${HOST}/return`,
-    ClientBackURL: `${HOST}/clientReturn`,
+    ReturnURL: `http://localhost:5173/`,
+    ClientBackURL: `http://localhost:5173/`,
+    // ChoosePayment: "ALL",
+    // ReturnURL: `${HOST}/return`,
+    // ClientBackURL: `${HOST}/clientReturn`,
   };
 
+  console.log(`options: ${JSON.stringify(options)}`);
   const create = new ecpay_payment(options);
+  // 一堆東西不知道是什麼 裡面還有html
+  // console.log(`create: ${JSON.stringify(create)}`);
 
+  console.log(`base_param: ${JSON.stringify(base_param)}`);
   // 注意：在此事直接提供 html + js 直接觸發的範例，直接從前端觸發付款行為
   const html = create.payment_client.aio_check_out_all(base_param);
   console.log(html);
@@ -97,7 +105,11 @@ router.post("/return", async (req, res) => {
 // 用戶交易完成後的轉址
 router.get("/clientReturn", (req, res) => {
   console.log("clientReturn:", req.body, req.query);
-  res.render("return", { query: req.query });
+  // 回到首頁;
+  const frontendURL = `http://localhost:5173/?home${new URLSearchParams(
+    req.query
+  ).toString()}`;
+  res.redirect(frontendURL);
 });
 
 export default router;
