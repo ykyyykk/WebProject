@@ -69,8 +69,8 @@ router.post("/changecartamount", async (request, response, next) => {
   const sql = `UPDATE Cart SET buyAmount = ? WHERE itemID = ? AND userID = ?`;
 
   try {
-    const [data] = await pool.execute(sql, [itemID, userID, amount]);
-    console.log(`data: ${JSON.stringify(data)}`);
+    await pool.execute(sql, [amount, itemID, userID]);
+    response.status(200).json({ success: true });
   } catch (error) {
     next(error);
   }

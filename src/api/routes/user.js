@@ -57,11 +57,11 @@ router.post("/updateuserpriceamount", async (request, response, next) => {
 
   try {
     const [row] = await pool.execute(sql, [amount, price, userID]);
-    if ([row][0].affectedRows > 0) {
-      response.status(200).json({ success: true });
-    } else {
+    if ([row][0].affectedRows <= 0) {
       response.status(404).json({ success: false, message: "找不到會員" });
+      return;
     }
+    response.status(200).json({ success: true });
   } catch (error) {
     next(error);
   }

@@ -5,6 +5,7 @@ import { transporter } from "../../config/email.js";
 const router = express.Router();
 
 router.post("/register", async (request, response, next) => {
+  console.log("register");
   const { name, phoneNumber, email, password } = request.body;
   const sql = `INSERT INTO User (name, phoneNumber, email, password) VALUES(?,?,?,?)`;
   try {
@@ -85,6 +86,7 @@ router.post("/checkverification", async (request, response, next) => {
   const { email, verificationCode } = request.body;
   const sql = `SELECT * FROM Verification WHERE email = ? AND code = ?`;
   const selectSql = `SELECT password FROM User WHERE email = ?`;
+  const deleteSql = `DELETE FROM Verification WHERE email = ?`;
 
   try {
     const [row] = await pool.execute(sql, [email, verificationCode]);
@@ -98,6 +100,8 @@ router.post("/checkverification", async (request, response, next) => {
     }
 
     response.status(200).json({ success: true, row: selectRow[0] });
+
+    await pool.execute(deleteSql, [email]);
   } catch (error) {
     next(error);
   }
@@ -107,6 +111,8 @@ router.post("/sendforgotpasswordcode", async (request, response, next) => {
   //檢查是否重複註冊
   const { email } = request.body;
   const checkSql = `SELECT email FROM User WHERE email = ?`;
+  const sql = `INSERT INTO Verification (email, code, createdAt, expiresAt) VALUES(?,?,?,?)`;
+
   try {
     const [row] = await pool.execute(checkSql, [email]);
 
@@ -121,7 +127,6 @@ router.post("/sendforgotpasswordcode", async (request, response, next) => {
     return;
   }
 
-  const sql = `INSERT INTO Verification (email, code, createdAt, expiresAt) VALUES(?,?,?,?)`;
   const verificationCode = Math.floor(100000 + Math.random() * 900000);
   const createdAt = Date.now();
   const expiresAt = Date.now() + 300000; //單位是毫秒
