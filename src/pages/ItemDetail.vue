@@ -175,16 +175,26 @@ export default {
           id: this.item.id,
           amount: this.amount,
         });
-        console.log(`response: ${response}`);
+
+        // console.log(`response: ${response}`);
         if (!response.data.success) {
           return;
         }
+
         this.item.stock -= this.amount;
+
         EventBus.emit("showPopup", "已購買");
+
         await axios.post(`${API_BASE_URL}/api/purchaseitem`, {
           date: moment().tz("Asia/Taipei").format("YYYY-MM-DD HH:mm:ss"),
           value: +this.item.price * +this.item.amount,
           id: +this.item.id,
+        });
+
+        await axios.post(`${API_BASE_URL}/api/updateuserpriceamount`, {
+          userID: this.user.id,
+          amount: this.item.amount,
+          price: +this.item.price * +this.item.amount,
         });
         // TODOWarning: 綠界購買有夠難
         // console.log("OnClickBuy");

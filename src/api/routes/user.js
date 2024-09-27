@@ -49,4 +49,22 @@ router.delete(
   }
 );
 
+router.post("/updateuserpriceamount", async (request, response, next) => {
+  const { userID, amount, price } = request.body;
+  const sql = `UPDATE User
+               SET totalPurchaseAmount = ?, totalPurchasePrice = ?
+               WHERE id = ?;`;
+
+  try {
+    const [row] = await pool.execute(sql, [amount, price, userID]);
+    if ([row][0].affectedRows > 0) {
+      response.status(200).json({ success: true });
+    } else {
+      response.status(404).json({ success: false, message: "找不到會員" });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;
