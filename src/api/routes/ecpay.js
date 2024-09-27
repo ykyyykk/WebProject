@@ -50,26 +50,35 @@ router.get("/ecpay", (req, res) => {
 
   TradeNo = "test" + new Date().getTime();
 
-  console.log(`original ReturnURL: ${HOST}/return`);
+  // www.louise.tw:5173/api/return
+  // console.log(`original ReturnURL: ${HOST}/return`);
   let base_param = {
     MerchantTradeNo: "f0a0d7e9fae1bb72bc93", //請帶20碼uid, ex: f0a0d7e9fae1bb72bc93
     MerchantTradeDate: new Date().getTime(),
     TotalAmount: "100", //訂單金額
     TradeDesc: "測試交易描述", //訂單描述
     ItemName: "測試商品等", //訂單名稱
-    ReturnURL: `http://localhost:5173/`,
-    ClientBackURL: `http://localhost:5173/`,
+    ReturnURL: () => {
+      console.log(0);
+    },
+    ClientBackURL: () => {
+      console.log(1);
+    },
+    // ReturnURL: `http://localhost:5173/`,
+    // ClientBackURL: `http://localhost:5173/`,
     // ChoosePayment: "ALL",
     // ReturnURL: `${HOST}/return`,
     // ClientBackURL: `${HOST}/clientReturn`,
   };
 
+  // {"OperationMode":"Test","MercProfile":{"MerchantID":2000132,"HashKey":"pwFHCqoQZGmho4w6","HashIV":"EkRm7iFT261dpevs"},"IgnorePayment":[],"IsProjectContractor":false}
   console.log(`options: ${JSON.stringify(options)}`);
   const create = new ecpay_payment(options);
   // 一堆東西不知道是什麼 裡面還有html
   // console.log(`create: ${JSON.stringify(create)}`);
 
-  console.log(`base_param: ${JSON.stringify(base_param)}`);
+  // {"MerchantTradeNo":"f0a0d7e9fae1bb72bc93","MerchantTradeDate":1727399003330,"TotalAmount":"100","TradeDesc":"測試交易描述","ItemName":"測試商品等"}
+  // console.log(`base_param: ${JSON.stringify(base_param)}`);
   // 注意：在此事直接提供 html + js 直接觸發的範例，直接從前端觸發付款行為
   const html = create.payment_client.aio_check_out_all(base_param);
   console.log(html);

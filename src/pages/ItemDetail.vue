@@ -171,31 +171,28 @@ export default {
         return;
       }
       try {
-        console.log("OnClickBuy");
-        // const response = await axios.get(`${API_BASE_URL}/api/clientReturn`);
-        // // 直接回傳我整個index.html不知道在衝三小
+        const response = await axios.post(`${API_BASE_URL}/api/purchaseitem`, {
+          id: this.item.id,
+          amount: this.amount,
+        });
+        console.log(`response: ${response}`);
+        if (!response.data.success) {
+          return;
+        }
+        this.item.stock -= this.amount;
+        EventBus.emit("showPopup", "已購買");
+        await axios.post(`${API_BASE_URL}/api/purchaseitem`, {
+          date: moment().tz("Asia/Taipei").format("YYYY-MM-DD HH:mm:ss"),
+          value: +this.item.price * +this.item.amount,
+          id: +this.item.id,
+        });
+        // TODOWarning: 綠界購買有夠難
+        // console.log("OnClickBuy");
+        // // const response = await axios.get(`${API_BASE_URL}/api/clientReturn`);
+        // // // 直接回傳我整個index.html不知道在衝三小
+        // // console.log(response);
+        // const response = await axios.get(`${API_BASE_URL}/api/ecpay`);
         // console.log(response);
-
-        const response = await axios.get(`${API_BASE_URL}/api/ecpay`);
-        console.log(response);
-
-        // const response = await axios.post(`${API_BASE_URL}/api/purchaseitem`, {
-        //   id: this.item.id,
-        //   amount: this.amount,
-        // });
-        // console.log(`response: ${response}`);
-
-        // if (!response.data.success) {
-        //   return;
-        // }
-        // this.item.stock -= this.amount;
-        // EventBus.emit("showPopup", "已購買");
-        // await axios.post(`${API_BASE_URL}/api/purchaseitem`, {
-        //   date: moment().tz("Asia/Taipei").format("YYYY-MM-DD HH:mm:ss"),
-        //   value: +this.item.price * +this.item.amount,
-        //   id: +this.item.id,
-        // });
-        // TODOWarning: 綠界購買等Google登入解決在做
       } catch (error) {
         alert(`Error: ${error}`);
       }
