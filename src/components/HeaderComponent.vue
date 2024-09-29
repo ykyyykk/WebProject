@@ -23,6 +23,10 @@
         />
       </router-link>
 
+      <!-- 測試用 失敗 -->
+      <!-- <div class="ms-2 d-none d-md-block w-50 p-0">
+        <CustomInputComponent />
+      </div> -->
       <div class="ms-2 d-none d-md-block w-50 p-0">
         <SearchInputComponent />
       </div>
@@ -78,18 +82,21 @@
 </template>
 
 <script>
-import { mapState } from "vuex/dist/vuex.cjs.js";
 import SideBarComponent from "../components/SideBarComponent.vue";
 import SearchInputComponent from "./SearchInputComponent.vue";
+import CustomInputComponent from "./CustomInputComponent.vue";
+import { mapState } from "vuex/dist/vuex.cjs.js";
 import { API_BASE_URL } from "../config/api";
 
 export default {
-  components: { SideBarComponent, SearchInputComponent },
+  components: { SideBarComponent, SearchInputComponent, CustomInputComponent },
   data() {
     return {
       isSideBarOpen: false,
       isSearchWindowOpen: false,
       API_BASE_URL: API_BASE_URL,
+      placeholder: "abc",
+      inputValue: "inputValue",
     };
   },
   computed: {

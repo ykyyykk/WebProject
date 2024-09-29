@@ -2,7 +2,7 @@
   <ElevatorComponent />
   <HeaderComponent />
   <div class="d-flex">
-    <SwiperComponent :pages="pages" />
+    <SwiperComponent :pages="pages" :showNavigation="true" />
 
     <!-- TODOWarning: 這邊改Swiper 上下滑 三張圖片 -->
     <div style="width: 500px" class="d-lg-block d-none">
@@ -13,19 +13,6 @@
   </div>
 
   <div class="px-md-5 px-0">
-    <!-- https://wixtwservice.wixsite.com/sinya/microsoft?utm_term=%E5%BE%AE%E8%BB%9F+windows11+microsoft&utm_content=%E5%BE%AE%E8%BB%9F%E6%B4%BB%E5%8B%95&utm_campaign=%E5%BE%AE%E8%BB%9F%E6%B4%BB%E5%8B%95 -->
-
-    <!-- 沒用 要先裝popover插件 -->
-    <!-- <button
-    type="button"
-    class="btn btn-lg btn-danger"
-    data-bs-toggle="popover"
-    data-bs-title="Popover title"
-    data-bs-content="And here's some amazing content. It's very engaging. Right?"
-    >
-    Click to toggle popover
-  </button> -->
-
     <div class="d-flex w-100 m-0">
       <!-- 左側廣告欄 -->
       <div class="d-md-block d-none mt-3 col">
@@ -55,15 +42,12 @@
 
       <!-- TODORWD: 捲動時會跟著移動 -->
       <div class="d-sm-block d-none mt-3 col">
-        <!-- TODOWarning: 這邊改swiper 左右滑 只有兩張圖片 -->
-        <!-- TODOWarning: 不管max-width放在哪 都沒辦法第一張的限制寬度 -->
-        <!-- <a
-          href="https://wixtwservice.wixsite.com/sinya/microsoft?utm_term=%E5%BE%AE%E8%BB%9F+windows11+microsoft&utm_content=%E5%BE%AE%E8%BB%9F%E6%B4%BB%E5%8B%95&utm_campaign=%E5%BE%AE%E8%BB%9F%E6%B4%BB%E5%8B%95"
-        >
-          <img style="max-width: 133px" src="../../public/ads300_600/ad1.png" />
-        </a> -->
         <!-- TODO: 把左右按鈕變可選 zindex要調整 會覆蓋電梯 -->
-        <SwiperComponent style="max-width: 133px" :pages="rightSwiper" />
+        <SwiperComponent
+          style="max-width: 133px"
+          :pages="rightSwiper"
+          :showNavigation="false"
+        />
         <div v-for="ad in this.rightSideAd" :key="ad">
           <ImageLinkComponent :obj="ad" />
         </div>

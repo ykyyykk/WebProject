@@ -1,12 +1,12 @@
 <template>
   <swiper
     :cssMode="true"
-    :navigation="true"
-    :pagination="true"
+    :navigation="showNavigation && pages.length > 1"
+    :pagination="pages.length > 1"
     :mousewheel="true"
     :keyboard="true"
     :modules="modules"
-    :loop="true"
+    :loop="pages.length > 1"
     class="mySwiper shadow-sm w-100 z-0"
     style="height: 20rem"
     @swiper="OnSwiper"
@@ -22,6 +22,7 @@
       class="d-flex justify-content-center align-items-center text-center"
     >
       <div
+        v-if="pages.length > 1"
         ref="progressBar"
         class="bg-primary w-0 position-absolute bottom-0 start-0"
         style="height: 4px"
@@ -50,6 +51,10 @@ export default {
       type: Array,
       required: true,
     },
+    showNavigation: {
+      type: Boolean,
+      default: true,
+    },
   },
   components: {
     Swiper,
@@ -64,21 +69,29 @@ export default {
   methods: {
     OnSwiper(swiper) {
       this.swiperInstance = swiper;
-      this.AnimateProgressBar();
+      if (this.pages.length > 1) {
+        this.AnimateProgressBar();
+      }
     },
     OnSlideChange() {
-      this.ResetProgress();
+      if (this.pages.length > 1) {
+        this.ResetProgress();
+      }
     },
     NextImage() {
-      this.ResetProgress();
-      if (this.swiperInstance) {
-        this.swiperInstance.slideNext();
+      if (this.pages.length > 1) {
+        this.ResetProgress();
+        if (this.swiperInstance) {
+          this.swiperInstance.slideNext();
+        }
       }
     },
     PreviousImage() {
-      this.ResetProgress();
-      if (this.swiperInstance) {
-        this.swiperInstance.slidePrev();
+      if (this.pages.length > 1) {
+        this.ResetProgress();
+        if (this.swiperInstance) {
+          this.swiperInstance.slidePrev();
+        }
       }
     },
     ResetProgress() {
@@ -89,23 +102,25 @@ export default {
       this.AnimateProgressBar();
     },
     AnimateProgressBar() {
-      this.progressAnimation = anime({
-        targets: this.$refs.progressBar,
-        width: "100%",
-        duration: 3000,
-        easing: "linear",
-        complete: () => {
-          this.NextImage();
-        },
-      });
+      if (this.pages.length > 1) {
+        this.progressAnimation = anime({
+          targets: this.$refs.progressBar,
+          width: "100%",
+          duration: 3000,
+          easing: "linear",
+          complete: () => {
+            this.NextImage();
+          },
+        });
+      }
     },
     PauseAutoplay() {
-      if (this.progressAnimation) {
+      if (this.progressAnimation && this.pages.length > 1) {
         this.progressAnimation.pause();
       }
     },
     ResumeAutoplay() {
-      if (this.progressAnimation) {
+      if (this.progressAnimation && this.pages.length > 1) {
         this.progressAnimation.play();
       }
     },

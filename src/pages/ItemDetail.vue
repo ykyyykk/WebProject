@@ -9,7 +9,7 @@
   <div v-if="item" class="d-flex justify-content-center mt-5">
     <div class="p-3 col-sm-10 col-12">
       <div class="shadow p-3 mb-3 placeholder-glow">
-        <SwiperComponent :pages="this.pages" />
+        <SwiperComponent :pages="this.pages" :showNavigation="true" />
         <!-- <div id="scroll" class="d-flex overflow-x-auto overflow-y-hidden mt-3">
           <div v-for="page in this.pages" :key="page" class="position-relative">
             <div
@@ -217,29 +217,3 @@ export default {
   },
 };
 </script>
-
-<style>
-#scroll {
-  /* 全域讓預設ScorllBar 瘦一點好看點 */
-  scrollbar-width: thin;
-  scrollbar-color: #888 #f1f1f1;
-}
-
-#scroll::-webkit-scrollbar {
-  width: 12px;
-}
-
-#scroll::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-#scroll::-webkit-scrollbar-thumb {
-  background-color: #888;
-  border-radius: 10px;
-  border: 3px solid #f1f1f1;
-}
-
-#scroll::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-</style>
