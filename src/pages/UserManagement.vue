@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="this.allUser"
-    class="container mt-5 mb-5 p-3 shadow overflow-x-scroll"
-  >
+  <div v-if="this.allUser" class="container mt-5 mb-5 p-3 shadow">
     <div class="d-flex mb-3 shadow-sm m-0 p-3 w-100">
       <input @click="OnCheckAll()" class="ms-2 me-3" type="checkbox" />
       <button
@@ -177,15 +174,9 @@
         </div>
 
         <div
-          class="p-0 m-0 border border-black flex-row position-absolute"
+          class="p-0 m-0 flex-row position-absolute"
           style="right: 1rem; top: 19.2%"
         >
-          <button
-            @click="this.SaveUser(user.id)"
-            class="btn-sm btn btn-outline-primary"
-          >
-            <i class="fa-regular fa-floppy-disk"></i>
-          </button>
           <button
             @click="this.DeleteUser(user.id)"
             class="btn-sm btn btn-outline-danger"
@@ -342,29 +333,3 @@ export default {
   },
 };
 </script>
-
-<style>
-html {
-  /* 全域讓預設ScorllBar 瘦一點好看點 */
-  scrollbar-width: thin;
-  scrollbar-color: #888 #f1f1f1;
-}
-
-body::-webkit-scrollbar {
-  width: 12px;
-}
-
-body::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-body::-webkit-scrollbar-thumb {
-  background-color: #888;
-  border-radius: 10px;
-  border: 3px solid #f1f1f1;
-}
-
-body::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-</style>

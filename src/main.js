@@ -5,6 +5,7 @@ import router from "./router";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
 import "animejs/lib/anime.es.js";
+import "./global.css";
 import store from "./store";
 import axios from "axios";
 // 需要更多複雜功能 例如 Google Drive、Google Calendar 需要改安裝 vue3-google-oauth2;

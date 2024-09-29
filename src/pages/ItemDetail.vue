@@ -185,16 +185,16 @@ export default {
 
         EventBus.emit("showPopup", "已購買");
 
-        await axios.post(`${API_BASE_URL}/api/purchaseitem`, {
+        await axios.post(`${API_BASE_URL}/api/addrevnue`, {
           date: moment().tz("Asia/Taipei").format("YYYY-MM-DD HH:mm:ss"),
-          value: +this.item.price * +this.item.amount,
+          value: +this.item.price * +this.amount,
           id: +this.item.id,
         });
 
         await axios.post(`${API_BASE_URL}/api/updateuserpriceamount`, {
           userID: this.user.id,
-          amount: this.item.amount,
-          price: +this.item.price * +this.item.amount,
+          amount: this.amount,
+          price: +this.item.price * +this.amount,
         });
         // TODOWarning: 綠界購買有夠難
         // console.log("OnClickBuy");

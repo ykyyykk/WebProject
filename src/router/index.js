@@ -13,8 +13,6 @@ import Dashboard from "../pages/Dashboard.vue";
 import ItemManagement from "../pages/ItemManagement.vue";
 import UserManagement from "../pages/UserManagement.vue";
 import RevenueChart from "../pages/RevenueChart.vue";
-import Grid from "../pages/Grid.vue";
-import Test from "../pages/Test.vue";
 
 const routes = [
   {
@@ -46,11 +44,6 @@ const routes = [
     path: "/register",
     name: "Register",
     component: Register,
-  },
-  {
-    path: "/grid",
-    name: "Grid",
-    component: Grid,
   },
   {
     path: "/itemdetail/:id",
@@ -88,11 +81,6 @@ const routes = [
     path: "/dashboard/addItem",
     name: "AddItem",
     component: AddItem,
-  },
-  {
-    path: "/test",
-    name: "Test",
-    component: Test,
   },
   {
     // 404轉址
