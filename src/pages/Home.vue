@@ -42,7 +42,6 @@
 
       <!-- TODORWD: 捲動時會跟著移動 -->
       <div class="d-sm-block d-none mt-3 col">
-        <!-- TODO: 把左右按鈕變可選 zindex要調整 會覆蓋電梯 -->
         <SwiperComponent
           style="max-width: 133px"
           :pages="rightSwiper"

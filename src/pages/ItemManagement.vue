@@ -89,20 +89,22 @@ export default {
     ...mapActions(["SetAllItems"]),
     GetThumbnail(thumbnail, category) {
       if (thumbnail != "") {
-        return `../../public/img/${thumbnail}`;
+        // 目前這樣GCE才會正常
+        return `/img/${thumbnail}`;
       }
 
+      // 目前這樣GCE才會正常
       switch (category) {
         case "處理器":
-          return "../../public/img/CPU.jpg";
+          return "/img/CPU.jpg";
         case "主機板":
-          return "../../public/img/MB.jpg";
+          return "/img/MB.jpg";
         case "記憶體":
-          return "../../public/img/Ram.jpg";
+          return "/img/Ram.jpg";
         case "硬碟":
-          return "../../public/img/HDD.jpg";
+          return "/img/HDD.jpg";
         case "顯示卡":
-          return "../../public/img/GPU.jpg";
+          return "/img/GPU.jpg";
       }
       return;
     },

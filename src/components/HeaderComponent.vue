@@ -35,7 +35,6 @@
     <div class="d-flex justify-content-end align-items-center gap-3">
       <!-- 用來測試顯示API_BASE_URL -->
       <!-- <span>{{ this.API_BASE_URL }}</span> -->
-      <!-- TODO: 在手機上按下ItemDetail不會顯示圖片 只有首頁會顯示圖片 -->
       <button
         @click="ToggleSearchWindow()"
         class="border border-0 bg-transparent d-md-none"

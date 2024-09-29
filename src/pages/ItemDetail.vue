@@ -91,50 +91,6 @@ export default {
     ...mapState(["user", "items"]),
   },
   methods: {
-    GetThumbnail(thumbnail, category) {
-      if (thumbnail != "") {
-        return null;
-      }
-      switch (category) {
-        case "處理器":
-          return "img/CPU.jpg";
-        case "主機板":
-          return "img/MB.jpg";
-        case "記憶體":
-          return "img/Ram.jpg";
-        case "硬碟":
-          return "img/HDD.jpg";
-        case "顯示卡":
-          return "img/GPU.jpg";
-      }
-      return;
-    },
-    async GetItemImage(id, thumbnail, category) {
-      // 為了不讓同一張圖片出現兩次
-      if (this.GetThumbnail(thumbnail, category) != null) {
-        this.pages.push({
-          src: `/public/${this.GetThumbnail(thumbnail, category)}`,
-        });
-      }
-
-      try {
-        const response = await axios.post(`${API_BASE_URL}/api/getitemimage`, {
-          itemID: id,
-        });
-
-        // 當找不到image時
-        if (response.data.items === undefined) {
-          return;
-        }
-
-        const responseItems = response.data.items;
-        for (let i = 0; i < responseItems.length; i++) {
-          this.pages.push({ src: `/public/img/${responseItems[i].imageUrl}` });
-        }
-      } catch (error) {
-        alert(`取得商品圖片失敗: ${error}`);
-      }
-    },
     async FetchItemDetails(id) {
       try {
         // 與post不同 get需要將資料顯示在url上 隱私較差 但速度比post稍快 適用於讀取數據
@@ -145,6 +101,50 @@ export default {
         alert("取得物品資訊失敗", error);
       }
       this.GetItemImage(this.item.id, this.item.thumbnail, this.item.category);
+    },
+    async GetItemImage(id, thumbnail, category) {
+      try {
+        const response = await axios.post(`${API_BASE_URL}/api/getitemimage`, {
+          itemID: id,
+        });
+
+        // console.log(`response.data: ${JSON.stringify(response.data)}`);
+        // 目前這樣GCE才會正常 當找不到image時
+        if (response.data.items === undefined || response.data === null) {
+          const imgPath = this.GetThumbnail(thumbnail, category);
+          // console.log(`imgPath: ${imgPath}`);
+          // 目前這樣GCE才會正常
+          this.pages.push({ src: `${imgPath}` });
+          return;
+        }
+
+        const responseItems = response.data.items;
+        for (let i = 0; i < responseItems.length; i++) {
+          // 目前這樣GCE才會正常
+          this.pages.push({ src: `/img/${responseItems[i].imageUrl}` });
+        }
+      } catch (error) {
+        alert(`取得商品圖片失敗: ${error}`);
+      }
+    },
+    GetThumbnail(thumbnail, category) {
+      if (thumbnail != "") {
+        return null;
+      }
+      // 目前這樣GCE才會正常
+      switch (category) {
+        case "處理器":
+          return "/img/CPU.jpg";
+        case "主機板":
+          return "/img/MB.jpg";
+        case "記憶體":
+          return "/img/Ram.jpg";
+        case "硬碟":
+          return "/img/HDD.jpg";
+        case "顯示卡":
+          return "/img/GPU.jpg";
+      }
+      return;
     },
     async AddToCart() {
       if (this.user == null) {

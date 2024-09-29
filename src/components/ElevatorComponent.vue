@@ -1,14 +1,15 @@
 <template>
   <button
     @click="ScrollToTop()"
-    class="btn btn-primary position-fixed"
+    class="btn btn-primary position-fixed z-1"
     style="bottom: 70px; right: 20px"
   >
     <i class="fa-solid fa-arrow-up"></i>
   </button>
+  <!-- z-1是為了不被右側廣告擋住 -->
   <button
     @click="ScrollToBottom()"
-    class="btn btn-primary position-fixed"
+    class="btn btn-primary position-fixed z-1"
     style="bottom: 20px; right: 20px"
   >
     <i class="fa-solid fa-arrow-down"></i>
