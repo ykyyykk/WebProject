@@ -69,10 +69,11 @@ import SwiperComponent from "../components/SwiperComponent.vue";
 import NumberInputComponent from "../components/NumberInputComponent.vue";
 import PopupComponent from "../components/PopupComponent.vue";
 import axios from "axios";
-import { API_BASE_URL } from "../config/api";
+import { API_BASE_URL, MERCHANTID, HASHKEY, HASHIV } from "../config/api";
 import { mapState } from "vuex/dist/vuex.cjs.js";
 import { EventBus } from "../utils/eventBus.js";
 import moment from "moment-timezone";
+import CryptoJS from "crypto-js";
 
 export default {
   data() {
@@ -81,6 +82,18 @@ export default {
       amount: 1,
       pages: [],
       selectImageName: "",
+      ParamsBeforeCMV: {
+        MerchantID: "3002607",
+        MerchantTradeNo: "",
+        MerchantTradeDate: "",
+        PaymentType: "aio",
+        TotalAmount: 1,
+        TradeDesc: "測試敘述",
+        ItemName: "測試名稱",
+        ReturnURL: "https://www.ecpay.com.tw",
+        ChoosePayment: "ALL",
+        EncryptType: 1,
+      },
     };
   },
   async mounted() {
@@ -171,41 +184,124 @@ export default {
         return;
       }
       try {
-        const response = await axios.post(`${API_BASE_URL}/api/purchaseitem`, {
-          id: this.item.id,
-          amount: this.amount,
-        });
+        // const response = await axios.post(`${API_BASE_URL}/api/purchaseitem`, {
+        //   id: this.item.id,
+        //   amount: this.amount,
+        // });
+        // // console.log(`response: ${response}`);
+        // if (!response.data.success) {
+        //   return;
+        // }
+        // this.item.stock -= this.amount;
+        // EventBus.emit("showPopup", "已購買");
+        // await axios.post(`${API_BASE_URL}/api/addrevnue`, {
+        //   date: moment().tz("Asia/Taipei").format("YYYY-MM-DD HH:mm:ss"),
+        //   value: +this.item.price * +this.amount,
+        //   id: +this.item.id,
+        // });
+        // await axios.post(`${API_BASE_URL}/api/updateuserpriceamount`, {
+        //   userID: this.user.id,
+        //   amount: this.amount,
+        //   price: +this.item.price * +this.amount,
+        // });
 
-        // console.log(`response: ${response}`);
-        if (!response.data.success) {
-          return;
-        }
-
-        this.item.stock -= this.amount;
-
-        EventBus.emit("showPopup", "已購買");
-
-        await axios.post(`${API_BASE_URL}/api/addrevnue`, {
-          date: moment().tz("Asia/Taipei").format("YYYY-MM-DD HH:mm:ss"),
-          value: +this.item.price * +this.amount,
-          id: +this.item.id,
-        });
-
-        await axios.post(`${API_BASE_URL}/api/updateuserpriceamount`, {
-          userID: this.user.id,
-          amount: this.amount,
-          price: +this.item.price * +this.amount,
-        });
         // TODOWarning: 綠界購買有夠難
-        // console.log("OnClickBuy");
-        // // const response = await axios.get(`${API_BASE_URL}/api/clientReturn`);
-        // // // 直接回傳我整個index.html不知道在衝三小
-        // // console.log(response);
-        // const response = await axios.get(`${API_BASE_URL}/api/ecpay`);
-        // console.log(response);
+        // console.log(`MERCHANTID: ${MERCHANTID}`); // 這邊是undefined
+        this.ParamsBeforeCMV = {
+          MerchantID: "3002607",
+          MerchantTradeNo: "",
+          MerchantTradeDate: "",
+          PaymentType: "aio",
+          TotalAmount: 1,
+          TradeDesc: "測試敘述",
+          ItemName: "測試名稱",
+          ReturnURL: "https://www.ecpay.com.tw",
+          ChoosePayment: "ALL",
+          EncryptType: 1,
+        };
+        const form = document.createElement("form");
+        form.method = "POST";
+        // 正式發布時 需要將網址的-stage給取消掉
+        form.action =
+          "https://payment-stage.ecpay.com.tw//Cashier/AioCheckOut/V5";
+
+        this.ParamsBeforeCMV.MerchantTradeNo = this.SetMerchantTradeNo();
+        this.ParamsBeforeCMV.MerchantTradeDate = this.FormatDate();
+
+        const CheckMacValue = this.CheckMacValueGen(this.ParamsBeforeCMV);
+        console.log(`CheckMacValue`);
+        console.log(CheckMacValue);
+
+        console.log(`...this.ParamsBeforeCMV`);
+        console.log(this.ParamsBeforeCMV);
+        console.log(...ParamsBeforeCMV);
+        console.log(...this.ParamsBeforeCMV);
+        // Error: ReferenceError: ParamsBeforeCMV is not defined
+        // const allParams = { ...this.ParamsBeforeCMV, CheckMacValue };
+        // const allParams = { ...ParamsBeforeCMV, CheckMacValue };
+        // const allParams = { ParamsBeforeCMV, CheckMacValue };
+        const allParams = { ...ParamsBeforeCMV, CheckMacValue };
+        Object.keys(allParams).forEach((key) => {
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = key;
+          console.log(`key: ${key}`);
+          console.log(allParams[key]);
+          input.value = allParams[key];
+          form.appendChild(input);
+        });
+
+        // document.body.appendChild(form);
+        // form.submit(); // 自動提交表單
       } catch (error) {
         alert(`Error: ${error}`);
       }
+    },
+    FormatDate() {
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, "0");
+      const day = date.getDate().toString().padStart(2, "0");
+      const hours = date.getHours().toString().padStart(2, "0");
+      const minutes = date.getMinutes().toString().padStart(2, "0");
+      const seconds = date.getSeconds().toString().padStart(2, "0");
+      return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+    },
+    CheckMacValueGen(parameters) {
+      let paramString = Object.keys(parameters)
+        .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+        .map((key) => `${key}=${parameters[key]}`)
+        .join("&");
+
+      paramString = `HashKey=${HASHKEY}&${paramString}&HashIV=${HASHIV}`;
+      paramString = encodeURIComponent(paramString).toLowerCase();
+
+      // 特殊字符轉換
+      paramString = paramString
+        .replace(/%20/g, "+")
+        .replace(/%2d/g, "-")
+        .replace(/%5f/g, "_")
+        .replace(/%2e/g, ".")
+        .replace(/%21/g, "!")
+        .replace(/%2a/g, "*")
+        .replace(/%28/g, "(")
+        .replace(/%29/g, ")");
+
+      return CryptoJS.SHA256(paramString)
+        .toString(CryptoJS.enc.Hex)
+        .toUpperCase();
+    },
+    SetMerchantTradeNo() {
+      const now = new Date();
+      return `od${now.getFullYear()}${(now.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}${now.getDate().toString().padStart(2, "0")}${now
+        .getHours()
+        .toString()
+        .padStart(2, "0")}${now.getMinutes().toString().padStart(2, "0")}${now
+        .getSeconds()
+        .toString()
+        .padStart(2, "0")}${now.getMilliseconds().toString().padStart(3, "0")}`;
     },
   },
   components: {
