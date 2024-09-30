@@ -72,7 +72,7 @@ import axios from "axios";
 import { API_BASE_URL, MERCHANTID, HASHKEY, HASHIV } from "../config/api";
 import { mapState } from "vuex/dist/vuex.cjs.js";
 import { EventBus } from "../utils/eventBus.js";
-import moment from "moment-timezone";
+// import moment from "moment-timezone";
 import CryptoJS from "crypto-js";
 
 export default {
