@@ -1,5 +1,5 @@
 <template>
-  <div v-if="items" class="container mt-5 mb-5">
+  <div v-if="items && this.itemSales" class="container mt-5 mb-5">
     <!-- z-0為了讓sidebar蓋住 -->
     <footer class="d-flex w-100 p-3 bg-white w-100 z-0">
       <div class="d-flex align-items-center" style="width: 10rem">
@@ -43,7 +43,7 @@
           <div class="">{{ item.name }}</div>
           <div class="">價格: ${{ item.price }}</div>
           <div class="">剩餘庫存: {{ item.stock }}</div>
-          <div class="">已賣出: 已賣出份數</div>
+          <div class="">已賣出: {{ this.GetSoldAmount(item.id) }}</div>
           <div class="">評分: 評分1/5</div>
           <div class="">檢視: 檢視次數</div>
         </div>
@@ -79,14 +79,34 @@ export default {
     return {
       selectItems: [],
       isSelectAll: false,
+      itemSales: [],
     };
   },
   components: { HeaderComponent, SmallHeaderComponent, NumberInputComponent },
   computed: {
     ...mapState(["user", "items"]),
   },
+  mounted() {
+    this.FetchAllItemSales();
+  },
   methods: {
     ...mapActions(["SetAllItems"]),
+    async FetchAllItemSales() {
+      try {
+        // 一次性取得每個itemID 的賣出個數 而不是對每個id 單獨去call api
+        const response = await axios.get(`${API_BASE_URL}/api/itemssoldamount`);
+        if (response.data.success) {
+          this.itemSales = response.data.sales;
+        } else {
+          console.error("Failed to fetch item sales");
+        }
+      } catch (error) {
+        console.error("Error fetching item sales:", error);
+      }
+    },
+    GetSoldAmount(itemID) {
+      return this.itemSales[itemID] || 0;
+    },
     GetThumbnail(thumbnail, category) {
       if (thumbnail != "") {
         // 目前這樣GCE才會正常
