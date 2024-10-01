@@ -1,5 +1,4 @@
 <template>
-  <!-- Qvg&6&)MFu29R+? -->
   <PopupComponent />
   <SmallHeaderComponent pageTitle="繼續購物" />
 
@@ -41,11 +40,14 @@
           <div>剩餘庫存: {{ item.stock }}</div>
         </div>
         <div class="w-100 d-flex justify-content-between mb-3">
-          <button @click="AddToCart()" class="btn btn-danger col-5">
+          <button @click="AddToCart()" class="btn btn-danger col">
             加入購物車
           </button>
-          <button @click="Buy()" class="btn btn-outline-danger col-5">
+          <button @click="Buy()" class="mx-5 btn btn-outline-danger col">
             立即購買
+          </button>
+          <button @click="ECPay()" class="btn btn-outline-danger col">
+            綠界付款
           </button>
         </div>
       </div>
@@ -67,10 +69,10 @@ import SwiperComponent from "../components/SwiperComponent.vue";
 import NumberInputComponent from "../components/NumberInputComponent.vue";
 import PopupComponent from "../components/PopupComponent.vue";
 import axios from "axios";
-import { API_BASE_URL, MERCHANTID, HASHKEY, HASHIV } from "../config/api";
+import { API_BASE_URL, HASHKEY, HASHIV } from "../config/api";
 import { mapState } from "vuex/dist/vuex.cjs.js";
 import { EventBus } from "../utils/eventBus.js";
-// import moment from "moment-timezone";
+import moment from "moment-timezone";
 import CryptoJS from "crypto-js";
 
 export default {
@@ -88,9 +90,10 @@ export default {
         TotalAmount: 1,
         TradeDesc: "測試敘述",
         ItemName: "測試名稱",
-        ReturnURL: "https://www.ecpay.com.tw",
+        ReturnURL: `https://www.louise.tw:3500/api/test`,
         ChoosePayment: "ALL",
         EncryptType: 1,
+        OrderResultURL: `https://www.louise.tw:3500/api/test`,
       },
     };
   },
@@ -123,7 +126,6 @@ export default {
         // 目前這樣GCE才會正常 當找不到image時
         if (response.data.items === undefined || response.data === null) {
           const imgPath = this.GetThumbnail(thumbnail, category);
-          // console.log(`imgPath: ${imgPath}`);
           // 目前這樣GCE才會正常
           this.pages.push({ src: `${imgPath}` });
           return;
@@ -182,29 +184,33 @@ export default {
         return;
       }
       try {
-        // const response = await axios.post(`${API_BASE_URL}/api/purchaseitem`, {
-        //   id: this.item.id,
-        //   amount: this.amount,
-        // });
-        // // console.log(`response: ${response}`);
-        // if (!response.data.success) {
-        //   return;
-        // }
-        // this.item.stock -= this.amount;
-        // EventBus.emit("showPopup", "已購買");
-        // await axios.post(`${API_BASE_URL}/api/addrevnue`, {
-        //   date: moment().tz("Asia/Taipei").format("YYYY-MM-DD HH:mm:ss"),
-        //   value: +this.item.price * +this.amount,
-        //   id: +this.item.id,
-        // });
-        // await axios.post(`${API_BASE_URL}/api/updateuserpriceamount`, {
-        //   userID: this.user.id,
-        //   amount: this.amount,
-        //   price: +this.item.price * +this.amount,
-        // });
-
+        const response = await axios.post(`${API_BASE_URL}/api/purchaseitem`, {
+          id: this.item.id,
+          amount: this.amount,
+        });
+        // console.log(`response: ${response}`);
+        if (!response.data.success) {
+          return;
+        }
+        this.item.stock -= this.amount;
+        EventBus.emit("showPopup", "已購買");
+        await axios.post(`${API_BASE_URL}/api/addrevnue`, {
+          date: moment().tz("Asia/Taipei").format("YYYY-MM-DD HH:mm:ss"),
+          value: +this.item.price * +this.amount,
+          id: +this.item.id,
+        });
+        await axios.post(`${API_BASE_URL}/api/updateuserpriceamount`, {
+          userID: this.user.id,
+          amount: this.amount,
+          price: +this.item.price * +this.amount,
+        });
         // TODOWarning: 綠界購買有夠難===========================================
-        // console.log(`MERCHANTID: ${MERCHANTID}`); // 這邊是undefined
+      } catch (error) {
+        alert(`Error: ${error}`);
+      }
+    },
+    ECPay() {
+      try {
         this.ParamsBeforeCMV = {
           MerchantID: "3002607",
           MerchantTradeNo: "",
@@ -213,7 +219,7 @@ export default {
           TotalAmount: 1,
           TradeDesc: "測試敘述",
           ItemName: "測試名稱",
-          ReturnURL: "https://www.ecpay.com.tw",
+          ReturnURL: "https://www.louise.tw/api/test",
           ChoosePayment: "ALL",
           EncryptType: 1,
         };
@@ -241,46 +247,24 @@ export default {
         input.name = "CheckMacValue";
         input.value = CheckMacValue;
         form.appendChild(input);
-        console.log(form);
+        // console.log(form);
 
-        // document.body.appendChild(form);
-        // form.submit(); // 自動提交表單
-
-        // const newWindow = window.open("", "_blank");
-
-        // if (newWindow) {
-        //   const form = newWindow.document.createElement("form");
-        //   form.method = "POST";
-        //   form.action =
-        //     "https://payment-stage.ecpay.com.tw//Cashier/AioCheckOut/V5";
-
-        //   // 動態生成隱藏的 input 元素，將參數加入表單中
-        //   Object.keys(this.ParamsBeforeCMV).forEach((key) => {
-        //     const input = newWindow.document.createElement("input");
-        //     input.type = "hidden";
-        //     input.name = key;
-        //     input.value = this.ParamsBeforeCMV[key];
-        //     form.appendChild(input);
-        //   });
-
-        //   // 加入 CheckMacValue
-        //   const input = newWindow.document.createElement("input");
-        //   input.type = "hidden";
-        //   input.name = "CheckMacValue";
-        //   input.value = CheckMacValue;
-        //   form.appendChild(input);
-
-        //   // 將表單加入新窗口的 document 中
-        //   newWindow.document.body.appendChild(form);
-        //   console.log(form);
-        //   // 自動提交表單
-        //   form.submit();
-        // } else {
-        //   alert("無法打開新視窗，請檢查是否被瀏覽器攔截。");
-        // }
+        document.body.appendChild(form);
+        form.submit(); // 自動提交表單
       } catch (error) {
         alert(`Error: ${error}`);
       }
+    },
+    SetMerchantTradeNo(now) {
+      return `od${now.getFullYear()}${(now.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}${now.getDate().toString().padStart(2, "0")}${now
+        .getHours()
+        .toString()
+        .padStart(2, "0")}${now.getMinutes().toString().padStart(2, "0")}${now
+        .getSeconds()
+        .toString()
+        .padStart(2, "0")}${now.getMilliseconds().toString().padStart(3, "0")}`;
     },
     FormatDate(now) {
       const year = now.getFullYear();
@@ -296,8 +280,9 @@ export default {
         .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
         .map((key) => `${key}=${parameters[key]}`)
         .join("&");
-
-      paramString = `HashKey=${HASHKEY}&${paramString}&HashIV=${HASHIV}`;
+      // console.log(this.HASHKEY);
+      // console.log(this.HASHIV);
+      paramString = `HashKey=${"pwFHCqoQZGmho4w6"}&${paramString}&HashIV=${"EkRm7iFT261dpevs"}`;
       paramString = encodeURIComponent(paramString).toLowerCase();
 
       // 特殊字符轉換
@@ -314,17 +299,6 @@ export default {
       return CryptoJS.SHA256(paramString)
         .toString(CryptoJS.enc.Hex)
         .toUpperCase();
-    },
-    SetMerchantTradeNo(now) {
-      return `od${now.getFullYear()}${(now.getMonth() + 1)
-        .toString()
-        .padStart(2, "0")}${now.getDate().toString().padStart(2, "0")}${now
-        .getHours()
-        .toString()
-        .padStart(2, "0")}${now.getMinutes().toString().padStart(2, "0")}${now
-        .getSeconds()
-        .toString()
-        .padStart(2, "0")}${now.getMilliseconds().toString().padStart(3, "0")}`;
     },
   },
   components: {

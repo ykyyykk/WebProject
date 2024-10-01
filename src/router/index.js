@@ -13,6 +13,7 @@ import Dashboard from "../pages/Dashboard.vue";
 import ItemManagement from "../pages/ItemManagement.vue";
 import UserManagement from "../pages/UserManagement.vue";
 import RevenueChart from "../pages/RevenueChart.vue";
+import PayResult from "../pages/PayResult.vue";
 
 const routes = [
   {
@@ -81,6 +82,11 @@ const routes = [
         component: RevenueChart,
       },
     ],
+  },
+  {
+    path: "/payresult",
+    name: "PayResult",
+    component: PayResult,
   },
   {
     // 404轉址
