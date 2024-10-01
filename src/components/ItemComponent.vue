@@ -56,6 +56,7 @@ export default {
   },
   methods: {
     GetThumbnail(thumbnail, category) {
+      // TODO: 目前這邊在localhost顯示不出來是正常的 因為本地端根本沒有 一樣的照片 需要新增下載伺服器圖片
       if (thumbnail != "") {
         return `img/${thumbnail}`;
       }
@@ -68,10 +69,9 @@ export default {
           return "img/Ram.jpg";
         case "硬碟":
           return "img/HDD.jpg";
-        case "顯示卡":
+        default:
           return "img/GPU.jpg";
       }
-      return;
     },
     IsItemInCart(id) {
       return this.cartItems.some((cartItem) => cartItem.id === id);

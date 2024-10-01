@@ -80,12 +80,12 @@ router.get("/item/:id", async (request, response, next) => {
 
   try {
     const [row] = await pool.execute(sql, [id]);
-    if (row) {
+    if (row.length > 0) {
       // 改成mysql後 取得單一物品都要這樣 login也是
       response.status(200).json({ success: true, item: row[0] });
-    } else {
-      response.status(404).json({ success: false, message: "item not found" });
+      return;
     }
+    response.status(404).json({ success: false, message: "item not found" });
   } catch (error) {
     next(error);
   }

@@ -3,7 +3,6 @@
   <div class="d-flex">
     <SwiperComponent :pages="pages" :showNavigation="true" />
 
-    <!-- TODOWarning: 這邊改Swiper 上下滑 三張圖片 -->
     <div style="width: 500px" class="d-lg-block d-none">
       <div v-for="ad in this.events" :key="ad">
         <ImageLinkComponent :obj="ad" />

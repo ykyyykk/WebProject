@@ -42,7 +42,6 @@
         </li>
       </ul>
     </div>
-    <!-- TODO: 這邊的Dropdown是壞的 -->
     <!-- TODO: 新增完清空 或是 回到ItemMangement -->
     <div class="mb-3">
       <label class="form-label fw-bolder">價格</label>

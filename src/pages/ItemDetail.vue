@@ -108,10 +108,10 @@ export default {
         const response = await axios.get(`${API_BASE_URL}/api/item/${id}`);
 
         this.item = response.data.item;
+        this.GetItemImage(id, this.item.thumbnail, this.item.category);
       } catch (error) {
         alert("取得物品資訊失敗", error);
       }
-      this.GetItemImage(this.item.id, this.item.thumbnail, this.item.category);
     },
     async GetItemImage(id, thumbnail, category) {
       try {

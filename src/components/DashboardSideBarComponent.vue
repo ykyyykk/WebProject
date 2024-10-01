@@ -65,7 +65,7 @@ export default {
   mounted() {
     //需要import 但是會讓AddItem.vue的Dropdown 沒辦法出現下拉式選單
     // import { Offcanvas } from "bootstrap";
-    // TODO 為了讓SideBar一開始就是打開的狀態 暫時關閉 等到不被擋住時再打開
+    // 為了讓SideBar一開始就是打開的狀態 暫時關閉 等到不被擋住時再打開
     // const offcanvasElement = document.getElementById("offcanvasScrolling");
     // const bsOffcanvas = new Offcanvas(offcanvasElement);
     // bsOffcanvas.show(); // 通過JavaScript 打開Sidebar
