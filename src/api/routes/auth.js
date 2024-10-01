@@ -43,7 +43,7 @@ router.post("/sendverification", async (request, response, next) => {
   const checkSql = `SELECT email FROM User WHERE email = ?`;
   try {
     const [row] = await pool.execute(checkSql, [email]);
-    if (row) {
+    if (row.length > 0) {
       response
         .status(200)
         .json({ success: false, message: "此信箱已經註冊過了" });
@@ -85,6 +85,26 @@ router.post("/sendverification", async (request, response, next) => {
 router.post("/checkverification", async (request, response, next) => {
   const { email, verificationCode } = request.body;
   const sql = `SELECT * FROM Verification WHERE email = ? AND code = ?`;
+  const deleteSql = `DELETE FROM Verification WHERE email = ?`;
+
+  try {
+    const [row] = await pool.execute(sql, [email, verificationCode]);
+    if (row.length <= 0) {
+      response.status(200).json({ success: false, message: "驗證碼錯誤" });
+      return;
+    }
+
+    response.status(200).json({ success: true });
+
+    await pool.execute(deleteSql, [email]);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/checkforgotpassword", async (request, response, next) => {
+  const { email, verificationCode } = request.body;
+  const sql = `SELECT * FROM Verification WHERE email = ? AND code = ?`;
   const selectSql = `SELECT password FROM User WHERE email = ?`;
   const deleteSql = `DELETE FROM Verification WHERE email = ?`;
 
@@ -92,11 +112,14 @@ router.post("/checkverification", async (request, response, next) => {
     const [row] = await pool.execute(sql, [email, verificationCode]);
     if (row.length <= 0) {
       response.status(200).json({ success: false, message: "驗證碼錯誤" });
+      return;
     }
 
     const [selectRow] = await pool.execute(selectSql, [email]);
+    console.log(selectRow);
     if (selectRow.length <= 0) {
       response.status(200).json({ success: false, message: "找不到信箱" });
+      return;
     }
 
     response.status(200).json({ success: true, row: selectRow[0] });

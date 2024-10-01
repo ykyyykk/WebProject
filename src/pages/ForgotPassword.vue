@@ -42,7 +42,7 @@
     </button>
 
     <button
-      @click="CheckVerification()"
+      @click="CheckForgotPassword()"
       :disabled="this.verificationCode.length < 6"
       class="btn btn-primary w-100 mb-3"
     >
@@ -114,10 +114,10 @@ export default {
         alert(`發送驗證碼錯誤 ${error}`);
       }
     },
-    async CheckVerification() {
+    async CheckForgotPassword() {
       try {
         const response = await axios.post(
-          `${API_BASE_URL}/api/checkverification`,
+          `${API_BASE_URL}/api/checkforgotpassword`,
           {
             email: this.email,
             verificationCode: this.verificationCode,
