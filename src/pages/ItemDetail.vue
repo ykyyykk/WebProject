@@ -203,7 +203,7 @@ export default {
         //   price: +this.item.price * +this.amount,
         // });
 
-        // TODOWarning: 綠界購買有夠難
+        // TODOWarning: 綠界購買有夠難===========================================
         // console.log(`MERCHANTID: ${MERCHANTID}`); // 這邊是undefined
         this.ParamsBeforeCMV = {
           MerchantID: "3002607",
@@ -217,52 +217,78 @@ export default {
           ChoosePayment: "ALL",
           EncryptType: 1,
         };
+
+        const now = new Date();
+        this.ParamsBeforeCMV.MerchantTradeNo = this.SetMerchantTradeNo(now);
+        this.ParamsBeforeCMV.MerchantTradeDate = this.FormatDate(now);
+
         const form = document.createElement("form");
         form.method = "POST";
         // 正式發布時 需要將網址的-stage給取消掉
         form.action =
           "https://payment-stage.ecpay.com.tw//Cashier/AioCheckOut/V5";
 
-        this.ParamsBeforeCMV.MerchantTradeNo = this.SetMerchantTradeNo();
-        this.ParamsBeforeCMV.MerchantTradeDate = this.FormatDate();
-
         const CheckMacValue = this.CheckMacValueGen(this.ParamsBeforeCMV);
-        console.log(`CheckMacValue`);
-        console.log(CheckMacValue);
-
-        console.log(`...this.ParamsBeforeCMV`);
-        console.log(this.ParamsBeforeCMV);
-        console.log(...ParamsBeforeCMV);
-        console.log(...this.ParamsBeforeCMV);
-        // Error: ReferenceError: ParamsBeforeCMV is not defined
-        // const allParams = { ...this.ParamsBeforeCMV, CheckMacValue };
-        // const allParams = { ...ParamsBeforeCMV, CheckMacValue };
-        // const allParams = { ParamsBeforeCMV, CheckMacValue };
-        const allParams = { ...ParamsBeforeCMV, CheckMacValue };
-        Object.keys(allParams).forEach((key) => {
+        Object.keys(this.ParamsBeforeCMV).forEach((key) => {
           const input = document.createElement("input");
           input.type = "hidden";
           input.name = key;
-          console.log(`key: ${key}`);
-          console.log(allParams[key]);
-          input.value = allParams[key];
+          input.value = this.ParamsBeforeCMV[key];
           form.appendChild(input);
         });
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "CheckMacValue";
+        input.value = CheckMacValue;
+        form.appendChild(input);
+        console.log(form);
 
         // document.body.appendChild(form);
         // form.submit(); // 自動提交表單
+
+        // const newWindow = window.open("", "_blank");
+
+        // if (newWindow) {
+        //   const form = newWindow.document.createElement("form");
+        //   form.method = "POST";
+        //   form.action =
+        //     "https://payment-stage.ecpay.com.tw//Cashier/AioCheckOut/V5";
+
+        //   // 動態生成隱藏的 input 元素，將參數加入表單中
+        //   Object.keys(this.ParamsBeforeCMV).forEach((key) => {
+        //     const input = newWindow.document.createElement("input");
+        //     input.type = "hidden";
+        //     input.name = key;
+        //     input.value = this.ParamsBeforeCMV[key];
+        //     form.appendChild(input);
+        //   });
+
+        //   // 加入 CheckMacValue
+        //   const input = newWindow.document.createElement("input");
+        //   input.type = "hidden";
+        //   input.name = "CheckMacValue";
+        //   input.value = CheckMacValue;
+        //   form.appendChild(input);
+
+        //   // 將表單加入新窗口的 document 中
+        //   newWindow.document.body.appendChild(form);
+        //   console.log(form);
+        //   // 自動提交表單
+        //   form.submit();
+        // } else {
+        //   alert("無法打開新視窗，請檢查是否被瀏覽器攔截。");
+        // }
       } catch (error) {
         alert(`Error: ${error}`);
       }
     },
-    FormatDate() {
-      const date = new Date();
-      const year = date.getFullYear();
-      const month = (date.getMonth() + 1).toString().padStart(2, "0");
-      const day = date.getDate().toString().padStart(2, "0");
-      const hours = date.getHours().toString().padStart(2, "0");
-      const minutes = date.getMinutes().toString().padStart(2, "0");
-      const seconds = date.getSeconds().toString().padStart(2, "0");
+    FormatDate(now) {
+      const year = now.getFullYear();
+      const month = (now.getMonth() + 1).toString().padStart(2, "0");
+      const day = now.getDate().toString().padStart(2, "0");
+      const hours = now.getHours().toString().padStart(2, "0");
+      const minutes = now.getMinutes().toString().padStart(2, "0");
+      const seconds = now.getSeconds().toString().padStart(2, "0");
       return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
     },
     CheckMacValueGen(parameters) {
@@ -289,8 +315,7 @@ export default {
         .toString(CryptoJS.enc.Hex)
         .toUpperCase();
     },
-    SetMerchantTradeNo() {
-      const now = new Date();
+    SetMerchantTradeNo(now) {
       return `od${now.getFullYear()}${(now.getMonth() + 1)
         .toString()
         .padStart(2, "0")}${now.getDate().toString().padStart(2, "0")}${now
