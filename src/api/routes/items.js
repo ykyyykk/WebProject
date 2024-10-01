@@ -181,4 +181,12 @@ router.delete(
   }
 );
 
+router.post("/testecpay", async (request, response, next) => {
+  try {
+    response.status(200).json({ success: true, message: "1|OK" });
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;

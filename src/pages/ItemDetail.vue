@@ -211,15 +211,17 @@ export default {
     },
     ECPay() {
       try {
+        //這裡面亂的Key亂打也會造成錯誤
         this.ParamsBeforeCMV = {
           MerchantID: "3002607",
           MerchantTradeNo: "",
           MerchantTradeDate: "",
           PaymentType: "aio",
           TotalAmount: 1,
+          StoreID: "aaa",
           TradeDesc: "測試敘述",
           ItemName: "測試名稱",
-          ReturnURL: "https://www.louise.tw/api/test",
+          ReturnURL: "https://www.louise.tw/",
           ChoosePayment: "ALL",
           EncryptType: 1,
         };
@@ -247,7 +249,7 @@ export default {
         input.name = "CheckMacValue";
         input.value = CheckMacValue;
         form.appendChild(input);
-        // console.log(form);
+        console.log(form);
 
         document.body.appendChild(form);
         form.submit(); // 自動提交表單

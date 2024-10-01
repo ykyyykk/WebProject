@@ -96,11 +96,12 @@ const routes = [
   },
 ];
 
+// console.log(import.meta.env.BASE_URL); // 輸出是: /
+// console.log(import.meta.env.VITE_API_BASE_URL); // localhost:3000
 const router = createRouter({
-  // 需要再vite.config.js.defineConfig()裡面新增base: "/",
-  // 並在這邊把將process改成import.meta
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory("/"),
   routes,
 });
 
+// ssl_protocols TLSv1.2 TLSv1.3;
 export default router;
