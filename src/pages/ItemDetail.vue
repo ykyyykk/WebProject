@@ -1,7 +1,6 @@
 <template>
   <!-- Qvg&6&)MFu29R+? -->
   <PopupComponent />
-  <HeaderComponent />
   <SmallHeaderComponent pageTitle="繼續購物" />
 
   <!-- v-if不能省略 因為item.name的執行順序會比this.item = response.data.items; 還快 會error -->
@@ -63,7 +62,6 @@
 </template>
 
 <script>
-import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import SwiperComponent from "../components/SwiperComponent.vue";
 import NumberInputComponent from "../components/NumberInputComponent.vue";
@@ -305,7 +303,6 @@ export default {
     },
   },
   components: {
-    HeaderComponent,
     SmallHeaderComponent,
     SwiperComponent,
     NumberInputComponent,

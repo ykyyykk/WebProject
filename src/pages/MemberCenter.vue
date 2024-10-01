@@ -1,5 +1,4 @@
 <template>
-  <HeaderComponent />
   <SmallHeaderComponent pageTitle="會員中心" />
 
   <div
@@ -74,7 +73,6 @@
 </template>
 
 <script>
-import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import { mapActions } from "vuex/dist/vuex.cjs.js";
 //在 OptionsAPI 中 通常不使用 useStore useRouter 這些是 CompositionAPI 的一部分
@@ -101,7 +99,7 @@ export default {
     this.email = this.$store.state.user.email;
     this.password = this.$store.state.user.password;
   },
-  components: { HeaderComponent, SmallHeaderComponent },
+  components: { SmallHeaderComponent },
   methods: {
     ...mapActions(["SetLogout"]),
     SaveUserInfo() {

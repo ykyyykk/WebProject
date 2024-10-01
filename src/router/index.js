@@ -56,6 +56,11 @@ const routes = [
     component: SearchResult,
   },
   {
+    path: "/addItem",
+    name: "AddItem",
+    component: AddItem,
+  },
+  {
     path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
@@ -76,11 +81,6 @@ const routes = [
         component: RevenueChart,
       },
     ],
-  },
-  {
-    path: "/dashboard/addItem",
-    name: "AddItem",
-    component: AddItem,
   },
   {
     // 404轉址

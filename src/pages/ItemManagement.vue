@@ -67,7 +67,6 @@
 </template>
 
 <script>
-import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import NumberInputComponent from "../components/NumberInputComponent.vue";
 import axios from "axios";
@@ -82,7 +81,7 @@ export default {
       itemSales: [],
     };
   },
-  components: { HeaderComponent, SmallHeaderComponent, NumberInputComponent },
+  components: { SmallHeaderComponent, NumberInputComponent },
   computed: {
     ...mapState(["user", "items"]),
   },

@@ -1,5 +1,4 @@
 <template>
-  <HeaderComponentVue />
   <SmallHeaderComponentVue pageTitle="忘記密碼" />
 
   <div
@@ -62,13 +61,12 @@
 </template>
 
 <script>
-import HeaderComponentVue from "../components/HeaderComponent.vue";
 import SmallHeaderComponentVue from "../components/SmallHeaderComponent.vue";
 import { API_BASE_URL } from "../config/api";
 import axios from "axios";
 
 export default {
-  components: { HeaderComponentVue, SmallHeaderComponentVue },
+  components: { SmallHeaderComponentVue },
   data() {
     return {
       email: "",

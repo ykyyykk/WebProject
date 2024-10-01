@@ -1,5 +1,4 @@
 <template>
-  <HeaderComponent />
   <ElevatorComponent />
 
   <!-- 為了col-10所以在包一層 -->
@@ -129,7 +128,6 @@
 
 <script>
 import { mapState } from "vuex/dist/vuex.cjs.js";
-import HeaderComponent from "../components/HeaderComponent.vue";
 import ItemComponent from "../components/ItemComponent.vue";
 import ElevatorComponent from "../components/ElevatorComponent.vue";
 
@@ -143,7 +141,7 @@ export default {
       maxPrice: 99999999,
     };
   },
-  components: { HeaderComponent, ItemComponent, ElevatorComponent },
+  components: { ItemComponent, ElevatorComponent },
   computed: {
     ...mapState(["items", "searchQuery", "categories"]),
     // 給v-for用的

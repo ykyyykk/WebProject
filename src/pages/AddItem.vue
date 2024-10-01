@@ -1,5 +1,4 @@
 <template>
-  <HeaderComponent />
   <SmallHeaderComponent pageTitle="新增商品" />
 
   <form @submit.prevent="AddNewItem()" class="p-3 w-100 h-100 mt-5">
@@ -88,7 +87,6 @@
 
 <script>
 import axios from "axios";
-import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import FileInputComponent from "../components/FileInputComponent.vue";
 import { API_BASE_URL } from "../config/api";
@@ -106,7 +104,7 @@ export default {
       status: "全新",
     };
   },
-  components: { HeaderComponent, SmallHeaderComponent, FileInputComponent },
+  components: { SmallHeaderComponent, FileInputComponent },
   computed: {
     ...mapState(["categories"]),
     canUpload() {

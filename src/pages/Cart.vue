@@ -1,5 +1,4 @@
 <template>
-  <HeaderComponent />
   <SmallHeaderComponent pageTitle="購物車" />
 
   <div v-if="items" class="container mt-5 mb-5">
@@ -81,7 +80,6 @@
 </template>
 
 <script>
-import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import NumberInputComponent from "../components/NumberInputComponent.vue";
 import axios from "axios";
@@ -106,7 +104,7 @@ export default {
       1000
     );
   },
-  components: { HeaderComponent, SmallHeaderComponent, NumberInputComponent },
+  components: { SmallHeaderComponent, NumberInputComponent },
   computed: {
     ...mapState(["user", "items"]),
   },

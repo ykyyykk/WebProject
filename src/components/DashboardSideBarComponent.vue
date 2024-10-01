@@ -1,9 +1,17 @@
 <template>
-  <!-- TODORWD: 需要先解決 itemMangement 有scroll 而且footer看的到在同一個高度內 -->
-  <!-- position-absolute -->
-  <!-- style="top: 6.2rem" -->
+  <div class="mb-3 position-absolute z-3" style="top: 7rem; left: 0.5rem">
+    <button
+      class="btn btn-outline-primary overflow-auto"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasScrolling"
+      aria-controls="offcanvasScrolling"
+    >
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+
   <div
-    class="offcanvas offcanvas-start"
+    class="border border-black offcanvas offcanvas-start"
     data-bs-scroll="true"
     data-bs-backdrop="false"
     tabindex="-1"
@@ -14,8 +22,8 @@
       <button
         type="button"
         class="btn-close"
-        data-bs-dismiss="offcanvas"
         aria-label="Close"
+        data-bs-dismiss="offcanvas"
       ></button>
     </div>
 
@@ -47,26 +55,16 @@
       清理驗證碼
     </button>
   </div>
-
-  <div class="mb-3 position-absolute z-3" style="top: 7rem; left: 0.5rem">
-    <button
-      class="btn btn-outline-primary overflow-auto"
-      data-bs-toggle="offcanvas"
-      data-bs-target="#offcanvasScrolling"
-      aria-controls="offcanvasScrolling"
-    >
-      <i class="fa-solid fa-bars"></i>
-    </button>
-  </div>
 </template>
 
 <script>
 import axios from "axios";
 import { API_BASE_URL } from "../config/api";
-import { Offcanvas } from "bootstrap";
 
 export default {
   mounted() {
+    //需要import 但是會讓AddItem.vue的Dropdown 沒辦法出現下拉式選單
+    // import { Offcanvas } from "bootstrap";
     // TODO 為了讓SideBar一開始就是打開的狀態 暫時關閉 等到不被擋住時再打開
     // const offcanvasElement = document.getElementById("offcanvasScrolling");
     // const bsOffcanvas = new Offcanvas(offcanvasElement);

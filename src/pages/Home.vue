@@ -1,6 +1,5 @@
 <template>
   <ElevatorComponent />
-  <HeaderComponent />
   <div class="d-flex">
     <SwiperComponent :pages="pages" :showNavigation="true" />
 
@@ -56,7 +55,6 @@
 </template>
 
 <script>
-import HeaderComponent from "../components/HeaderComponent.vue";
 import SwiperComponent from "../components/SwiperComponent.vue";
 import ItemComponent from "../components/ItemComponent.vue";
 import ElevatorComponent from "../components/ElevatorComponent.vue";
@@ -65,7 +63,6 @@ import { mapState } from "vuex/dist/vuex.cjs.js";
 
 export default {
   components: {
-    HeaderComponent,
     SwiperComponent,
     ItemComponent,
     ElevatorComponent,

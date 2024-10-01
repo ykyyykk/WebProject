@@ -1,17 +1,15 @@
 <template>
-  <HeaderComponent />
   <SmallHeaderComponent pageTitle="產品管理" />
 
   <div class="d-flex">
-    <!-- <DashboardSideBarComponent /> -->
+    <DashboardSideBarComponent />
     <router-view />
   </div>
 </template>
 
 <script>
 // TODOError:暫時註解掉 不知道為什麼 如果不註解掉 AddItem.vue 的dropdown會壞掉
-// import DashboardSideBarComponent from "../components/DashboardSideBarComponent.vue";
-import HeaderComponent from "../components/HeaderComponent.vue";
+import DashboardSideBarComponent from "../components/DashboardSideBarComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 
 export default {
@@ -25,9 +23,8 @@ export default {
     }
   },
   components: {
-    HeaderComponent,
     SmallHeaderComponent,
-    // DashboardSideBarComponent,
+    DashboardSideBarComponent,
   },
 };
 </script>

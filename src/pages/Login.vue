@@ -1,5 +1,4 @@
 <template>
-  <HeaderComponent />
   <SmallHeaderComponent pageTitle="登入" />
 
   <div
@@ -64,7 +63,6 @@
 
 <script>
 import axios from "axios";
-import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import { mapActions } from "vuex/dist/vuex.cjs.js";
 import GoogleLoginComponent from "../components/GoogleLoginComponent.vue";
@@ -79,7 +77,6 @@ export default {
     };
   },
   components: {
-    HeaderComponent,
     SmallHeaderComponent,
     GoogleLoginComponent,
   },

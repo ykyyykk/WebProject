@@ -1,5 +1,4 @@
 <template>
-  <HeaderComponent />
   <SmallHeaderComponent pageTitle="註冊" />
 
   <div
@@ -115,7 +114,6 @@
 
 <script>
 import axios from "axios";
-import HeaderComponent from "../components/HeaderComponent.vue";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import GoogleRegisterComponent from "../components/GoogleRegisterComponent.vue";
 import { API_BASE_URL } from "../config/api";
@@ -243,7 +241,6 @@ export default {
     },
   },
   components: {
-    HeaderComponent,
     SmallHeaderComponent,
     GoogleRegisterComponent,
   },
