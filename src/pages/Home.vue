@@ -34,6 +34,7 @@
           :key="item.id"
           class="col-xl-3 col-lg-4 col-6"
         >
+          <!-- TODO: 圖片高度太低 在首頁的格子會不一樣大 -->
           <ItemComponent :item="item" />
         </div>
       </div>

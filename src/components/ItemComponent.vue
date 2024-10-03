@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     GetThumbnail(thumbnail, category) {
-      // TODO: 目前這邊在localhost顯示不出來是正常的 因為本地端根本沒有 一樣的照片 需要新增下載伺服器圖片
+      // 目前這邊在localhost顯示不出來是正常的 因為本地端根本沒有 一樣的照片 需要新增下載伺服器圖片
       if (thumbnail != "") {
         return `img/${thumbnail}`;
       }
