@@ -46,9 +46,10 @@
           <button @click="Buy()" class="mx-5 btn btn-outline-danger col">
             立即購買
           </button>
-          <button @click="ECPay()" class="btn btn-outline-danger col">
-            綠界付款
-          </button>
+          <ECPayButtonComponent
+            :name="item.name"
+            :price="this.amount * item.price"
+          />
         </div>
       </div>
       <div class="shadow p-3">
@@ -68,12 +69,12 @@ import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import SwiperComponent from "../components/SwiperComponent.vue";
 import NumberInputComponent from "../components/NumberInputComponent.vue";
 import PopupComponent from "../components/PopupComponent.vue";
+import ECPayButtonComponent from "../components/ECPayButtonComponent.vue";
 import axios from "axios";
-import { API_BASE_URL, HASHKEY, HASHIV } from "../config/api";
+import { API_BASE_URL } from "../config/api";
 import { mapState } from "vuex/dist/vuex.cjs.js";
 import { EventBus } from "../utils/eventBus.js";
 import moment from "moment-timezone";
-import CryptoJS from "crypto-js";
 
 export default {
   data() {
@@ -175,8 +176,8 @@ export default {
           id: this.item.id,
           amount: this.amount,
         });
-        // 測試反向代理 不用 port
-        // const response = await axios.post(`/api/purchaseitem`, {
+        // 測試反向代理 不用 port 失敗
+        // const response = await axios.post(`/purchaseitem`, {
         //   id: this.item.id,
         //   amount: this.amount,
         // });
@@ -191,111 +192,15 @@ export default {
           value: +this.item.price * +this.amount,
           id: +this.item.id,
         });
+
         await axios.post(`${API_BASE_URL}/api/updateuserpriceamount`, {
           userID: this.user.id,
           amount: this.amount,
           price: +this.item.price * +this.amount,
         });
-        // TODOWarning: 綠界購買有夠難===========================================
       } catch (error) {
         alert(`Error: ${error}`);
       }
-    },
-    ECPay() {
-      try {
-        //這裡面亂的Key亂打也會造成錯誤
-        this.ParamsBeforeCMV = {
-          MerchantID: "3002607",
-          MerchantTradeNo: "",
-          MerchantTradeDate: "",
-          PaymentType: "aio",
-          TotalAmount: 100, //這是價格 會影響付款方式的數量 調成100會比較方便使用所有的付款方式
-          StoreID: "aaa",
-          TradeDesc: "this.item.detail",
-          ItemName: this.item.name,
-          ReturnURL: `${API_BASE_URL}/api/return`,
-          // ReturnURL: `${API_BASE_URL}/api/return`, //不能省略
-          // ReturnURL: `https://www.louise.tw`, //不會跳轉
-          ChoosePayment: "ALL",
-          EncryptType: 1,
-        };
-
-        const now = new Date();
-        this.ParamsBeforeCMV.MerchantTradeNo = this.SetMerchantTradeNo(now);
-        this.ParamsBeforeCMV.MerchantTradeDate = this.FormatDate(now);
-
-        const form = document.createElement("form");
-        form.method = "POST";
-        // 正式發布時 需要將網址的-stage給取消掉
-        form.action =
-          "https://payment-stage.ecpay.com.tw//Cashier/AioCheckOut/V5";
-
-        const CheckMacValue = this.CheckMacValueGen(this.ParamsBeforeCMV);
-        Object.keys(this.ParamsBeforeCMV).forEach((key) => {
-          const input = document.createElement("input");
-          input.type = "hidden";
-          input.name = key;
-          input.value = this.ParamsBeforeCMV[key];
-          form.appendChild(input);
-        });
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "CheckMacValue";
-        input.value = CheckMacValue;
-        form.appendChild(input);
-
-        console.log(form);
-
-        document.body.appendChild(form);
-        form.submit(); // 自動提交表單
-      } catch (error) {
-        alert(`Error: ${error}`);
-      }
-    },
-    SetMerchantTradeNo(now) {
-      return `od${now.getFullYear()}${(now.getMonth() + 1)
-        .toString()
-        .padStart(2, "0")}${now.getDate().toString().padStart(2, "0")}${now
-        .getHours()
-        .toString()
-        .padStart(2, "0")}${now.getMinutes().toString().padStart(2, "0")}${now
-        .getSeconds()
-        .toString()
-        .padStart(2, "0")}${now.getMilliseconds().toString().padStart(3, "0")}`;
-    },
-    FormatDate(now) {
-      const year = now.getFullYear();
-      const month = (now.getMonth() + 1).toString().padStart(2, "0");
-      const day = now.getDate().toString().padStart(2, "0");
-      const hours = now.getHours().toString().padStart(2, "0");
-      const minutes = now.getMinutes().toString().padStart(2, "0");
-      const seconds = now.getSeconds().toString().padStart(2, "0");
-      return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
-    },
-    CheckMacValueGen(parameters) {
-      let paramString = Object.keys(parameters)
-        .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
-        .map((key) => `${key}=${parameters[key]}`)
-        .join("&");
-      // console.log(this.HASHKEY);
-      // console.log(this.HASHIV);
-      paramString = `HashKey=${"pwFHCqoQZGmho4w6"}&${paramString}&HashIV=${"EkRm7iFT261dpevs"}`;
-      paramString = encodeURIComponent(paramString).toLowerCase();
-
-      // 特殊字符轉換
-      paramString = paramString
-        .replace(/%20/g, "+")
-        .replace(/%2d/g, "-")
-        .replace(/%5f/g, "_")
-        .replace(/%2e/g, ".")
-        .replace(/%21/g, "!")
-        .replace(/%2a/g, "*")
-        .replace(/%28/g, "(")
-        .replace(/%29/g, ")");
-
-      return CryptoJS.SHA256(paramString)
-        .toString(CryptoJS.enc.Hex)
-        .toUpperCase();
     },
   },
   components: {
@@ -303,6 +208,7 @@ export default {
     SwiperComponent,
     NumberInputComponent,
     PopupComponent,
+    ECPayButtonComponent,
   },
 };
 </script>

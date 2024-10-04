@@ -17,10 +17,7 @@
         class="text-decoration-none ms-2"
         style="width: 12rem"
       >
-        <img
-          style="width: 100%; height: auto"
-          src="../assets/img/Decathlon_Logo.png"
-        />
+        <img style="width: 100%; height: auto" src="/static/Logo.png" />
       </router-link>
 
       <!-- 測試用 失敗 -->
