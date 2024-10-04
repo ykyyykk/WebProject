@@ -33,7 +33,7 @@ export default {
           // 在有設定OrderResultURL的情況下不會出現
           ClientBackURL: HOST,
           // 取代原本的付款成功顯示的頁面 直接設定首頁會405 NotAllowed
-          // OrderResultURL: `${API_BASE_URL}/api/orderresulturl`,
+          OrderResultURL: `${API_BASE_URL}/api/return`,
           ChoosePayment: "ALL",
           EncryptType: 1,
         };
