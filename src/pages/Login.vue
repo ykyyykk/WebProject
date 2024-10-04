@@ -90,10 +90,7 @@ export default {
           password: this.password,
         });
 
-        console.log(response.data);
         if (response.data.success) {
-          // console.log(`response.data: ${JSON.stringify(response.data.user)}`);
-          // console.log(`id: ${response.data.user.id}`);
           // // JSON.stringify ObjectToJSON
           // // 因為localStorage.setItem()只能存字串 所以要先轉JSON 要用的時候在轉Object
           localStorage.setItem("user", JSON.stringify(response.data.user));

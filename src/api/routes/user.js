@@ -9,10 +9,6 @@ router.get("/getalluser", async (request, response, next) => {
   try {
     const [users] = await pool.execute(sql);
     if (users.length > 0) {
-      // console.log(users);
-      // console.log(users[0]);
-      // console.log([users]);
-      // console.log([users][0]);
       console.log("取得所有會員成功");
       response.status(200).json({ success: true, users });
     } else {

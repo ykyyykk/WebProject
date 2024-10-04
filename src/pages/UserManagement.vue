@@ -216,7 +216,6 @@ export default {
   methods: {
     async GetAllUser() {
       const response = await axios.get(`${API_BASE_URL}/api/getalluser`);
-      console.log(response.data.users);
       this.allUser = response.data.users;
     },
     async DeleteUser(deleteID) {
@@ -235,7 +234,6 @@ export default {
       }
     },
     ChagneSortTag(sortTag) {
-      // console.log(this.sortTag);
       if (this.sortTag === sortTag) {
         if (!this.isDescending) {
           this.isDescending = true;

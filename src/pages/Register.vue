@@ -211,7 +211,6 @@ export default {
       }
     },
     async CheckVerification() {
-      console.log(`this.verificationCode: ${this.verificationCode}`);
       try {
         const response = await axios.post(
           `${API_BASE_URL}/api/checkverification`,
@@ -220,7 +219,6 @@ export default {
             verificationCode: this.verificationCode,
           }
         );
-        console.log(response.data);
         if (response.data.success) {
           await this.Register();
           this.$router.push({ name: "Login" });

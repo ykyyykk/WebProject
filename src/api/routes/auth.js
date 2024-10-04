@@ -5,7 +5,6 @@ import { transporter } from "../../config/email.js";
 const router = express.Router();
 
 router.post("/register", async (request, response, next) => {
-  console.log("register");
   const { name, phoneNumber, email, password } = request.body;
   const sql = `INSERT INTO User (name, phoneNumber, email, password) VALUES(?,?,?,?)`;
   try {
@@ -116,7 +115,6 @@ router.post("/checkforgotpassword", async (request, response, next) => {
     }
 
     const [selectRow] = await pool.execute(selectSql, [email]);
-    console.log(selectRow);
     if (selectRow.length <= 0) {
       response.status(200).json({ success: false, message: "找不到信箱" });
       return;

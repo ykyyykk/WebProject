@@ -53,7 +53,6 @@ export default {
         `${API_BASE_URL}/api/getallrevenuewithitemcategory`
       );
 
-      // console.log(response);
       if (!response.data.success) {
         return;
       }
@@ -61,7 +60,6 @@ export default {
       this.Order();
     },
     Order() {
-      // console.log(this.revenues);
       // console.log(this.revenues[0].date); // 2024-08-31T16:00:00.000Z
       // const date = new Date("2024/9/8"); //成功轉換
       // const date = new Date(this.revenues[0].date); //成功轉換
@@ -103,10 +101,6 @@ export default {
         name,
         value,
       }));
-      // console.log(this.monthPie);
-      // console.log(typeof this.monthPie);
-      // console.log(isArray(this.monthPie));
-      // console.log(isArray(this.monthX));
     },
     WeekOrder() {
       const weekRevenue = new Map();

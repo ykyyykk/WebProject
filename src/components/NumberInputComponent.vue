@@ -32,9 +32,7 @@ export default {
   },
   methods: {
     Increase() {
-      // console.log(`this.max ${this.max}`);
       if (this.amount < this.max) {
-        // console.log(`amount: ${this.amount}`);
         this.$emit("update:amount", this.amount + 1);
       }
     },
@@ -44,7 +42,6 @@ export default {
       }
     },
     UpdateAmount(event) {
-      console.log(event);
       let newValue = Number(event.target.value);
       if (isNaN(newValue) || newValue < 1) {
         newValue = 1;

@@ -35,7 +35,7 @@ export default {
           }
         );
 
-        console.log(`loginResponse: ${JSON.stringify(loginResponse)}`);
+        // console.log(`loginResponse: ${JSON.stringify(loginResponse)}`);
 
         const email = loginResponse.data.user.email;
         const password = loginResponse.data.user.sub;

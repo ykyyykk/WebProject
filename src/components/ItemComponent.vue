@@ -102,20 +102,18 @@ export default {
           userID: this.user.id,
           amount: amount,
         });
-        console.log("新增至購物車成功");
+        // PopupComponent 放ItemComponent有點怪 所以用alert
+        alert(`新增至購物車成功`);
       } catch (error) {
         alert("新增至購物車失敗", error);
       }
     },
     async RemoveFromCart(id) {
       try {
-        console.log(`id: ${id}`);
-        console.log(`this.user.id: ${this.user.id}`);
         //DELETE 通常不包含 request 需要從URL獲取參數
         await axios.delete(
           `${API_BASE_URL}/api/deletefromcart/${id}/${this.user.id}`
         );
-        console.log("移除至購物車成功");
       } catch (error) {
         alert("從購物車移除失敗", error);
       }

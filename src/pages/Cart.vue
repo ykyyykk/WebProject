@@ -115,7 +115,7 @@ export default {
     UpdateCartItemAmount(itemID, newAmount) {
       const item = this.cartItems.find((item) => item.id === itemID);
       if (!item) {
-        console.log(`!item`);
+        alert("!item");
         return;
       }
       item.buyAmount = newAmount;
@@ -128,7 +128,6 @@ export default {
           userID: this.user.id,
           amount: amount,
         });
-        console.log("購物車數量變更成功");
       } catch (error) {
         alert(`購物車數量變更失敗: ${error}`);
         // 購物車數量變更失敗: AxiosError: Network Error
@@ -167,17 +166,14 @@ export default {
       }
     },
     async DeleteFromCart(id) {
-      console.log(`DeleteFromCart: ${id}`);
       try {
         const response = await axios.delete(
           `${API_BASE_URL}/api/deletefromcart/${id}/${this.user.id}`
         );
         //更改的資料筆數
-        // const changes = response.data.info.changes;
         const changes = response.data.info.changedRows;
         if (changes != 0) {
           this.cartItems = this.cartItems.filter((item) => item.id !== id);
-          console.log("刪掉物品");
         }
       } catch (error) {
         alert(`錯誤: ${error}`);
@@ -233,7 +229,6 @@ export default {
               amount: this.selectItems[i].amount,
             }
           );
-          console.log(`response: ${response}`);
           if (response.data.success) {
             await this.DeleteFromCart(this.selectItems[i].id);
             await axios.post(`${API_BASE_URL}/api/purchaseitem`, {

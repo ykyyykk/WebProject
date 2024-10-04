@@ -8,7 +8,6 @@ import revenueRoutes from "./api/routes/revenue.js";
 import userRoutes from "./api/routes/user.js";
 import cartRoutes from "./api/routes/cart.js";
 import googleAuth from "./api/routes/googleAuth.js";
-import { ErrorHandler } from "./api/middleware/errorhandler.js";
 import { __dirname } from "./utils/path.js";
 import path from "path";
 
@@ -38,7 +37,6 @@ app.use("/api", revenueRoutes);
 app.use("/api", userRoutes);
 app.use("/api", cartRoutes);
 app.use("/api", googleAuth);
-app.use(ErrorHandler);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

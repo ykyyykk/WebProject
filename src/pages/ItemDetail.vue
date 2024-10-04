@@ -110,7 +110,6 @@ export default {
           itemID: id,
         });
 
-        // console.log(`response.data: ${JSON.stringify(response.data)}`);
         // 目前這樣GCE才會正常 當找不到image時
         if (response.data.items === undefined || response.data === null) {
           const imgPath = this.GetThumbnail(thumbnail, category);

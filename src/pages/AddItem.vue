@@ -119,13 +119,8 @@ export default {
     },
     async UploadImage() {
       try {
-        // console.log("UploadImage");
-        // console.log(`productImages: ${this.productImages.length}`);
         const formData = new FormData();
         this.productImages.forEach((image) => {
-          // console.log(image.name);
-          // console.log(image.url);
-          // console.log(image.file);
           formData.append("images", image.file);
         });
 
@@ -146,20 +141,13 @@ export default {
       }
     },
     async AddNewItem() {
-      console.log("AddNewItem");
       const uploadResponse = await this.UploadImage();
 
-      // console.log(`uploadResponse: ${JSON.stringify(uploadResponse)}`);
       if (!uploadResponse) {
         return;
       }
 
       try {
-        // console.log(uploadResponse.data.files);
-        // console.log(uploadResponse.data.files[0]);
-        // console.log(uploadResponse.data.files[0].filename);
-        // console.log(uploadResponse.data.files[0].filename.split("-"));
-        // console.log(uploadResponse.data.files[0].filename.split("-")[0]);
         const itemID = uploadResponse.data.files[0].filename.split("-")[0];
         const uploadedFiles = uploadResponse.data.files;
         const imageUrls = uploadedFiles.map((file) => file.filename);
@@ -170,14 +158,6 @@ export default {
 
         this.detail =
           this.detail === "" ? `高效能${this.selectCategory}` : this.detail;
-        // console.log(itemID);
-        // console.log(this.name);
-        // console.log(this.detail);
-        // console.log(this.selectCategory);
-        // console.log(this.price);
-        // console.log(this.stock);
-        // console.log(this.status);
-        // console.log(uploadedFiles[0].filename);
         await axios.post(`${API_BASE_URL}/api/addnewitem`, {
           id: itemID,
           name: this.name,

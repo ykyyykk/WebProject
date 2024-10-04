@@ -159,16 +159,5 @@ export default createStore({
     SetCartItems({ commit }, { cartItems }) {
       commit("SetCartItems", cartItems);
     },
-    // 失敗 嘗試讀取public/banner
-    // async FetchPages({ commit }) {
-    //   try {
-    //     const response = await fetch("http://localhost:3000/api/images");
-    //     console.log(response);
-    //     const data = await response.json();
-    //     commit("SetPages", data);
-    //   } catch (error) {
-    //     console.error("Error fetching pages:", error);
-    //   }
-    // },
   },
 });

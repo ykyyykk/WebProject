@@ -33,9 +33,9 @@ router.post("/googlesignin", async (request, response) => {
     });
 
     // TODO: 聽說google登入的token 好像是 response 還是 request 的 credential
-    console.log("People API Response:", peopleInfo.data);
+    // console.log("People API Response:", peopleInfo.data);
     request.User.phoneNumbers = peopleInfo.data.phoneNumbers;
-    console.log(`request.User: ${JSON.stringify(request.User)}`);
+    // console.log(`request.User: ${JSON.stringify(request.User)}`);
 
     response.send({ message: "Google sign-in success", user: request.User });
   } catch (error) {

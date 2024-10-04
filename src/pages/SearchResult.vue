@@ -146,7 +146,6 @@ export default {
     ...mapState(["items", "searchQuery", "categories"]),
     // 給v-for用的
     GetFilterItems() {
-      console.log("GetFilterItems");
       let filterItems = this.items.filter((item) =>
         item.name.toLowerCase().includes(this.searchQuery.toLowerCase())
       );

@@ -103,6 +103,7 @@ export default {
   methods: {
     ...mapActions(["SetLogout"]),
     SaveUserInfo() {
+      // TODO: 還沒做會員資料儲存功能
       console.log(`data.name: ${this.name}`);
       console.log("SaveUserInfo");
     },

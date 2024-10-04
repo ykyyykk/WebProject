@@ -25,7 +25,6 @@ router.post(
     if (!request.files || request.files.length === 0) {
       next(error);
     }
-    console.log(`request.files: ${request.files}`);
     response.status(200).json({
       success: true,
       message: "圖片上傳成功",
@@ -60,8 +59,6 @@ router.post("/addnewitem", async (request, response, next) => {
 
 router.post("/insertmultipleimages", async (request, response, next) => {
   const { itemID, imageUrls } = request.body;
-  console.log(itemID);
-  console.log(imageUrls);
   const sql = `INSERT INTO Image (itemID, imageUrl)
                VALUES(?,?)`;
   try {
@@ -167,7 +164,6 @@ router.delete(
 
     try {
       const [row] = await pool.execute(sql, [itemID]);
-      // console.log([row][0]);
       if ([row][0].affectedRows > 0) {
         response.status(200).json({ success: true });
       } else {
