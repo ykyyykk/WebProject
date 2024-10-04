@@ -5,12 +5,10 @@ import ecpay_payment from "ecpay_aio_nodejs";
 
 const router = express.Router();
 
-// const { MERCHANTID, HASHKEY, HASHIV, HOST } = process.env;
-
-const MERCHANTID = 2000132;
+const MERCHANTID = "3002607";
 const HASHKEY = "pwFHCqoQZGmho4w6";
 const HASHIV = "EkRm7iFT261dpevs";
-const HOST = "https://www.louise.tw:5173/api";
+const HOST = "https://www.louise.tw";
 
 // SDK 提供的範例，初始化
 // https://github.com/ECPay/ECPayAIO_Node.js/blob/master/ECPAY_Payment_node_js/conf/config-example.js

@@ -82,19 +82,7 @@ export default {
       amount: 1,
       pages: [],
       selectImageName: "",
-      ParamsBeforeCMV: {
-        MerchantID: "3002607",
-        MerchantTradeNo: "",
-        MerchantTradeDate: "",
-        PaymentType: "aio",
-        TotalAmount: 1,
-        TradeDesc: "測試敘述",
-        ItemName: "測試名稱",
-        ReturnURL: `https://www.louise.tw:3500/api/test`,
-        ChoosePayment: "ALL",
-        EncryptType: 1,
-        OrderResultURL: `https://www.louise.tw:3500/api/test`,
-      },
+      ParamsBeforeCMV: {},
     };
   },
   async mounted() {
@@ -188,7 +176,12 @@ export default {
           id: this.item.id,
           amount: this.amount,
         });
-        // console.log(`response: ${response}`);
+        // 測試反向代理 不用 port
+        // const response = await axios.post(`/api/purchaseitem`, {
+        //   id: this.item.id,
+        //   amount: this.amount,
+        // });
+        console.log(`response: ${response}`);
         if (!response.data.success) {
           return;
         }
@@ -217,11 +210,13 @@ export default {
           MerchantTradeNo: "",
           MerchantTradeDate: "",
           PaymentType: "aio",
-          TotalAmount: 1,
+          TotalAmount: 100, //這是價格 會影響付款方式的數量 調成100會比較方便使用所有的付款方式
           StoreID: "aaa",
-          TradeDesc: "測試敘述",
-          ItemName: "測試名稱",
-          ReturnURL: "https://www.louise.tw/",
+          TradeDesc: "this.item.detail",
+          ItemName: this.item.name,
+          ReturnURL: `${API_BASE_URL}/api/return`,
+          // ReturnURL: `${API_BASE_URL}/api/return`, //不能省略
+          // ReturnURL: `https://www.louise.tw`, //不會跳轉
           ChoosePayment: "ALL",
           EncryptType: 1,
         };
@@ -249,6 +244,7 @@ export default {
         input.name = "CheckMacValue";
         input.value = CheckMacValue;
         form.appendChild(input);
+
         console.log(form);
 
         document.body.appendChild(form);
