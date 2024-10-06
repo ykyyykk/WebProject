@@ -43,11 +43,14 @@
           <button @click="AddToCart()" class="btn btn-danger col">
             加入購物車
           </button>
+
           <button @click="Buy()" class="mx-5 btn btn-outline-danger col">
             立即購買
           </button>
+
+          <!-- 為了不要有Warning 才加toString() -->
           <ECPayButtonComponent
-            :id="item.id"
+            :id="item.id.toString()"
             :name="item.name"
             :price="this.amount * item.price"
             :amount="this.amount"

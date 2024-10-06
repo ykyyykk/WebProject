@@ -42,6 +42,8 @@ export default {
           CustomField2: this.amount,
         };
 
+        // console.log(`id: ${this.id}`);
+        // console.log(`amount: ${this.amount}`);
         const form = await this.CreateForm();
         form.submit(); // 自動提交表單
       } catch (error) {
