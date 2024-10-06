@@ -4,10 +4,17 @@ import pool from "../../config/mysql.js";
 const router = express.Router();
 
 router.post("/addorder", async (request, response, next) => {
-  const { paymentType, tradeDate, totalAmount, itemName, checkMacValue } =
-    request.body;
-  const sql = `INSERT INTO ECPay ( paymentType, tradeDate, totalAmount, itemName,checkMacValue)
-               VALUES(?,?,?,?,?)`;
+  const {
+    paymentType,
+    tradeDate,
+    totalAmount,
+    itemName,
+    checkMacValue,
+    merchantTradeNo,
+  } = request.body;
+  const sql = `INSERT INTO ECPay 
+               (paymentType, tradeDate, totalAmount, itemName, checkMacValue, merchantTradeNo)
+               VALUES(?,?,?,?,?,?)`;
 
   try {
     await pool.execute(sql, [
@@ -16,6 +23,7 @@ router.post("/addorder", async (request, response, next) => {
       totalAmount,
       itemName,
       checkMacValue,
+      merchantTradeNo,
     ]);
     response.status(200).json({ success: true });
   } catch (error) {

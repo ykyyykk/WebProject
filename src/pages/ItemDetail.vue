@@ -47,8 +47,10 @@
             立即購買
           </button>
           <ECPayButtonComponent
+            :id="item.id"
             :name="item.name"
             :price="this.amount * item.price"
+            :amount="this.amount"
           />
         </div>
       </div>

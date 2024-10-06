@@ -103,5 +103,4 @@ const router = createRouter({
   routes,
 });
 
-// ssl_protocols TLSv1.2 TLSv1.3;
 export default router;

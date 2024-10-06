@@ -9,8 +9,10 @@ import axios from "axios";
 
 export default {
   props: {
+    id: { type: String, required: true },
     name: { type: String, required: true },
     price: { type: Number, required: true },
+    amount: { type: Number, required: true },
   },
   methods: {
     async ECPay() {
@@ -33,13 +35,14 @@ export default {
           // 在有設定OrderResultURL的情況下不會出現
           ClientBackURL: HOST,
           // 取代原本的付款成功顯示的頁面 直接設定首頁會405 NotAllowed
-          OrderResultURL: `${API_BASE_URL}/api/return`,
+          // OrderResultURL: `${API_BASE_URL}/api/return`,
           ChoosePayment: "ALL",
           EncryptType: 1,
+          CustomField1: this.id,
+          CustomField2: this.amount,
         };
 
         const form = await this.CreateForm();
-        //   console.log(form.CheckMacValue.value);
         form.submit(); // 自動提交表單
       } catch (error) {
         alert(`Error: ${error}`);
@@ -50,7 +53,8 @@ export default {
       tradeDate,
       totalAmount,
       itemName,
-      checkMacValue
+      checkMacValue,
+      merchantTradeNo
     ) {
       const response = await axios.post(`${API_BASE_URL}/api/addorder`, {
         paymentType: paymentType,
@@ -58,6 +62,7 @@ export default {
         totalAmount: totalAmount,
         itemName: itemName,
         checkMacValue: checkMacValue,
+        merchantTradeNo: merchantTradeNo,
       });
       console.log(response.data);
     },
@@ -82,6 +87,7 @@ export default {
       input.name = "CheckMacValue";
       input.value = CheckMacValue;
       form.appendChild(input);
+
       document.body.appendChild(form);
 
       console.log(form);
@@ -91,7 +97,8 @@ export default {
         form.MerchantTradeDate.value,
         form.TotalAmount.value,
         form.ItemName.value,
-        form.CheckMacValue.value
+        form.CheckMacValue.value,
+        form.MerchantTradeNo.value
       );
 
       return form;
