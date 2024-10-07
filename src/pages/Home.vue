@@ -137,7 +137,7 @@ export default {
         console.log(this.json);
 
         const form = await this.CreateForm();
-        form.submit(); // 自動提交表單
+        // form.submit(); // 自動提交表單
       } catch (error) {
         alert(`Error: ${error}`);
       }
