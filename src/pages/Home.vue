@@ -74,13 +74,17 @@ export default {
       // 這邊的MerchantID不知道怎麼字串的情況下賦值
       // this.data.MerchantID = this.merchantID; 這樣會Error
       // Cannot create property 'MerchantID' on string
-      data: `{
-        MerchantID: "2000132",
-        RelateNumber: "ueikxnqoxlapenrkxurmwonsi",
-        Print: "0",
-        Donation: "1",
-        TaxType: "3",
-        SalesAmount: 1000,
+      data: {
+        MerchantID: "",
+        RelateNumber: "",
+        CustomerName: "louise", // print == 1 時必填
+        CustomerAddr: "address", // print == 1 時必填
+        CustomerPhone: "0954074430", // print == 1
+        CustomerEmail: "louise87276@gmail.com", // print == 1 時必填
+        Print: "1",
+        Donation: "0",
+        TaxType: "1",
+        SalesAmount: 70,
         Items: [
           {
             ItemName: "item01",
@@ -91,14 +95,15 @@ export default {
           },
           {
             ItemName: "item02",
-            ItemCount: 2,
+            ItemCount: 1,
             ItemWord: "個",
             ItemPrice: 20,
-            ItemAmount: 20,
+            ItemAmount: 20, // itemPrice * itemCount
           },
         ],
-        InvType: "07"
-      }`,
+        InvType: "07",
+        vat: "1",
+      },
     };
   },
   components: {
@@ -133,14 +138,25 @@ export default {
           Data: "",
         };
 
+        this.data.MerchantID = this.merchantID;
+        this.data.RelateNumber = "louise" + this.GetTimestamp(now);
         // console.log(this.data);
-        const encryptData = this.GetEncrypData(this.data);
+        const dataString = JSON.stringify(this.data);
+        const encryptData = this.GetEncrypData(dataString);
         this.json.Data = encryptData;
 
+        // console.log(this.json);
         // 沒辦法從前端call
-        await axios.post(`${API_BASE_URL}/api/Issue`, {
-          aa: "bb",
-        });
+        const responseData = await axios.post(
+          `${API_BASE_URL}/api/Issue`,
+          this.json
+        );
+        console.log(responseData.data);
+        if (responseData.data.TransCode != "1") {
+          alert(`開立發票失敗`);
+          return;
+        }
+        console.log(this.GetDecryptData(responseData.data.Data));
       } catch (error) {
         alert(`Error: ${error}`);
       }
@@ -150,13 +166,10 @@ export default {
       return Math.floor(now / 1000);
     },
     GetEncrypData(data) {
-      const encode = encodeURIComponent(data);
-
       // https://stackoverflow.com/questions/76585283/nodejs-cryptojs-returns-different-aes-128-cbc-encrypted-value-when-using-cryptoj
+      const encode = encodeURIComponent(data);
       const key = CryptoJS.enc.Utf8.parse(this.hashKey);
       const iv = CryptoJS.enc.Utf8.parse(this.hashIV);
-      // const key = this.hashKey;
-      // const iv = this.hashIV;
 
       // key 和 iv 會隨著時間不一樣
       const encryptAES = CryptoJS.AES.encrypt(encode, key, {
@@ -170,20 +183,15 @@ export default {
     GetDecryptData(data) {
       const key = CryptoJS.enc.Utf8.parse(this.hashKey);
       const iv = CryptoJS.enc.Utf8.parse(this.hashIV);
-      // const key = this.hashKey;
-      // const iv = this.hashIV;
 
       const decryptAES = CryptoJS.AES.decrypt(data, key, {
         iv: iv,
         mode: CryptoJS.mode.CBC,
         padding: CryptoJS.pad.Pkcs7,
-        // }).toString();
       }).toString(CryptoJS.enc.Utf8);
       console.log("file: Home.vue:119  mounted  decryptAES: ", decryptAES);
 
       const decode = decodeURIComponent(decryptAES);
-      console.log("decode");
-      console.log(decode);
       return decode;
     },
   },
