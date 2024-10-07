@@ -30,8 +30,6 @@
     </div>
 
     <div class="d-flex justify-content-end align-items-center gap-3">
-      <!-- 用來測試顯示API_BASE_URL -->
-      <!-- <span>{{ this.API_BASE_URL }}</span> -->
       <button
         @click="ToggleSearchWindow()"
         class="border border-0 bg-transparent d-md-none"
@@ -82,7 +80,6 @@ import SideBarComponent from "../components/SideBarComponent.vue";
 import SearchInputComponent from "./SearchInputComponent.vue";
 import CustomInputComponent from "./CustomInputComponent.vue";
 import { mapState } from "vuex/dist/vuex.cjs.js";
-import { API_BASE_URL } from "../config/api";
 
 export default {
   components: { SideBarComponent, SearchInputComponent, CustomInputComponent },
@@ -90,7 +87,6 @@ export default {
     return {
       isSideBarOpen: false,
       isSearchWindowOpen: false,
-      API_BASE_URL: API_BASE_URL,
       placeholder: "abc",
       inputValue: "inputValue",
     };

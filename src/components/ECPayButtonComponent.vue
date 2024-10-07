@@ -15,6 +15,7 @@ export default {
     amount: { type: Number, required: true },
   },
   methods: {
+    // https://medium.com/@roan6903/ecpay-aioexampple-37073ceeb853
     async ECPay() {
       try {
         const now = new Date();
