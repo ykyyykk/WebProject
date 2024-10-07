@@ -16,17 +16,14 @@ const app = express();
 // 本來是 app.use(cors()); 但為了增加google登入 不確定origin 會不會影響之後部署
 app.use(
   cors({
+    // 允許多個來源
     origin: [
-      "*",
-      // "http://localhost:5173",
-      // "https://www.louise.tw:3500",
-      // "https://api.louise.tw",
+      "http://localhost:5173",
       // "https://einvoice-stage.ecpay.com.tw/B2CInvoice/Issue",
-    ], // 允許多個來源
+    ],
     // 允許的方法 如果沒有就不沒辦法使用
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     allowedHeaders: "*",
-    //為了綠界開發票
     allowedOrigins: "*",
     credentials: true, // 如果有需要，可以允许发送 cookie
   })
