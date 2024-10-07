@@ -1,13 +1,14 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import authRoutes from "./api/routes/auth.js";
-import itemRoutes from "./api/routes/items.js";
-import ecpayRoutes from "./api/routes/ecpay.js";
-import revenueRoutes from "./api/routes/revenue.js";
-import userRoutes from "./api/routes/user.js";
-import cartRoutes from "./api/routes/cart.js";
-import googleAuth from "./api/routes/googleAuth.js";
+import authRoutes from "./api/routes/Auth.js";
+import itemRoutes from "./api/routes/Items.js";
+import cashierRoutes from "./api/routes/Cashier.js";
+import b2cInvoiceRoutes from "./api/routes/B2CInvoice.js";
+import revenueRoutes from "./api/routes/Revenue.js";
+import userRoutes from "./api/routes/User.js";
+import cartRoutes from "./api/routes/Cart.js";
+import googleAuth from "./api/routes/GoogleAuth.js";
 import { __dirname } from "./utils/path.js";
 import path from "path";
 
@@ -19,7 +20,7 @@ app.use(
     // 允許多個來源
     origin: [
       "http://localhost:5173",
-      // "https://einvoice-stage.ecpay.com.tw/B2CInvoice/Issue",
+      "https://einvoice-stage.ecpay.com.tw/B2CInvoice/Issue",
     ],
     // 允許的方法 如果沒有就不沒辦法使用
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
@@ -35,7 +36,8 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/api", authRoutes);
 app.use("/api", itemRoutes);
-app.use("/api", ecpayRoutes);
+app.use("/api", cashierRoutes);
+app.use("/api", b2cInvoiceRoutes);
 app.use("/api", revenueRoutes);
 app.use("/api", userRoutes);
 app.use("/api", cartRoutes);

@@ -1,47 +1,11 @@
 import express from "express";
-import pool from "../../config/mysql.js";
+import axios from "axios";
 
 const router = express.Router();
 
-router.post("/addorder", async (request, response, next) => {
-  const {
-    paymentType,
-    tradeDate,
-    totalAmount,
-    itemName,
-    checkMacValue,
-    merchantTradeNo,
-  } = request.body;
-  const sql = `INSERT INTO ECPay 
-               (paymentType, tradeDate, totalAmount, itemName, checkMacValue, merchantTradeNo)
-               VALUES(?,?,?,?,?,?)`;
-
-  try {
-    await pool.execute(sql, [
-      paymentType,
-      tradeDate,
-      totalAmount,
-      itemName,
-      checkMacValue,
-      merchantTradeNo,
-    ]);
-    response.status(200).json({ success: true });
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.post("/return", async (request, response, next) => {
-  console.log(request.body);
-  try {
-    response.status(200).json({ success: true });
-  } catch (error) {
-    next(error);
-  }
-});
-
 router.post("/Issue", async (request, response, next) => {
   console.log("Issue");
+  console.log(request.body); //{ aa: "bb"}
 
   const payload = {
     MerchantID: "2000132",
@@ -55,19 +19,15 @@ router.post("/Issue", async (request, response, next) => {
   try {
     const response = await axios.post(
       "https://einvoice-stage.ecpay.com.tw/B2CInvoice/Issue",
-      payload,
-      {
-        headers: {
-          "Content-Type": "application/json", // 根據 ECPay API 文件要求
-        },
-      }
+      payload
     );
+    // console.log(response);
     console.log(response.data);
-    res.status(200).send(response.data); // 傳回結果
+    // response.status(200).send(response.data); // 傳回結果
   } catch (error) {
     console.error("API 呼叫失敗: ", error);
-    res.status(500).send("API 呼叫失敗");
+    // response.status(500).send("API 呼叫失敗");
+    next(error);
   }
 });
-
 export default router;

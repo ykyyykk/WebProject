@@ -181,11 +181,6 @@ export default {
           id: this.item.id,
           amount: this.amount,
         });
-        // 測試反向代理 不用 port 失敗
-        // const response = await axios.post(`/purchaseitem`, {
-        //   id: this.item.id,
-        //   amount: this.amount,
-        // });
         console.log(`response: ${response}`);
         if (!response.data.success) {
           return;

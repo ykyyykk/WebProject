@@ -137,8 +137,10 @@ export default {
         const encryptData = this.GetEncrypData(this.data);
         this.json.Data = encryptData;
 
-        const response = await axios.post(`${API_BASE_URL}/api/Issue`);
-        console.log(response);
+        // 沒辦法從前端call
+        await axios.post(`${API_BASE_URL}/api/Issue`, {
+          aa: "bb",
+        });
       } catch (error) {
         alert(`Error: ${error}`);
       }

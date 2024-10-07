@@ -33,7 +33,12 @@ router.post(
   }
 );
 
-//聽說不要在api裡面含有get post put delete會比較好
+// 完整的 RESTful API 設計應該包含：
+// GET /items - 獲取所有項目
+// GET /items/:id - 獲取特定項目
+// POST /items - 創建新項目
+// PUT /items/:id - 更新特定項目
+// DELETE /items/:id - 刪除特定項目
 router.post("/addnewitem", async (request, response, next) => {
   const { id, name, detail, category, price, stock, status, thumbnail } =
     request.body;
@@ -51,7 +56,8 @@ router.post("/addnewitem", async (request, response, next) => {
       status,
       thumbnail,
     ]);
-    response.status(200).json({ success: true });
+    // 使用 201 Created 而不是 200 OK
+    response.status(201).json({ success: true });
   } catch (error) {
     next(error);
   }
