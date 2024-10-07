@@ -96,6 +96,7 @@ export default {
   },
   methods: {
     LoginOnClick() {
+      // console.log(this.user);
       if (this.user == null) {
         this.$router.push({ name: "Login" });
         return;

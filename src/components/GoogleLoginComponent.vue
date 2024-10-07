@@ -13,9 +13,11 @@
 import axios from "axios";
 import { googleTokenLogin } from "vue3-google-login";
 import { API_BASE_URL } from "../config/api";
+import { mapActions } from "vuex/dist/vuex.cjs.js";
 
 export default {
   methods: {
+    ...mapActions(["SetLogin"]),
     async googleSignin() {
       try {
         const response = await googleTokenLogin();
@@ -28,7 +30,7 @@ export default {
 
         // console.log(accessToken);
 
-        const loginResponse = await axios.post(
+        const googlesignin = await axios.post(
           `${API_BASE_URL}/api/googlesignin`,
           {
             token: accessToken,
@@ -37,16 +39,27 @@ export default {
 
         // console.log(`loginResponse: ${JSON.stringify(loginResponse)}`);
 
-        const email = loginResponse.data.user.email;
-        const password = loginResponse.data.user.sub;
+        const email = googlesignin.data.user.email;
+        const password = googlesignin.data.user.sub;
 
-        await axios.post(`${API_BASE_URL}/api/login`, {
+        const login = await axios.post(`${API_BASE_URL}/api/login`, {
           email: email,
           password: password,
         });
 
-        alert("登入成功");
-        this.$router.push({ name: "Home" });
+        // console.log(login);
+
+        if (login.data.success) {
+          // // JSON.stringify ObjectToJSON
+          // // 因為localStorage.setItem()只能存字串 所以要先轉JSON 要用的時候在轉Object
+          localStorage.setItem("user", JSON.stringify(login.data.user));
+          // sessionStorage 瀏覽器關掉就沒了
+          this.SetLogin({ user: login.data.user });
+          alert("登入成功");
+          this.$router.push({ name: "Home" });
+        } else {
+          alert("帳號或密碼錯誤！");
+        }
       } catch (error) {
         alert(`登入失敗: ${error}`);
       }
