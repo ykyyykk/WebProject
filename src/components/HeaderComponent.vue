@@ -130,6 +130,7 @@ export default {
       }
     },
   },
+  // 沒辦法單純用 d-md-none d-sm-flex 取代
   beforeUnmount() {
     window.removeEventListener("resize", this.UpdateWindowWidth);
   },
