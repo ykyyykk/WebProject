@@ -40,6 +40,7 @@
           <div>剩餘庫存: {{ item.stock }}</div>
         </div>
         <div class="w-100 d-flex justify-content-between mb-3">
+          <!-- TODO: 不懂為什麼綠界開發票測試一直跑出來 明明已經刪掉了 -->
           <button @click="AddToCart()" class="btn btn-danger col">
             加入購物車
           </button>
