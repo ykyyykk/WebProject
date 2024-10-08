@@ -1,9 +1,3 @@
-<template>
-  <button @click="Issue()" class="btn btn-outline-danger col">
-    綠界開發票測試
-  </button>
-</template>
-
 <script>
 import { mapState } from "vuex/dist/vuex.cjs.js";
 import CryptoJS from "crypto-js";
@@ -54,6 +48,7 @@ export default {
     ...mapState(["user"]),
   },
   methods: {
+    // 這裡沒用 因為支付沒辦法用localhost
     async Issue() {
       try {
         const now = new Date();

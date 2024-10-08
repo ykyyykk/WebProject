@@ -55,8 +55,6 @@
             :price="this.amount * item.price"
             :amount="this.amount"
           />
-
-          <B2CInvoiceComponent />
         </div>
       </div>
       <div class="shadow p-3">
