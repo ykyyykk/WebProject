@@ -36,7 +36,7 @@ export default {
       }
     },
     GetTimestamp(now) {
-      console.log(Math.floor(now / 1000));
+      // console.log(Math.floor(now / 1000));
       return Math.floor(now / 1000);
     },
     GetEncrypData(data) {

@@ -33,12 +33,7 @@ router.post("/addorder", async (request, response, next) => {
 });
 
 router.post("/return", async (request, response, next) => {
-  console.log(request.body);
-  try {
-    response.status(200).json({ success: true });
-  } catch (error) {
-    next(error);
-  }
+  // Localhost 沒辦法call /return 因為是localhost
 });
 
 export default router;

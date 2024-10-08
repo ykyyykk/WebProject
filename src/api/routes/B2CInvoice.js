@@ -12,8 +12,8 @@ router.post("/Issue", async (request, response, next) => {
     console.log(apiResponse.data);
     response.status(200).send(apiResponse.data); // 傳回結果
   } catch (error) {
-    console.error("API 呼叫失敗: ", error);
-    response.status(500).send("API 呼叫失敗");
+    console.error(`API 呼叫失敗: ${error}`);
+    response.status(500).send(`API 呼叫失敗: ${error}`);
     next(error);
   }
 });

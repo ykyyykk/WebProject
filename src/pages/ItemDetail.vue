@@ -55,6 +55,8 @@
             :price="this.amount * item.price"
             :amount="this.amount"
           />
+
+          <B2CInvoiceComponent />
         </div>
       </div>
       <div class="shadow p-3">
@@ -75,6 +77,7 @@ import SwiperComponent from "../components/SwiperComponent.vue";
 import NumberInputComponent from "../components/NumberInputComponent.vue";
 import PopupComponent from "../components/PopupComponent.vue";
 import ECPayButtonComponent from "../components/ECPayButtonComponent.vue";
+import B2CInvoiceComponent from "../components/B2CInvoiceComponent.vue";
 import axios from "axios";
 import { API_BASE_URL } from "../config/api";
 import { mapState } from "vuex/dist/vuex.cjs.js";
@@ -209,6 +212,7 @@ export default {
     NumberInputComponent,
     PopupComponent,
     ECPayButtonComponent,
+    B2CInvoiceComponent,
   },
 };
 </script>

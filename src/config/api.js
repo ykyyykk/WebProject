@@ -3,3 +3,7 @@ export const MERCHANTID = import.meta.env.VITE_MERCHANTID; // 開頭一定要加
 export const HASHKEY = import.meta.env.VITE_HASHKEY;
 export const HASHIV = import.meta.env.VITE_HASHIV;
 export const HOST = import.meta.env.VITE_HOST;
+
+export const Issue_MERCHANTID = import.meta.env.VITE_Issue_MERCHANTID;
+export const Issue_HASHKEY = import.meta.env.VITE_Issue_HASHKEY;
+export const Issue_HASHIV = import.meta.env.VITE_Issue_HASHIV;
