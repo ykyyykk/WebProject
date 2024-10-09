@@ -13,13 +13,18 @@ import Dashboard from "../pages/Dashboard.vue";
 import ItemManagement from "../pages/ItemManagement.vue";
 import UserManagement from "../pages/UserManagement.vue";
 import RevenueChart from "../pages/RevenueChart.vue";
-import PayResult from "../pages/PayResult.vue";
+import MiniGame from "../pages/MiniGame.vue";
 
 const routes = [
   {
     path: "/",
     name: "Home",
     component: Home,
+  },
+  {
+    path: "/minigame",
+    name: "MiniGame",
+    component: MiniGame,
   },
   {
     path: "/cart",
@@ -82,11 +87,6 @@ const routes = [
         component: RevenueChart,
       },
     ],
-  },
-  {
-    path: "/payresult",
-    name: "PayResult",
-    component: PayResult,
   },
   {
     // 404轉址

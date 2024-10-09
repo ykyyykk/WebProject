@@ -44,6 +44,15 @@
       >
         <i class="fa-solid fa-store fs-5"></i>
       </router-link>
+
+      <router-link
+        :to="{ path: '/minigame' }"
+        class="bg-transparent text-black tooltip_direction"
+        data-name="小遊戲"
+        data-direction="bottom"
+        style="--accent-color: grey"
+        ><i class="fa-solid fa-gamepad fs-5"></i>
+      </router-link>
       <!-- TODOAdd: 新增通知 -->
       <!-- TODOAdd: 通知同步發送email-->
       <!-- TODOAdd: 取消訂閱通知email-->
