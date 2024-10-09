@@ -50,6 +50,16 @@
 
       <!-- 因為router-link會讓tooltip有小小的接縫不好看所以用button -->
       <button
+        @click="this.$router.push({ name: 'Portfolio' })"
+        class="bg-transparent text-black border border-0 tooltip_direction"
+        data-name="作品集"
+        data-direction="bottom"
+        style="--accent-color: grey"
+      >
+        <i class="fa-solid fa-user-graduate"></i>
+      </button>
+
+      <button
         @click="this.$router.push({ name: 'MiniGame' })"
         class="bg-transparent text-black border border-0 tooltip_direction"
         data-name="小遊戲"

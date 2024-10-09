@@ -14,6 +14,7 @@ import ItemManagement from "../pages/ItemManagement.vue";
 import UserManagement from "../pages/UserManagement.vue";
 import RevenueChart from "../pages/RevenueChart.vue";
 import MiniGame from "../pages/MiniGame.vue";
+import Portfolio from "../pages/Portfolio.vue";
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     path: "/minigame",
     name: "MiniGame",
     component: MiniGame,
+  },
+  {
+    path: "/potfolio",
+    name: "Portfolio",
+    component: Portfolio,
   },
   {
     path: "/cart",

@@ -1,6 +1,6 @@
 <template>
   <div class="min-vh-100">
-    <div id="enemy_side" class="mt-2 d-flex justify-content-center">
+    <div id="enemy_side" class="mt-3 d-flex justify-content-center">
       <div
         id="enemy_health_bar"
         class="progress col-sm-5 h-auto me-3"
@@ -49,7 +49,7 @@
         style="width: 750px"
         tabindex="0"
       ></div>
-      <div id="consecutive_win_count_txt" class="mt-auto mb-2">
+      <div id="consecutive_win_count_txt" class="mt-auto mb-3">
         連續勝利: {{ consecutiveWinCount }}
       </div>
     </div>
@@ -92,7 +92,7 @@
       </div>
     </div>
 
-    <div id="player_btn_group" class="mb-2 d-flex justify-content-center">
+    <div id="player_btn_group" class="mb-3 d-flex justify-content-center">
       <div
         @mouseenter="hoverBtn = 'Attack'"
         @mouseleave="hoverBtn = ''"
@@ -155,7 +155,7 @@
       </div>
     </div>
 
-    <div class="mb-2 d-flex justify-content-center gap-2">
+    <div class="mb-3 d-flex justify-content-center gap-2">
       <button
         @click="NextGameBtnOnClick()"
         id="next_game_btn"
