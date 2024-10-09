@@ -1,0 +1,92 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: #ebebf6;
+}
+
+.socials-container {
+  display: flex;
+  gap: 20px;
+}
+
+.socials-container a {
+  background-color: white;
+  padding: 1em;
+  /* 畫圓 */
+  border-radius: 50%;
+  height: 64px;
+  width: 64px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.socials-container a svg {
+  height: 32px;
+}
+
+/* tooltip 動畫初始狀態 */
+.socials-container a::before {
+  /* 會去取html 中 socials-container 裡面的 a 塞的data-name */
+  content: attr(data-name);
+  position: absolute;
+  /* 會去取html 中 socials-container 裡面的 a 塞的style=--accent-color" */
+  background-color: var(--accent-color);
+  color: white;
+  text-decoration: none;
+  padding: 0.5em 1em;
+  border-radius: 100px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+  transform: translateY(-30px) rotate(25deg);
+  opacity: 0;
+  transition: 200ms cubic-bezier(0.42, 0, 0.44, 1.68);
+}
+
+/* tooltip完成狀態 */
+.socials-container a:hover::before {
+  transform: translateY(-65px) rotate(0deg);
+  opacity: 1;
+}
+
+/* 倒三角形完成狀態 */
+.socials-container a:hover::after {
+  /* 根據視窗大小 translateY 需要上下調整 */
+  transform: translateY(-45px) rotate(0deg);
+  opacity: 1;
+}
+
+/* 製作倒三角形 */
+.socials-container a::after {
+  content: "";
+  position: absolute;
+  height: 0;
+  width: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 10px solid var(--accent-color);
+  /* 沒有border-bottom 因為是倒三角形 */
+  transform: translateY(0px) rotate(0deg);
+  opacity: 0;
+  /* 可以用FireFox瀏覽器去調整 原本是ease 圖表拉一拉可以得到此結果 */
+  transition: 200ms cubic-bezier(0.42, 0, 0.44, 1.68);
+}
+
+/* 製作a反白 */
+.socials-container a:hover {
+  background-color: var(--accent-color);
+  /* SVG反白 有可能沒有用 所以底下還要單獨設定一次*/
+  fill: white;
+}
+
+/* 如果上面反白沒用才會用到 */
+.socials-container a:hover svg {
+  fill: white;
+}
