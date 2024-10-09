@@ -40,19 +40,24 @@
       <router-link
         v-if="isManager"
         :to="{ path: '/dashboard' }"
-        class="bg-transparent text-black"
+        class="bg-transparent text-black tooltip_direction"
+        data-name="控制台"
+        data-direction="bottom"
+        style="--accent-color: grey"
       >
         <i class="fa-solid fa-store fs-5"></i>
       </router-link>
 
-      <router-link
-        :to="{ path: '/minigame' }"
-        class="bg-transparent text-black tooltip_direction"
+      <!-- 因為router-link會讓tooltip有小小的接縫不好看所以用button -->
+      <button
+        @click="this.$router.push({ name: 'MiniGame' })"
+        class="bg-transparent text-black border border-0 tooltip_direction"
         data-name="小遊戲"
         data-direction="bottom"
         style="--accent-color: grey"
-        ><i class="fa-solid fa-gamepad fs-5"></i>
-      </router-link>
+      >
+        <i class="fa-solid fa-gamepad fs-5"></i>
+      </button>
       <!-- TODOAdd: 新增通知 -->
       <!-- TODOAdd: 通知同步發送email-->
       <!-- TODOAdd: 取消訂閱通知email-->
