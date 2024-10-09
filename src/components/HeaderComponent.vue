@@ -44,21 +44,26 @@
       >
         <i class="fa-solid fa-store fs-5"></i>
       </router-link>
-
       <!-- TODOAdd: 新增通知 -->
       <!-- TODOAdd: 通知同步發送email-->
       <!-- TODOAdd: 取消訂閱通知email-->
       <!-- 不要用router-link 不知道為什麼 會呼叫到Cart 明明名稱不一樣 -->
       <button
         @click="this.LoginOnClick()"
-        class="bg-transparent text-black border border-0"
+        class="bg-transparent text-black border border-0 tooltip_direction"
+        data-name="會員專區"
+        data-direction="bottom"
+        style="--accent-color: grey"
       >
         <i class="fa-solid fa-user fs-5"></i>
       </button>
 
       <button
         @click="this.CartOnClick()"
-        class="bg-transparent text-black ms-auto me-2 border border-0"
+        class="bg-transparent text-black ms-auto me-2 border border-0 tooltip_direction"
+        data-name="購物車"
+        data-direction="bottom"
+        style="--accent-color: grey"
       >
         <i class="fa-solid fa-cart-shopping fs-5"></i>
       </button>

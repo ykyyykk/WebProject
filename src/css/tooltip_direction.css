@@ -1,0 +1,116 @@
+.tooltip_direction {
+  background-color: white;
+  /* height: 64px;
+  width: 64px; */
+  /* 一定要relative不然tooltip 和 三角形不知道跑哪去 */
+  position: relative;
+}
+
+/* Tooltip 文字 */
+.tooltip_direction::before {
+  content: attr(data-name);
+  position: absolute;
+  background-color: var(--accent-color);
+  color: white;
+  text-decoration: none;
+  padding: 0.5em 1em;
+  text-wrap: nowrap;
+  border-radius: 100px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: 200ms cubic-bezier(0.42, 0, 0.44, 1.68);
+}
+
+/* 倒三角形 */
+.tooltip_direction::after {
+  content: "";
+  position: absolute;
+  height: 0;
+  width: 0;
+  opacity: 0;
+  transition: 200ms cubic-bezier(0.42, 0, 0.44, 1.68);
+}
+
+/* 被Hover的物體反白背景反白 */
+.tooltip_direction:hover {
+  background-color: var(--accent-color);
+}
+
+/* 三角形動畫完成狀態 一定要設定direction */
+/* Top Tooltip */
+.tooltip_direction[data-direction="top"]::before {
+  /* tooltip距離本體 */
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-30px) rotate(40deg);
+}
+.tooltip_direction[data-direction="top"]::after {
+  /* 三角型距離本體 */
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(0) rotate(0deg);
+  /* 三角形圖案 */
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+  border-top: 10px solid var(--accent-color);
+}
+/* Bottom Tooltip */
+.tooltip_direction[data-direction="bottom"]::before {
+  bottom: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(30px) rotate(-40deg);
+}
+.tooltip_direction[data-direction="bottom"]::after {
+  bottom: -50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(0);
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+  border-bottom: 10px solid var(--accent-color);
+}
+/* Left Tooltip */
+.tooltip_direction[data-direction="left"]::before {
+  left: 50%;
+  top: 50%;
+  transform: translateY(-50%) translateX(-30px) rotate(40deg);
+}
+.tooltip_direction[data-direction="left"]::after {
+  left: -50%;
+  top: 50%;
+  transform: translateY(-50%) translateX(0);
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 10px solid var(--accent-color);
+}
+/* Right Tooltip */
+.tooltip_direction[data-direction="right"]::before {
+  right: 50%;
+  top: 50%;
+  transform: translateY(-50%) translateX(30px) rotate(40deg);
+}
+.tooltip_direction[data-direction="right"]::after {
+  right: -50%;
+  top: 50%;
+  transform: translateY(-50%) translateX(0);
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 10px solid var(--accent-color);
+}
+
+/* Tooltip動畫完成狀態 一定要設定direction*/
+.tooltip_direction:hover::before,
+.tooltip_direction:hover::after {
+  opacity: 1;
+}
+.tooltip_direction[data-direction="top"]:hover::before {
+  transform: translateX(-50%) translateY(-65px) rotate(0deg);
+}
+.tooltip_direction[data-direction="bottom"]:hover::before {
+  transform: translateX(-50%) translateY(65px) rotate(0deg);
+}
+.tooltip_direction[data-direction="left"]:hover::before {
+  transform: translateX(-65px) translateY(-50%) rotate(0deg);
+}
+.tooltip_direction[data-direction="right"]:hover::before {
+  transform: translateX(65px) translateY(-50%) rotate(0deg);
+}
