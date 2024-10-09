@@ -10,7 +10,6 @@ export default {
       enemy_energy: "",
       player_action: "",
       enemy_action: "",
-      history_log: "",
       attack_value: 6,
       counterattack_value: 8,
       recover_value: 3,
@@ -29,37 +28,15 @@ export default {
     this.UpdateLog("遊戲開始");
   },
   methods: {
-    AttackBtnOnClick() {
+    ActionBtnOnClick(actionName, cost) {
       if (!this.IsPlaying) return;
-      if (this.player_energy < this.attack_cost) return;
+      if (this.player_energy < cost) return;
 
-      this.player_energy -= this.attack_cost;
-      this.player_action = "attack";
+      this.player_energy -= cost;
+      this.player_action = actionName;
       this.enemy_action = this.GetRandomAction();
       this.UpdateLog(`===========================================`);
-      this.UpdateLog(`玩家使用: ${this.player_action}`);
-      this.CheckResult();
-    },
-    CounterAttackBtnOnClick() {
-      if (!this.IsPlaying) return;
-      if (this.player_energy < this.counterattack_cost) return;
-
-      this.player_energy -= this.counterattack_cost;
-      this.player_action = "counterattack";
-      this.enemy_action = this.GetRandomAction();
-      this.UpdateLog(`===========================================`);
-      this.UpdateLog(`玩家使用: ${this.player_action}`);
-      this.CheckResult();
-    },
-    RecoverBtnOnClick() {
-      if (!this.IsPlaying) return;
-      if (this.player_energy < this.recover_cost) return;
-
-      this.player_energy -= this.recover_cost;
-      this.player_action = "recover";
-      this.enemy_action = this.GetRandomAction();
-      this.UpdateLog(`===========================================`);
-      this.UpdateLog(`玩家使用: ${this.player_action}`);
+      this.UpdateLog(`玩家使用: ${actionName}`);
       this.CheckResult();
     },
     NextGameBtnOnClick() {
@@ -166,10 +143,7 @@ export default {
         this.enemy_action == "attack" &&
         this.player_action != "counterattack"
       ) {
-        this.player_health =
-          this.player_health >= this.attack_value
-            ? +this.player_health - +this.attack_value
-            : 0;
+        this.player_health -= +this.attack_value;
         this.UpdateLog(
           `玩家受到: ${this.attack_value} 點傷害 剩餘血量: ${this.player_health}`
         );
@@ -179,10 +153,7 @@ export default {
         this.player_action == "attack" &&
         this.enemy_action != "counterattack"
       ) {
-        this.enemy_health =
-          this.enemy_health >= this.attack_value
-            ? +this.enemy_health - +this.attack_value
-            : 0;
+        this.enemy_health -= +this.attack_value;
         this.UpdateLog(
           `敵人受到: ${this.attack_value} 點傷害 剩餘血量: ${this.enemy_health}`
         );
@@ -192,10 +163,7 @@ export default {
         this.player_action == "counterattack" &&
         this.enemy_action == "attack"
       ) {
-        this.enemy_health =
-          this.enemy_health >= this.counterattack_value
-            ? +this.enemy_health - +this.counterattack_value
-            : 0;
+        this.enemy_health -= +this.counterattack_value;
         this.UpdateLog(`玩家反擊 玩家剩餘血量: ${this.player_health}`);
         this.UpdateLog(
           `敵人受到: ${this.counterattack_value} 點傷害 剩餘血量: ${this.enemy_health}`
@@ -206,10 +174,7 @@ export default {
         this.enemy_action == "counterattack" &&
         this.player_action == "attack"
       ) {
-        this.player_health =
-          this.player_health >= this.counterattack_value
-            ? +this.player_health - +this.counterattack_value
-            : 0;
+        this.player_health -= +this.counterattack_value;
         this.UpdateLog(`敵人反擊 敵人剩餘血量: ${this.enemy_health}`);
         this.UpdateLog(
           `玩家受到: ${this.counterattack_value} 點傷害 剩餘血量: ${this.player_health}`
@@ -221,6 +186,8 @@ export default {
       ) {
         this.UpdateLog(`雙方都使用 反擊 沒有發生任何事`);
       }
+      this.player_health = this.player_health <= 0 ? 0 : +this.player_health;
+      this.enemy_health = this.enemy_health <= 0 ? 0 : +this.enemy_health;
       this.player_energy += +this.default_recover_energy;
       this.enemy_energy += +this.default_recover_energy;
       this.CheckHealth();

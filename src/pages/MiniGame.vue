@@ -99,7 +99,7 @@
         :class="{
           hovering: this.hoverBtn == 'Attack' && player_energy >= attack_cost,
         }"
-        @click="AttackBtnOnClick()"
+        @click="ActionBtnOnClick('attack', attack_cost)"
         id="attack_btn"
         class="card col-sm-3 border-black me-3"
       >
@@ -119,7 +119,7 @@
             this.hoverBtn == 'CounterAttack' &&
             player_energy >= counterattack_cost,
         }"
-        @click="CounterAttackBtnOnClick()"
+        @click="ActionBtnOnClick('counterattack', counterattack_cost)"
         id="counterattack_btn"
         class="card col-sm-3 border-black me-3"
       >
@@ -141,7 +141,7 @@
           // hovering: Useable('Recover', recover_cost),
           hovering: this.hoverBtn == 'Recover' && player_energy >= recover_cost,
         }"
-        @click="RecoverBtnOnClick()"
+        @click="ActionBtnOnClick('recover', recover_cost)"
         id="recover_btn"
         class="card col-sm-3 border-black me-3"
       >
