@@ -1,0 +1,24 @@
+# workflo名稱
+name: CI
+
+# 觸發條件
+on:
+  pull_request:
+    branches: [main]
+
+# 裡面定義各種要執行的 jobs 例如 test 就是其中一個 job 的名稱
+jobs:
+  test:
+    # 決定要運行在哪一個平台上
+    runs-on: ubuntu-latest
+    # 定義這個 job的步驟 每一個在 steps 底下的 name 就是一個 step 使用 run來決定要執行的 actions/commands
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12.x
+      - name: Install package
+        run: cd app && yarn install
+      - name: Testing
+        run: cd app && yarn test
