@@ -1,5 +1,5 @@
 <template>
-  <main class="d-none" style="height: calc(100vh - 50px)">
+  <main class="" style="height: calc(100vh - 50px)">
     <div class="container-fluid h-100 position-relative">
       <!-- 作品集1遊戲背景圖片 -->
       <img
@@ -7,7 +7,13 @@
         src="/static/header.jpg"
       />
       <!-- 漸層Mask -->
-      <div class="gradient position-absolute w-100 h-100 z-0"></div>
+      <div
+        class="position-absolute w-100 h-100 z-0"
+        style="
+          background-color: black;
+          mask-image: linear-gradient(to right, transparent, black 60%);
+        "
+      ></div>
       <!-- 作品集1 -->
       <div class="row h-100">
         <!-- 作品集1 左邊 -->
@@ -16,36 +22,7 @@
           <div
             class="d-flex mt-3 flex-xxl-row flex-wrap justify-content-evenly position-relative gap-sm-3 gap-0"
           >
-            <a
-              class="text-decoration-none m-0 d-flex flex-xxl-column flex-xl-column flex-md-column flex-sm-column flex-column align-items-center justify-content-xl-between justify-content-xxl-center col-xl-12 flex-nowrap-4 col-xxl"
-              href="https://store.steampowered.com/app/1483600/_/"
-            >
-              <p class="text-white fs-3">Steam</p>
-              <img
-                src="/static/Steam逢魔之時.png"
-                style="width: 100px; height: 100px"
-              />
-            </a>
-            <a
-              class="text-decoration-none btn m-0 d-flex flex-xxl-column flex-xl-column flex-md-column flex-sm-column flex-column align-items-center justify-content-xl-between justify-content-xxl-center col-xl-12 flex-nowrap-4 col-xxl"
-              href="https://play.google.com/store/apps/details?id=com.LittleFox.LittleFox&hl=zh_TW"
-            >
-              <p class="text-white fs-3">GooglePlay</p>
-              <img
-                src="/static/GooglePlay逢魔之時.png"
-                style="width: 100px; height: 100px"
-              />
-            </a>
-            <a
-              class="text-decoration-none btn m-0 d-flex flex-xxl-column flex-xl-column flex-md-column flex-sm-column flex-column align-items-center justify-content-xl-between justify-content-xxl-center col-xl-12 flex-nowrap-4 col-xxl"
-              href="https://simmer.io/@louise_bws/littlefox"
-            >
-              <p class="text-white fs-3">Simmer.io</p>
-              <img
-                src="/static/SimmerQRCode.png"
-                style="width: 100px; height: 100px"
-              />
-            </a>
+            <GameLinkComponent />
           </div>
         </div>
         <!-- 作品集1 右邊 -->
@@ -126,71 +103,24 @@
   </main>
 
   <div class="d-block container">
-    <div class="shadow-sm d-flex justify-content-evenly p-3">
-      <div
-        class="border border-black"
-        style="width: 150px; height: 150px"
-      ></div>
-      <div>
-        <h2>姓名：汪世傑</h2>
-        <h2>學業：桃園農工 造園科 畢業</h2>
-        <h2>生日：1998年6月27日</h2>
-      </div>
-    </div>
-
-    <div class="d-flex justify-content-evenly shadow-sm mt-3 p-3">
-      <!-- 在這裡可以放置捲動區域的內容 -->
-      <div class="d-block">
-        <div class="company_name">公司名稱：宏國室內裝修</div>
-        <div class="job_title">職位：學徒</div>
-        <div class="senioirty">年資：2017/8~2020/6 2年11個月</div>
-      </div>
-      <div class="d-block">
-        <div class="company_name">公司名稱：曉兔科技</div>
-        <div class="job_title">職位：前端端遊戲程式設計</div>
-        <div class="senioirty">年資：2021/1~2021/7 7個月</div>
-      </div>
-      <div class="d-block">
-        <div class="company_name">公司名稱：奧奇盟科技</div>
-        <div class="job_title">職位：全端遊戲程式設計</div>
-        <div class="senioirty">年資：2021/8~2021/9 2個月</div>
-      </div>
-      <div class="d-block">
-        <div class="company_name">公司名稱：村宏室內裝修</div>
-        <div class="job_title">職位：師傅</div>
-        <div class="senioirty">年資：2022/9~2023/10 1年2個月</div>
-      </div>
-    </div>
-
-    <div class="d-block justify-content-center shadow-sm mt-3 p-3 mb-5">
-      <div class="w-25 border border-black mx-auto">
-        <div class="d-flex justify-content-center mb-3 border border-black">
-          <i class="fa-solid fa-phone mx-2"></i>
-          <div>0950074430</div>
-        </div>
-        <div class="d-flex justify-content-center">
-          <i class="fa-solid fa-envelope mx-2"></i>
-          <div>louise87276@gmail.com</div>
-        </div>
-
-        <div class="d-flex justify-content-center mb-3">
-          <div>你的姓名:</div>
-          <input type="text" />
-        </div>
-        <div class="d-flex justify-content-center mb-3">
-          <div>你的電子郵件:</div>
-          <input type="email" />
-        </div>
-        <div class="d-block justify-content-center mb-3">
-          <div>詢問內容:</div>
-          <textarea cols="30" rows="10"></textarea>
-        </div>
-        <button
-          class="d-flex justify-content-center w-100 btn btn-outline-primary"
-        >
-          送出
-        </button>
-      </div>
-    </div>
+    <MyInfoComponent />
+    <JobsComponent />
+    <ContactMeComponent />
   </div>
 </template>
+
+<script>
+import ContactMeComponent from "../components/portfolio/ContactMeComponent.vue";
+import JobsComponent from "../components/portfolio/JobsComponent.vue";
+import MyInfoComponent from "../components/portfolio/MyInfoComponent.vue";
+import GameLinkComponent from "../components/portfolio/GameLinkComponent.vue";
+
+export default {
+  components: {
+    GameLinkComponent,
+    MyInfoComponent,
+    JobsComponent,
+    ContactMeComponent,
+  },
+};
+</script>
