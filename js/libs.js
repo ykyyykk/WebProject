@@ -27,10 +27,6 @@ loadCSS(
   "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
 );
 
-// loadCSS("https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css");
-// Swiper SwiperJs 沒辦法在這邊使用
-// loadJs("https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js");
-
 // <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 // <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
