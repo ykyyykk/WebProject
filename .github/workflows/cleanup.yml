@@ -1,0 +1,21 @@
+# workflo名稱 會在 Github Action 頁面上顯示的名稱
+name: CleanUp
+
+# 只有在 push 到 main 分支上才會觸發此 workflow
+on:
+  push:
+    branches: [main]
+
+# 建立一個 job
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions: write-all
+
+    steps:
+      - name: 🗑 Delete deployment
+        uses: strumwolf/delete-deployment-environment@v2
+        with:
+          token: ${{ secrets.GITHUBTOKEN }}
+          environment: github-pages
+          onlyRemoveDeployments: true
