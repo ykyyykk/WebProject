@@ -18,7 +18,7 @@ jobs:
       host: ${{ secrets.HOST }}
       user: ${{ secrets.USER }}
       password: ${{ secrets.PASSWORD }}
-      database: ${{ secrets_DATABASE }}
+      database: ${{ secrets.DATABASE }}
     # 定義這個 job的步驟 每一個在 steps 底下的 name 就是一個 step 使用 run來決定要執行的 actions/commands
     steps:
       - uses: actions/checkout@v2
