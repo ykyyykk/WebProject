@@ -1,12 +1,9 @@
-import { shallowMount, createLocalVue } from "@vue/test-utils";
-import Vuex from "vuex";
+import { shallowMount } from "@vue/test-utils";
+import { createStore } from "vuex";
 import axios from "axios";
-import Login from "@/pages/Login.vue";
+import Login from "../src/pages/Login.vue";
 
 jest.mock("axios");
-
-const localVue = createLocalVue();
-localVue.use(Vuex);
 
 describe("Login.vue", () => {
   let actions;
@@ -16,15 +13,16 @@ describe("Login.vue", () => {
     actions = {
       SetLogin: jest.fn(),
     };
-    store = new Vuex.Store({
+    store = createStore({
       actions,
     });
   });
 
-  it("呼叫 /login API and handles successful response", async () => {
+  it("calls login API and handles successful response", async () => {
     const wrapper = shallowMount(Login, {
-      store,
-      localVue,
+      global: {
+        plugins: [store],
+      },
       data() {
         return {
           email: "e",
@@ -56,33 +54,28 @@ describe("Login.vue", () => {
     );
   });
 
-  it("如果call /login 失敗", async () => {
+  it("handles login failure", async () => {
     const wrapper = shallowMount(Login, {
-      store,
-      localVue,
+      global: {
+        plugins: [store],
+      },
       data() {
         return {
-          email: "錯誤的email",
-          password: "錯誤的password",
+          email: "test@example.com",
+          password: "wrongpassword",
         };
       },
     });
 
-    const mockResponse = {
-      data: {
-        success: false,
-        message: "找不到使用者",
-      },
-    };
-    axios.post.mockRejectedValue(new Error("登入失敗"));
+    axios.post.mockRejectedValue(new Error("Login failed"));
 
     const alertMock = jest.spyOn(window, "alert").mockImplementation(() => {});
 
     await wrapper.vm.Login();
 
     expect(axios.post).toHaveBeenCalledWith(expect.any(String), {
-      email: "錯誤的email2",
-      password: "錯誤的密碼2",
+      email: "test@example.com",
+      password: "wrongpassword",
     });
     expect(alertMock).toHaveBeenCalledWith(
       expect.stringContaining("帳號或密碼錯誤")

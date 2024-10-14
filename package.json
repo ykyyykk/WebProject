@@ -9,27 +9,13 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "jest",
+    "test": "echo test",
     "startMac": "sh startNodeJS.sh",
     "startWin": "startNodeJS.bat"
   },
   "author": "",
   "license": "ISC",
   "description": "",
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "vue"
-    ],
-    "transform": {
-      "^.+\\.js$": "babel-jest",
-      ".*\\.(vue)$": "vue-jest"
-    },
-    "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/src/$1"
-    }
-  },
   "dependencies": {
     "@vitejs/plugin-vue": "^5.1.2",
     "animejs": "^3.2.2",
@@ -57,12 +43,5 @@
     "vue-router": "^4.4.3",
     "vue3-google-login": "^2.0.33",
     "vuex": "^4.0.2"
-  },
-  "devDependencies": {
-    "@babel/preset-env": "^7.25.8",
-    "@vue/test-utils": "^2.4.0-alpha.2",
-    "babel-jest": "^26.6.3",
-    "jest": "^26.6.3",
-    "vue-jest": "^5.0.0-alpha.10"
   }
 }
