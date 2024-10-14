@@ -21,14 +21,12 @@ jobs:
       database: ${{ secrets.DATABASE }}
     # 定義這個 job的步驟 每一個在 steps 底下的 name 就是一個 step 使用 run來決定要執行的 actions/commands
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js 20.17.0
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: 20.17.0
-      - name: Install mocha
-        run: npm install mocha -g
-      - name: Install package
-        run: npm install
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci
       - name: Testing
         run: npm test
