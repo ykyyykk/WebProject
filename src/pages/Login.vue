@@ -62,10 +62,10 @@
 </template>
 
 <script>
-import axios from "axios";
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
-import { mapActions } from "vuex/dist/vuex.cjs.js";
 import GoogleLoginComponent from "../components/GoogleLoginComponent.vue";
+import axios from "axios";
+import { mapActions } from "vuex/dist/vuex.cjs.js";
 import { API_BASE_URL } from "../config/api";
 
 export default {

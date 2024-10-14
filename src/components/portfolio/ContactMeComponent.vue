@@ -20,7 +20,9 @@
       </div>
       <div class="d-block mb-3">
         <div>詢問內容:</div>
-        <textarea class="w-100" style="height: 250px"></textarea>
+        <textarea class="w-100" style="height: 250px">
+這聯絡不到我不用送出</textarea
+        >
       </div>
       <button
         class="d-flex justify-content-center w-100 btn btn-outline-primary"
