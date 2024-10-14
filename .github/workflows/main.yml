@@ -27,6 +27,6 @@ jobs:
         with:
           node-version: 12.x
       - name: Install package
-        run: cd app && npm install
+        run: npm install
       - name: Testing
-        run: cd app && npm test
+        run: npm test
