@@ -1,16 +1,24 @@
-# workflo名稱
+# workflo名稱 會在 Github Action 頁面上顯示的名稱
 name: CI
 
-# 觸發條件
+# 只有在 push 到 main 分支上才會觸發此 workflow
 on:
-  pull_request:
+  push:
     branches: [main]
 
-# 裡面定義各種要執行的 jobs 例如 test 就是其中一個 job 的名稱
+# 建立一個 job
 jobs:
+  # 將此 job 的名稱設定為 'tests'
   test:
     # 決定要運行在哪一個平台上
     runs-on: ubuntu-latest
+    env:   
+      # 比較敏感的資料可以這樣在 yaml 檔案中可以使用 ${{ secrets.名稱 }} 取得 secrets 中存放的值
+      # 可以在 GitHub Repo 至 Settings → Secrets → Actions 中設定 secret
+      host: ${{ secrets.HOST }}
+      user: ${{ secrets.USER }}
+      password: ${{ secrets.PASSWORD }}
+      database: ${{ secrets_DATABASE }}
     # 定義這個 job的步驟 每一個在 steps 底下的 name 就是一個 step 使用 run來決定要執行的 actions/commands
     steps:
       - uses: actions/checkout@v2
