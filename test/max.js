@@ -1,4 +1,4 @@
-import should from "should";
+import should from "should"; //這是有用的 不要刪 也不要uninstall
 import { max } from "../lib/max.js";
 
 describe("#max", () => {
