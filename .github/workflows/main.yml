@@ -26,6 +26,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 20.17.0
+      - name: Install mocha
+        run: npm install mocha -g
       - name: Install package
         run: npm install
       - name: Testing
