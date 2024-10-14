@@ -21,6 +21,33 @@
         <div v-for="ad in this.leftSideAd" :key="ad">
           <ImageLinkComponent :obj="ad" />
         </div>
+
+        <!-- <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6842691191512975"
+          crossorigin="anonymous"
+        ></script> -->
+        <!-- <ins
+          class="adsbygoogle"
+          style="display: block; text-align: center"
+          data-ad-layout="in-article"
+          data-ad-format="fluid"
+          data-ad-client="ca-pub-6842691191512975"
+          data-ad-slot="8195035503"
+        ></ins> -->
+        <!-- <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script> -->
+        <div class="addGoogleItem">
+          <ins
+            class="adsbygoogle"
+            style="display: block"
+            data-ad-client="ca-pub-***此處替換data-ad-client***"
+            data-ad-slot="此處替換data-ad-slot"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          ></ins>
+        </div>
       </div>
 
       <!-- 中間物品欄 -->
@@ -77,6 +104,17 @@ export default {
       "rightSideAd",
       "rightSwiper",
     ]),
+  },
+  onMounted() {
+    //插入廣告
+    const oScript = document.createElement("script");
+    oScript.type = "text/javascript";
+    oScript.async = true;
+    oScript.src =
+      "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-******"; //更換此處為data-ad-client
+    oScript.crossOrigin = "anonymous";
+    document.head.appendChild(oScript);
+    window.addGoogleAds();
   },
 };
 </script>

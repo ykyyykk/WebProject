@@ -1,15 +1,38 @@
 <template>
   <div id="cool_input">
-    <input type="text" required spellcheck="false" />
+    <input
+      type="text"
+      :value="modelValue"
+      @input="onInput"
+      @blur="onBlur"
+      @keyup.enter="onEnter"
+      required
+      spellcheck="false"
+    />
     <!-- 不知道怎麼用props動態調整 -->
-    <label>label</label>
+    <label>{{ placeholder }}</label>
   </div>
 </template>
 
 <script>
 export default {
   props: {
+    modelValue: { type: String, required: true }, // 綁定 v-model 的值
     placeholder: { type: String, required: true },
+  },
+  emits: ["update:modelValue", "enter"], // 使用 v-model 需要 emit 更新
+  methods: {
+    onInput(event) {
+      this.$emit("update:modelValue", event.target.value); // 傳回輸入的值
+      this.$emit("input"); // 若要觸發 @input 事件
+    },
+    onBlur(event) {
+      this.$emit("update:modelValue", event.target.value); // 傳回輸入的值
+      this.$emit("blur"); // 若要觸發 @blur 事件
+    },
+    onEnter() {
+      this.$emit("enter"); // 觸發 enter 事件
+    },
   },
 };
 </script>
@@ -20,6 +43,7 @@ export default {
 }
 
 #cool_input input {
+  width: 100%;
   height: 2.5rem;
   border-radius: 6px;
   font-size: 18px;

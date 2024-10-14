@@ -20,6 +20,15 @@
         <div class="mb-3">
           <h4>價格範圍</h4>
           <div class="d-flex justify-content-between">
+            <!-- 失敗 不知道為什麼 按不下去可能跟css有關 -->
+            <!-- <CustomInputComponent
+            class="form-control form-control-sm text-center"
+            style="height: 2rem"
+            :placeholder="最小值"
+            v-model.number="this.minPrice"
+            @blur="SetPriceInterval()"
+            /> -->
+            <!-- @blur 當元素失去焦點時觸發 -->
             <input
               class="form-control form-control-sm text-center"
               style="height: 2rem"
@@ -28,6 +37,7 @@
               v-model.number="this.minPrice"
               @blur="SetPriceInterval()"
             />
+
             <div style="height: 2rem">~</div>
             <input
               class="form-control form-control-sm text-center"
@@ -130,6 +140,7 @@
 import { mapState } from "vuex/dist/vuex.cjs.js";
 import ItemComponent from "../components/ItemComponent.vue";
 import ElevatorComponent from "../components/ElevatorComponent.vue";
+import CustomInputComponent from "../components/CustomInputComponent.vue";
 
 export default {
   data() {

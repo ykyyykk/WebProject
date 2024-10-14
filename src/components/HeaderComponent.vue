@@ -20,10 +20,6 @@
         <img style="width: 100%; height: auto" src="/static/Logo.png" />
       </router-link>
 
-      <!-- 測試用 失敗 -->
-      <!-- <div class="ms-2 d-none d-md-block w-50 p-0">
-        <CustomInputComponent />
-      </div> -->
       <div class="ms-2 d-none d-md-block w-50 p-0">
         <SearchInputComponent />
       </div>

@@ -1,12 +1,11 @@
 <template>
-  <input
+  <CustomInputComponent
     v-model="searchQuery"
     @input="OnInput()"
     v-on:keyup.enter="this.ToggleSearchWindow()"
-    type="text"
-    class="form-control"
-    placeholder="查詢"
+    :placeholder="'查詢'"
   />
+
   <div class="position-relative">
     <!-- z-1為了蓋住Swiper -->
     <ul v-if="showDropdown" class="list-group position-absolute w-100 z-1">
@@ -30,8 +29,12 @@
 <script>
 import { mapActions, mapState } from "vuex/dist/vuex.cjs.js";
 import { useRouter } from "vue-router";
+import CustomInputComponent from "./CustomInputComponent.vue";
 
 export default {
+  components: {
+    CustomInputComponent,
+  },
   setup() {
     const router = useRouter();
     return { router };

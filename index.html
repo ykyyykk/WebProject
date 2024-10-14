@@ -5,11 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3C購物網站</title>
     <script type="module" src="js/libs.js"></script>
+    <!-- GoogleAdSense 中繼標記-->
+    <meta name="google-adsense-account" content="ca-pub-6842691191512975" />
+    <!-- GoogleAdSense AdSense-->
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6842691191512975"
+      crossorigin="anonymous"
+    ></script>
   </head>
 
   <body
     class="d-block justify-content-start align-items-center vh-100 overflow-x-hidden"
   >
+    <script>
+      window["addGoogleAds"] = function () {
+        let chlid = document.getElementsByClassName("addGoogleItem");
+        for (let index = 0; index < chlid.length; index++) {
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        }
+      };
+    </script>
     <div id="app"></div>
     <script type="module" src="src/main.js"></script>
   </body>
