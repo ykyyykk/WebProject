@@ -4,6 +4,8 @@
   width: 64px; */
   /* 一定要relative不然tooltip 和 三角形不知道跑哪去 */
   position: relative;
+  /* 為了不被作品集覆蓋 */
+  z-index: 1;
 }
 
 /* Tooltip 文字 */

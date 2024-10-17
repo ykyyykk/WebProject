@@ -15,8 +15,29 @@ import UserManagement from "../pages/UserManagement.vue";
 import RevenueChart from "../pages/RevenueChart.vue";
 import MiniGame from "../pages/MiniGame.vue";
 import Portfolio from "../pages/Portfolio.vue";
+import NoteMain from "../pages/NoteMain.vue";
+import Note1 from "../pages/Notes/Note1.vue";
 
 const routes = [
+  {
+    path: "/notemain/",
+    name: "NoteMain",
+    component: NoteMain,
+  },
+  {
+    path: "/notes/note1",
+    name: "Note1",
+    component: Note1,
+  },
+  // {
+  //   path: "/notes/:name",
+  //   name: "Note",
+  //   component: (event) => (
+  //     console.log(event), () => import(`../pages/Notes/${params.name}.vue`)
+  //   ),
+  //   // 可以使用 props 來傳遞參數
+  //   props: true,
+  // },
   {
     path: "/",
     name: "Home",

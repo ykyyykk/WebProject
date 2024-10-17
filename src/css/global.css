@@ -2,7 +2,10 @@ html {
   /* 全域讓預設ScorllBar 瘦一點好看點 */
   scrollbar-width: thin;
   scrollbar-color: #888 #f1f1f1;
-  /* TOOD: 不知道為什麼ItemDetail 的商品描述會分層 懶得解決 */
+}
+
+body {
+  /* TOOD: 放在html會分層 放在這邊會把button預設背景同樣更改 要在單獨設定每個button */
   /* background: #ebebf6; */
 }
 

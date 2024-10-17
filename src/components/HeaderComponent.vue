@@ -46,13 +46,22 @@
 
       <!-- 因為router-link會讓tooltip有小小的接縫不好看所以用button -->
       <button
+        @click="this.$router.push({ name: 'NoteMain' })"
+        class="bg-transparent text-black border border-0 tooltip_direction"
+        data-name="筆記"
+        data-direction="bottom"
+        style="--accent-color: grey"
+      >
+        <i class="fa-solid fa-book fs-5"></i>
+      </button>
+      <button
         @click="this.$router.push({ name: 'Portfolio' })"
         class="bg-transparent text-black border border-0 tooltip_direction"
         data-name="作品集"
         data-direction="bottom"
         style="--accent-color: grey"
       >
-        <i class="fa-solid fa-user-graduate"></i>
+        <i class="fa-solid fa-user-graduate fs-5"></i>
       </button>
 
       <button
