@@ -1,36 +1,30 @@
 <template>
-  <SmallHeaderComponentVue pageTitle="忘記密碼" />
+  <SmallHeaderComponent pageTitle="忘記密碼" />
 
   <div
-    style="height: 500px"
+    style="height: 600px"
     class="d-block justify-content-center align-items-center mt-5 p-3 w-100 overflow-x-hidden container"
   >
-    <div
-      class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
-    >
+    <div class="mb-3 d-flex align-items-center">
       <i class="fa-solid fa-envelope mx-2"></i>
-      <input
-        type="text"
-        class="form-control border border-0"
-        placeholder="Email"
+      <CustomInputComponent
+        class="w-100"
+        :placeholder="'Email'"
         v-model="email"
         aria-label="Email"
-        aria-describedby="basic-addon1"
+        aria-describedby="Email"
       />
     </div>
 
-    <div
-      class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
-    >
+    <div class="mb-3 d-flex align-items-center">
       <i class="fa-solid fa-lock mx-2"></i>
-      <input
-        type="text"
+      <CustomInputComponent
+        class="w-100"
+        :placeholder="'驗證碼'"
         v-model="verificationCode"
-        class="form-control border border-0"
-        placeholder="驗證碼"
-        aria-describedby="basic-addon1"
+        aria-label="VerificationCode"
+        aria-describedby="VerificationCode"
       />
-      <i class="fa-solid fa-eye-slash me-3"></i>
     </div>
 
     <button
@@ -61,12 +55,13 @@
 </template>
 
 <script>
-import SmallHeaderComponentVue from "../components/SmallHeaderComponent.vue";
+import CustomInputComponent from "../components/CustomInputComponent.vue";
+import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import { API_BASE_URL } from "../config/api";
 import axios from "axios";
 
 export default {
-  components: { SmallHeaderComponentVue },
+  components: { SmallHeaderComponent, CustomInputComponent },
   data() {
     return {
       email: "",
@@ -97,6 +92,7 @@ export default {
   methods: {
     async SendForgotPasswordCode() {
       try {
+        this.SetSendDuration();
         const response = await axios.post(
           `${API_BASE_URL}/api/sendforgotpasswordcode`,
           {
@@ -109,7 +105,6 @@ export default {
           return;
         }
         alert(`驗證碼已發送`);
-        this.SetSendDuration();
       } catch (error) {
         alert(`發送驗證碼錯誤 ${error}`);
       }
