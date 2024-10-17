@@ -2,45 +2,43 @@
   <SmallHeaderComponent pageTitle="登入" />
 
   <div
-    style="height: 500px"
+    style="height: 600px"
     class="d-block justify-content-center align-items-center mt-5 p-3 w-100 overflow-x-hidden container"
   >
-    <div
-      class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
-    >
+    <div class="mb-3 d-flex align-items-center">
       <i class="fa-solid fa-envelope mx-2"></i>
-      <input
-        type="text"
-        class="form-control border border-0"
-        placeholder="Email"
+      <CustomInputComponent
+        class="w-100"
+        :placeholder="'Email'"
         v-model="email"
         aria-label="Email"
-        aria-describedby="basic-addon1"
+        aria-describedby="Email"
       />
     </div>
 
-    <div
-      class="input-group mb-3 d-flex justify-content-center align-items-center rounded border border-1"
-    >
+    <div class="mb-3 d-flex align-items-center position-relative">
       <i class="fa-solid fa-lock mx-2"></i>
-      <input
+      <CustomInputComponent
+        class="w-100"
         :type="this.passwordVisibility ? 'text' : 'password'"
+        :placeholder="'密碼'"
         v-model="password"
-        class="form-control border border-0"
-        placeholder="密碼"
         aria-label="password"
-        aria-describedby="basic-addon1"
+        aria-describedby="password"
       />
+
       <button
         @click="this.passwordVisibility = !this.passwordVisibility"
-        class="border border-0 bg-transparent"
+        style="right: 6rem"
+        class="border border-0 bg-transparent position-absolute"
       >
-        <i class="fa-solid fa-eye-slash me-3"></i>
+        <i class="fa-solid fa-eye-slash"></i>
       </button>
 
       <router-link
         :to="{ name: 'ForgotPassword' }"
-        class="me-2 text-decoration-none"
+        style="right: 1rem"
+        class="text-decoration-none position-absolute"
         href="forgot_password.html"
         >忘記密碼</router-link
       >
@@ -64,6 +62,7 @@
 <script>
 import SmallHeaderComponent from "../components/SmallHeaderComponent.vue";
 import GoogleLoginComponent from "../components/GoogleLoginComponent.vue";
+import CustomInputComponent from "../components/CustomInputComponent.vue";
 import axios from "axios";
 import { mapActions } from "vuex/dist/vuex.cjs.js";
 import { API_BASE_URL } from "../config/api";
@@ -79,6 +78,7 @@ export default {
   components: {
     SmallHeaderComponent,
     GoogleLoginComponent,
+    CustomInputComponent,
   },
   methods: {
     ...mapActions(["SetLogin"]),

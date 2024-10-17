@@ -1,7 +1,7 @@
 <template>
   <div id="cool_input">
     <input
-      type="text"
+      :type="type"
       :value="modelValue"
       @input="onInput"
       @blur="onBlur"
@@ -19,6 +19,7 @@ export default {
   props: {
     modelValue: { type: String, required: true }, // 綁定 v-model 的值
     placeholder: { type: String, required: true },
+    type: { type: String, default: "text" },
   },
   emits: ["update:modelValue", "enter"], // 使用 v-model 需要 emit 更新
   methods: {
@@ -49,7 +50,7 @@ export default {
   font-size: 18px;
   padding: 0px 15px;
   border: 2px #1cd679 solid;
-  background-color: transparent;
+  background-color: white;
   /* onClick的時候不會有預設藍色的outline */
   outline: none;
   color: black;
@@ -72,7 +73,7 @@ export default {
   top: 0px;
   font-size: 16px;
   padding: 0px 10px;
-  /* 這裡要用background一樣的顏色 不能用transparent 會蓋不住border*/
+  /* 這裡要用background一樣的顏色 不能用transparent 會蓋不住border */
   background-color: white;
 }
 </style>
