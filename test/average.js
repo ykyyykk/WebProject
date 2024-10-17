@@ -1,3 +1,5 @@
+// 需要事先全域安裝mocha
+// 在terminal 輸入mocha 可以進行測試
 import should from "should"; //這是有用的 不要刪 也不要uninstall
 import { average } from "../lib/average.js";
 
