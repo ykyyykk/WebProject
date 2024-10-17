@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import authRoutes from "./api/routes/Auth.js";
+import questionRoutes from "./api/routes/Question.js";
 import itemRoutes from "./api/routes/Items.js";
 import cashierRoutes from "./api/routes/Cashier.js";
 import b2cInvoiceRoutes from "./api/routes/B2CInvoice.js";
@@ -35,6 +36,7 @@ app.use(bodyParser.json());
 // 提供靜態文件的路徑
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/api", authRoutes);
+app.use("/api", questionRoutes);
 app.use("/api", itemRoutes);
 app.use("/api", cashierRoutes);
 app.use("/api", b2cInvoiceRoutes);

@@ -9,7 +9,6 @@
       required
       spellcheck="false"
     />
-    <!-- 不知道怎麼用props動態調整 -->
     <label>{{ placeholder }}</label>
   </div>
 </template>
@@ -41,6 +40,7 @@ export default {
 <style scoped>
 #cool_input {
   position: relative;
+  width: 100%;
 }
 
 #cool_input input {

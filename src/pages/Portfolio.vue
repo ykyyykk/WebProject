@@ -6,6 +6,7 @@
         class="w-100 h-100 object-fit-fill position-absolute start-0 z-n1"
         src="/static/header.jpg"
       />
+
       <!-- 漸層Mask -->
       <div
         class="position-absolute w-100 h-100 z-0"
@@ -14,6 +15,7 @@
           mask-image: linear-gradient(to right, transparent, black 60%);
         "
       ></div>
+
       <!-- 作品集1 -->
       <div class="row h-100">
         <!-- 作品集1 左邊 -->

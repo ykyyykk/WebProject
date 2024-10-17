@@ -8,7 +8,6 @@
     <div class="mb-3 d-flex align-items-center">
       <i class="fa-solid fa-envelope mx-2"></i>
       <CustomInputComponent
-        class="w-100"
         :placeholder="'Email'"
         v-model="email"
         aria-label="Email"
@@ -19,7 +18,6 @@
     <div class="mb-3 d-flex align-items-center position-relative">
       <i class="fa-solid fa-lock mx-2"></i>
       <CustomInputComponent
-        class="w-100"
         :type="this.passwordVisibility ? 'text' : 'password'"
         :placeholder="'密碼'"
         v-model="password"
