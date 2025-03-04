@@ -38,3 +38,7 @@ coverage/
 
 # 忽略 npm 的緩存文件
 *.npm
+
+# 忽略小工具
+*.bat
+*.sh

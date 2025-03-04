@@ -17,7 +17,10 @@
       >
         <!-- TODOWarning: 這裡會Warning 跟中文無關 數字也會 只有在找到東西才會觸發 search 改 aaa 沒用  -->
         <router-link
-          :to="{ name: 'SearchResult', params: { search: this.searchQuery } }"
+          :to="{
+            name: 'SearchResult',
+            params: { search: this.searchQuery },
+          }"
           class="stretched-link text-decoration-none text-black"
           >{{ item.name }}
         </router-link>
