@@ -1,8 +1,5 @@
 <template>
-  <header
-    class="d-flex justify-content-between align-items-center p-3 bg-white"
-    style="height: 4rem"
-  >
+  <header class="d-flex justify-content-between align-items-center p-3 bg-white" style="height: 4rem">
     <div class="d-flex justify-content-start align-items-center w-100">
       <!-- 暫時取消 不知道要塞什麼 -->
       <!-- <button
@@ -12,12 +9,8 @@
         <i class="fa-solid fa-bars fs-2"></i>
       </button> -->
 
-      <router-link
-        :to="{ name: 'Home' }"
-        class="text-decoration-none ms-2"
-        style="width: 12rem"
-      >
-        <img style="width: 100%; height: auto" src="/static/Logo.png" />
+      <router-link :to="{ name: 'Home' }" class="text-decoration-none ms-2" style="width: 12rem">
+        <!-- <img style="width: 100%; height: auto" src="/static/Logo.png" /> -->
       </router-link>
 
       <div class="ms-2 d-none d-md-block w-50 p-0">
@@ -26,85 +19,51 @@
     </div>
 
     <div class="d-flex justify-content-end align-items-center gap-3">
-      <button
-        @click="ToggleSearchWindow()"
-        class="border border-0 bg-transparent d-md-none"
-      >
+      <button @click="ToggleSearchWindow()" class="border border-0 bg-transparent d-md-none">
         <i class="fa-solid fa-magnifying-glass fs-5"></i>
       </button>
 
-      <router-link
-        v-if="isManager"
-        :to="{ path: '/dashboard' }"
-        class="bg-transparent text-black tooltip_direction"
-        data-name="控制台"
-        data-direction="bottom"
-        style="--accent-color: grey"
-      >
+      <router-link v-if="isManager" :to="{ path: '/dashboard' }" class="bg-transparent text-black tooltip_direction"
+        data-name="控制台" data-direction="bottom" style="--accent-color: grey">
         <i class="fa-solid fa-store fs-5"></i>
       </router-link>
 
       <!-- 因為router-link會讓tooltip有小小的接縫不好看所以用button -->
-      <button
-        @click="this.$router.push({ name: 'NoteMain' })"
-        class="bg-transparent text-black border border-0 tooltip_direction"
-        data-name="筆記"
-        data-direction="bottom"
-        style="--accent-color: grey"
-      >
+      <button @click="this.$router.push({ name: 'NoteMain' })"
+        class="bg-transparent text-black border border-0 tooltip_direction" data-name="筆記" data-direction="bottom"
+        style="--accent-color: grey">
         <i class="fa-solid fa-book fs-5"></i>
       </button>
-      <button
-        @click="this.$router.push({ name: 'Portfolio' })"
-        class="bg-transparent text-black border border-0 tooltip_direction"
-        data-name="作品集"
-        data-direction="bottom"
-        style="--accent-color: grey"
-      >
+      <button @click="this.$router.push({ name: 'Portfolio' })"
+        class="bg-transparent text-black border border-0 tooltip_direction" data-name="作品集" data-direction="bottom"
+        style="--accent-color: grey">
         <i class="fa-solid fa-user-graduate fs-5"></i>
       </button>
 
-      <button
-        @click="this.$router.push({ name: 'MiniGame' })"
-        class="bg-transparent text-black border border-0 tooltip_direction"
-        data-name="小遊戲"
-        data-direction="bottom"
-        style="--accent-color: grey"
-      >
+      <button @click="this.$router.push({ name: 'MiniGame' })"
+        class="bg-transparent text-black border border-0 tooltip_direction" data-name="小遊戲" data-direction="bottom"
+        style="--accent-color: grey">
         <i class="fa-solid fa-gamepad fs-5"></i>
       </button>
       <!-- TODOAdd: 新增通知 -->
       <!-- TODOAdd: 通知同步發送email-->
       <!-- TODOAdd: 取消訂閱通知email-->
       <!-- 不要用router-link 不知道為什麼 會呼叫到Cart 明明名稱不一樣 -->
-      <button
-        @click="this.LoginOnClick()"
-        class="bg-transparent text-black border border-0 tooltip_direction"
-        data-name="會員專區"
-        data-direction="bottom"
-        style="--accent-color: grey"
-      >
+      <button @click="this.LoginOnClick()" class="bg-transparent text-black border border-0 tooltip_direction"
+        data-name="會員專區" data-direction="bottom" style="--accent-color: grey">
         <i class="fa-solid fa-user fs-5"></i>
       </button>
 
-      <button
-        @click="this.CartOnClick()"
-        class="bg-transparent text-black ms-auto me-2 border border-0 tooltip_direction"
-        data-name="購物車"
-        data-direction="bottom"
-        style="--accent-color: grey"
-      >
+      <button @click="this.CartOnClick()"
+        class="bg-transparent text-black ms-auto me-2 border border-0 tooltip_direction" data-name="購物車"
+        data-direction="bottom" style="--accent-color: grey">
         <i class="fa-solid fa-cart-shopping fs-5"></i>
       </button>
     </div>
   </header>
 
   <SideBarComponent v-model:isSideBarOpen="isSideBarOpen" />
-  <div
-    class="w-100 h-100 position-absolute left-0 bg-white p-3 z-3"
-    style="top: 4rem"
-    v-if="isSearchWindowOpen"
-  >
+  <div class="w-100 h-100 position-absolute left-0 bg-white p-3 z-3" style="top: 4rem" v-if="isSearchWindowOpen">
     <SearchInputComponent @ToggleSearchWindow="ToggleSearchWindow" />
   </div>
 </template>
